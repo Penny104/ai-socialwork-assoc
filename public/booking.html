@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>課程預約 — 社團法人臺灣科技與社會工作協會</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600;700&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:     #FDFBF7;
+  --grid:   #E8DCC4;
+  --ink:    #3E362E;
+  --orange: #F26D5B;
+  --yellow: #F4D35E;
+  --blue:   #5C8EAD;
+  --green:  #7D9D7F;
+  --fh: 'Fredoka', sans-serif;
+  --fb: 'Noto Sans TC', sans-serif;
+}
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body { background:var(--bg); color:var(--ink); font-family:var(--fb); }
+
+/* Grid paper bg */
+body::before {
+  content:''; position:fixed; inset:0; z-index:0; pointer-events:none;
+  background-image:
+    linear-gradient(var(--grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size:40px 40px; opacity:.35;
+}
+/* Left 3 lines */
+body::after {
+  content:''; position:fixed; top:0; left:0; width:48px; height:100vh;
+  z-index:50; pointer-events:none;
+  background:
+    linear-gradient(90deg, transparent 10px, var(--blue) 10px, var(--blue) 13px, transparent 13px),
+    linear-gradient(90deg, transparent 22px, var(--orange) 22px, var(--orange) 25px, transparent 25px),
+    linear-gradient(90deg, transparent 34px, #bbb 34px, #bbb 36px, transparent 36px);
+}
+
+/* ── NAV ── */
+.nav {
+  position:fixed; top:0; left:0; right:0; z-index:200;
+  display:flex; align-items:center; justify-content:space-between;
+  padding:1rem 2.5rem 1rem 4rem;
+  background:rgba(253,251,247,.92); backdrop-filter:blur(14px);
+  border-bottom:2px solid var(--grid);
+}
+.nav-logo {
+  font-family:var(--fh); font-size:.88rem; font-weight:600;
+  display:flex; align-items:center; gap:.3rem;
+  text-decoration:none; color:var(--ink);
+}
+.nav-logo-mark {
+  width:36px; height:36px; border-radius:8px;
+  background:var(--ink); color:white;
+  display:flex; align-items:center; justify-content:center;
+  font-family:var(--fh); font-size:11px; font-weight:700;
+  line-height:1.2; text-align:center; flex-shrink:0;
+}
+.nav-back {
+  font-family:var(--fh); font-size:.9rem; font-weight:500;
+  color:var(--ink); text-decoration:none;
+  display:flex; align-items:center; gap:.4rem;
+  transition:color .2s;
+}
+.nav-back:hover { color:var(--orange); }
+
+/* ── PAGE ── */
+.page {
+  min-height:100svh;
+  padding:7rem 5rem 6rem 6rem;
+  position:relative; z-index:1;
+}
+.page-hdr { margin-bottom:3rem; }
+.page-tag {
+  display:inline-block;
+  background:var(--yellow); color:var(--ink);
+  font-family:var(--fh); font-size:.82rem; font-weight:600;
+  padding:.22rem .9rem; border-radius:3px;
+  border:1.5px solid var(--ink); margin-bottom:1rem;
+}
+.page-title {
+  font-family:var(--fh); font-size:clamp(2rem,4vw,3.2rem);
+  font-weight:700; line-height:1.2; margin-bottom:.6rem;
+}
+.page-lead {
+  font-size:.93rem; line-height:1.9;
+  color:#7a6c60; max-width:55ch;
+}
+
+/* ── CALENDAR + PANEL ── */
+.booking-layout {
+  display:grid;
+  grid-template-columns:1fr;        /* default: full-width calendar */
+  gap:2.5rem;
+  align-items:start;
+  margin-bottom:5rem;
+  transition:grid-template-columns .55s cubic-bezier(.22,1,.36,1);
+}
+.booking-layout.has-date {
+  grid-template-columns:340px 1fr;  /* shrunken calendar + form */
+}
+@media(max-width:920px) {
+  .booking-layout, .booking-layout.has-date { grid-template-columns:1fr; }
+  .page { padding:7rem 1.5rem 5rem 1.5rem; }
+  body::after { display:none; }
+}
+
+/* Calendar */
+.cal-card {
+  background:white;
+  border:2px solid var(--ink); border-radius:14px;
+  padding:2rem;
+  box-shadow:5px 6px 0 var(--ink);
+  max-width:540px; margin:0 auto; width:100%;
+  position:sticky; top:88px;
+  transition:max-width .55s cubic-bezier(.22,1,.36,1),
+             padding .55s cubic-bezier(.22,1,.36,1),
+             box-shadow .3s;
+}
+.booking-layout.has-date .cal-card {
+  max-width:none; margin:0; padding:1.5rem;
+}
+.cal-nav {
+  display:flex; align-items:center; justify-content:space-between;
+  margin-bottom:1.25rem;
+}
+.cal-month {
+  font-family:var(--fh); font-size:1.25rem; font-weight:700; color:var(--ink);
+  transition:font-size .4s;
+}
+.booking-layout.has-date .cal-month { font-size:1rem; }
+.cal-btn {
+  width:34px; height:34px; border:2px solid var(--grid); border-radius:8px;
+  background:white; cursor:pointer; font-size:1rem; color:var(--ink);
+  display:flex; align-items:center; justify-content:center;
+  transition:border-color .2s, color .2s;
+}
+.cal-btn:hover { border-color:var(--orange); color:var(--orange); }
+.cal-weekdays {
+  display:grid; grid-template-columns:repeat(7,1fr);
+  text-align:center; margin-bottom:.5rem;
+}
+.cal-weekdays span {
+  font-family:var(--fh); font-size:.8rem; font-weight:600;
+  color:#bbb; padding:.4rem 0; letter-spacing:.04em;
+}
+.booking-layout.has-date .cal-weekdays span { font-size:.7rem; }
+.cal-grid { display:grid; grid-template-columns:repeat(7,1fr); gap:4px; }
+.cal-day {
+  aspect-ratio:1; display:flex; align-items:center; justify-content:center;
+  font-family:var(--fh); font-size:1rem; border-radius:10px;
+  cursor:pointer; transition:background .15s, color .15s, font-size .4s;
+  position:relative;
+}
+.booking-layout.has-date .cal-day { font-size:.82rem; border-radius:7px; }
+.cal-day.cal-empty { pointer-events:none; }
+.cal-day.cal-past { color:#ccc; cursor:not-allowed; }
+.cal-day.cal-today { color:var(--blue); font-weight:700; }
+.cal-day.cal-avail:not(.cal-past):hover { background:#f0faf4; color:var(--green); }
+.cal-day.cal-avail::after {
+  content:''; position:absolute; bottom:4px; left:50%;
+  transform:translateX(-50%);
+  width:5px; height:5px; border-radius:50%;
+  background:var(--green);
+}
+.cal-day.cal-selected {
+  background:var(--orange) !important;
+  color:white !important; font-weight:700;
+}
+.cal-day.cal-selected::after { background:rgba(255,255,255,.7); }
+.cal-legend {
+  display:flex; align-items:center; gap:.4rem;
+  margin-top:.85rem; font-size:.76rem; color:#aaa; font-family:var(--fh);
+}
+.leg-dot { width:7px; height:7px; border-radius:50%; display:inline-block; }
+
+/* ── Form panel (warm scrapbook style) — hidden until date selected ── */
+.form-panel {
+  background:white;
+  border:2px solid var(--ink); border-radius:14px;
+  overflow:hidden;
+  box-shadow:5px 6px 0 var(--ink);
+  display:none;
+}
+.form-panel.show {
+  display:block;
+  animation:panelIn .45s cubic-bezier(.22,1,.36,1) both;
+}
+@keyframes panelIn {
+  from { opacity:0; transform:translateX(28px); }
+  to   { opacity:1; transform:translateX(0); }
+}
+/* Tape + header */
+.form-panel-hdr {
+  padding:1.25rem 1.75rem;
+  background:var(--yellow);
+  border-bottom:2px solid var(--ink);
+  display:flex; align-items:center; gap:.75rem;
+  position:relative; overflow:hidden;
+}
+.form-panel-hdr::before {
+  content:''; position:absolute; top:0; left:0; right:0; height:4px;
+  background:var(--orange);
+}
+.form-panel-date {
+  font-family:var(--fh); font-size:1.05rem; font-weight:700;
+  color:var(--ink); flex:1;
+}
+.form-panel-clear {
+  font-size:.78rem; color:var(--ink); opacity:.55;
+  cursor:pointer; text-decoration:underline; font-family:var(--fh);
+  transition:opacity .2s;
+}
+.form-panel-clear:hover { opacity:1; color:var(--orange); }
+/* Form body */
+.form-body { padding:1.5rem 1.75rem 1.75rem; }
+.form-field { display:flex; flex-direction:column; gap:.35rem; margin-bottom:.9rem; }
+.form-field label {
+  font-family:var(--fh); font-size:.8rem; font-weight:600;
+  color:var(--ink); letter-spacing:.04em;
+}
+.form-field label .req { color:var(--orange); margin-left:2px; }
+.form-field input,
+.form-field textarea,
+.form-field select {
+  border:1.5px solid var(--grid); border-radius:8px;
+  padding:.6rem .85rem; font-family:var(--fb); font-size:.88rem;
+  color:var(--ink); background:var(--bg); outline:none;
+  transition:border-color .2s, background .2s;
+}
+.form-field input::placeholder,
+.form-field textarea::placeholder { color:#b8a898; }
+.form-field select { appearance:none; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23b8a898'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right .85rem center; padding-right:2.2rem; cursor:pointer; }
+.form-field input:focus,
+.form-field textarea:focus,
+.form-field select:focus { border-color:var(--orange); background:white; }
+.form-field textarea { resize:vertical; min-height:80px; }
+.form-row { display:grid; grid-template-columns:1fr 1fr; gap:.75rem; }
+.form-submit {
+  width:100%; padding:.85rem;
+  background:var(--ink); color:white;
+  border:none; border-radius:10px;
+  font-family:var(--fh); font-size:1rem; font-weight:700;
+  cursor:pointer; transition:transform .2s, box-shadow .2s;
+  margin-top:.5rem;
+  box-shadow:4px 4px 0 var(--orange);
+}
+.form-submit:hover { transform:translate(-2px,-2px); box-shadow:6px 6px 0 var(--orange); }
+.form-success { display:none; text-align:center; padding:3rem 2rem; }
+.form-success-icon {
+  width:60px; height:60px; border-radius:50%;
+  background:var(--green); color:white;
+  font-size:1.6rem; display:flex; align-items:center; justify-content:center;
+  margin:0 auto 1rem; box-shadow:3px 4px 0 rgba(125,157,127,.4);
+}
+.form-success p { font-family:var(--fh); font-size:1.05rem; color:var(--ink); line-height:1.8; }
+
+/* ── LECTURERS ── */
+.lecturers-section {
+  border-top:1.5px solid var(--grid); padding-top:4rem;
+}
+.sec-h {
+  font-family:var(--fh); font-size:clamp(1.8rem,3.5vw,2.6rem);
+  font-weight:700; margin-bottom:2rem;
+}
+.lecturers-grid {
+  display:grid; grid-template-columns:1fr 1fr; gap:2rem;
+}
+@media(max-width:768px) { .lecturers-grid { grid-template-columns:1fr; } }
+.lecturer-card {
+  display:flex; gap:1.5rem; align-items:flex-start;
+  background:white; border:1.5px solid var(--grid); border-radius:14px;
+  padding:1.75rem;
+  box-shadow:3px 5px 0 rgba(62,54,46,.06);
+  transition:transform .25s, box-shadow .25s;
+}
+.lecturer-card:nth-child(1) { transform:rotate(-.5deg); }
+.lecturer-card:nth-child(2) { transform:rotate(.5deg); }
+.lecturer-card:hover { transform:rotate(0) translateY(-4px); box-shadow:5px 10px 0 rgba(62,54,46,.1); }
+.lect-avatar {
+  width:80px; height:80px; border-radius:50%;
+  border:2.5px solid var(--ink);
+  background:linear-gradient(135deg,var(--bg),#e8dcc4);
+  display:flex; align-items:center; justify-content:center;
+  font-size:2.4rem; flex-shrink:0;
+}
+.lect-tag {
+  font-size:.72rem; font-weight:700; letter-spacing:.1em;
+  text-transform:uppercase; color:var(--orange); margin-bottom:.3rem;
+}
+.lect-name { font-family:var(--fh); font-size:1.55rem; font-weight:700; margin-bottom:.15rem; }
+.lect-role { font-size:.82rem; color:#9a8a7a; margin-bottom:.65rem; }
+.lect-skills {
+  display:flex; flex-wrap:wrap; gap:.35rem;
+  list-style:none; margin-bottom:.75rem;
+}
+.lect-skills li {
+  font-size:.73rem; font-weight:600; padding:.18rem .6rem; border-radius:4px;
+  background:#f3ede4; color:var(--ink); border:1px solid var(--grid);
+}
+.lect-bio { font-size:.86rem; line-height:1.9; color:#6a5c50; }
+
+/* ── FOOTER ── */
+.footer {
+  background:var(--ink); color:rgba(255,255,255,.65);
+  padding:2.5rem 5rem 2.5rem 6rem; text-align:center; margin-top:5rem;
+}
+.footer-logo { font-family:var(--fh); font-size:1.2rem; font-weight:700; color:var(--yellow); margin-bottom:.4rem; }
+.footer-copy { font-size:.75rem; opacity:.35; margin-top:.4rem; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <a class="nav-logo" href="scrapbook.html">
+    <img style="height:32px;width:auto;" src="logo-icon.png" alt="協會Logo">
+    <span>社團法人臺灣科技與社會工作協會</span>
+  </a>
+</nav>
+
+<div style="position:relative;z-index:1;">
+
+  <div class="page">
+    <div class="page-hdr">
+      <div class="page-tag">Course Reservation</div>
+      <h1 class="page-title">課程預約</h1>
+      <p class="page-lead">
+        歡迎各社福機構單位申請到府講授。<br>
+        請在日曆上點選您希望的授課日期，右側將跳出申請表單供您填寫。
+      </p>
+    </div>
+
+    <!-- Calendar + Form -->
+    <div class="booking-layout">
+
+      <!-- Calendar -->
+      <div class="cal-card">
+        <div class="cal-nav">
+          <button class="cal-btn" id="cal-prev">←</button>
+          <span class="cal-month" id="cal-month-label"></span>
+          <button class="cal-btn" id="cal-next">→</button>
+        </div>
+        <div class="cal-weekdays">
+          <span>日</span><span>一</span><span>二</span><span>三</span><span>四</span><span>五</span><span>六</span>
+        </div>
+        <div class="cal-grid" id="cal-grid"></div>
+        <div class="cal-legend">
+          <span class="leg-dot" style="background:var(--green);"></span> 可預約 &nbsp;&nbsp;
+          <span class="leg-dot" style="background:var(--orange);"></span> 已選取
+        </div>
+      </div>
+
+      <!-- Form panel — only shows when date selected -->
+      <div class="form-panel" id="form-panel">
+        <div class="form-panel-hdr">
+          <div class="form-panel-date" id="form-date-label">📅</div>
+          <span class="form-panel-clear" onclick="clearDate()">取消選擇</span>
+        </div>
+        <div class="form-body">
+          <form id="bk-form" onsubmit="handleSubmit(event)">
+            <div class="form-field">
+              <label>機構名稱 <span class="req">*</span></label>
+              <input type="text" placeholder="例：臺北市家庭服務中心" required>
+            </div>
+            <div class="form-field">
+              <label>授課時數<span class="req">*</span></label>
+              <select required>
+                <option value="" disabled selected>請選擇授課時數</option>
+                <option value="3">3 小時</option>
+                <option value="4">4 小時</option>
+                <option value="5">5 小時</option>
+                <option value="6">6 小時</option>
+                <option value="7">7 小時</option>
+                <option value="8">8 小時</option>
+              </select>
+            </div>
+            <div class="form-field">
+              <label>授課地點 <span class="req">*</span></label>
+              <input type="text" placeholder="例：臺北市中正區" required>
+            </div>
+            <div class="form-field">
+              <label>對課程的期待 <span class="req">*</span></label>
+              <textarea placeholder="請描述貴機構的學員背景、期待學習方向、特殊需求等…" required></textarea>
+            </div>
+            <div class="form-row">
+              <div class="form-field">
+                <label>聯絡電話 <span class="req">*</span></label>
+                <input type="tel" placeholder="02-1234-5678" required>
+              </div>
+              <div class="form-field">
+                <label>聯絡 Email <span class="req">*</span></label>
+                <input type="email" placeholder="contact@org.tw" required>
+              </div>
+            </div>
+            <button type="submit" class="form-submit">送出預約申請 →</button>
+          </form>
+          <div class="form-success" id="form-success">
+            <div class="form-success-icon">✓</div>
+            <p>預約申請已送出！<br>講師將於 3 個工作天內與您聯繫確認。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Lecturers -->
+    <div class="lecturers-section">
+      <h2 class="sec-h">授課講師</h2>
+      <div class="lecturers-grid">
+
+        <div class="lecturer-card">
+          <div class="lect-avatar">👩‍🏫</div>
+          <div>
+            <div class="lect-tag">理事長 · 社工師</div>
+            <h3 class="lect-name">陳雅慧</h3>
+            <p class="lect-role">國立臺灣大學社工系教授</p>
+            <ul class="lect-skills">
+              <li>AI 社工倫理</li>
+              <li>數位轉型實務</li>
+              <li>政策倡議</li>
+              <li>個案管理科技化</li>
+            </ul>
+            <p class="lect-bio">
+              擁有 20 年社工實務與教學經驗，長期關注科技融入社會服務的理論與實踐，曾多次受邀至立法院及衛福部進行政策諮詢。授課風格深入淺出，擅長以真實案例引導學員思考，學員評分均超過 4.7／5.0。
+            </p>
+          </div>
+        </div>
+
+        <div class="lecturer-card">
+          <div class="lect-avatar">👨‍💻</div>
+          <div>
+            <div class="lect-tag">技術總監 · 工程師</div>
+            <h3 class="lect-name">林建宏</h3>
+            <p class="lect-role">前大廠 AI 研究員 · 台大資工碩士</p>
+            <ul class="lect-skills">
+              <li>AI 工具實作</li>
+              <li>ChatGPT 應用</li>
+              <li>數據分析</li>
+              <li>自動化流程</li>
+            </ul>
+            <p class="lect-bio">
+              多年 AI 產業研發經歷，專注於將複雜的科技知識轉化為社工師能立即上手的實用技能。授課以「做中學」為核心，每場工作坊皆提供可帶走的工具模板，學員平均滿意度達 4.8／5.0。
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-logo">社團法人臺灣科技與社會工作協會</div>
+    <p style="font-size:.85rem;margin:.4rem 0;">tatswin2022@gmail.com &nbsp;·&nbsp; 臺灣</p>
+    <p class="footer-copy">© 2024 Taiwan Technology & Social Work Association. All Rights Reserved.</p>
+  </footer>
+
+</div>
+
+<script>
+/* ── Calendar ── */
+(function () {
+  const now = new Date();
+  const minDate = new Date(now);
+  minDate.setDate(now.getDate() + 3);
+  const minDateStr = minDate.toISOString().slice(0, 10);
+  const blocked = new Set();
+
+  let year  = now.getFullYear();
+  let month = now.getMonth();
+  let selectedDate = null;
+
+  const gridEl    = document.getElementById('cal-grid');
+  const monthLbl  = document.getElementById('cal-month-label');
+  const panel     = document.getElementById('form-panel');
+  const dateLabel = document.getElementById('form-date-label');
+  const fullMonths = ['一月','二月','三月','四月','五月','六月','七月','八月','九月','十月','十一月','十二月'];
+  const wdays = ['日','一','二','三','四','五','六'];
+
+  function render() {
+    const firstDay = new Date(year, month, 1).getDay();
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
+    const todayStr = now.toISOString().slice(0, 10);
+    monthLbl.textContent = `${year} 年 ${fullMonths[month]}`;
+    gridEl.innerHTML = '';
+
+    for (let i = 0; i < firstDay; i++) {
+      const el = document.createElement('div');
+      el.className = 'cal-day cal-empty';
+      gridEl.appendChild(el);
+    }
+    for (let d = 1; d <= daysInMonth; d++) {
+      const ds = `${year}-${String(month+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+      const el = document.createElement('div');
+      el.className = 'cal-day';
+      el.textContent = d;
+      const past = new Date(ds) < new Date(todayStr);
+      if (ds === todayStr)       el.classList.add('cal-today');
+      if (past || blocked.has(ds)) el.classList.add('cal-past');
+      else if (ds >= minDateStr)   el.classList.add('cal-avail');
+      else                         el.classList.add('cal-past');
+      if (ds === selectedDate)   el.classList.add('cal-selected');
+
+      el.addEventListener('click', () => {
+        if (el.classList.contains('cal-past') || blocked.has(ds)) return;
+        selectedDate = ds;
+        render();
+        showPanel(ds);
+      });
+      gridEl.appendChild(el);
+    }
+  }
+
+  const layout = document.querySelector('.booking-layout');
+
+  function showPanel(ds) {
+    const dt = new Date(ds + 'T00:00:00');
+    dateLabel.textContent = `📅 ${dt.getFullYear()} 年 ${dt.getMonth()+1} 月 ${dt.getDate()} 日（週${wdays[dt.getDay()]}）`;
+    document.getElementById('bk-form').style.display = '';
+    document.getElementById('form-success').style.display = 'none';
+    panel.classList.add('show');
+    layout.classList.add('has-date');
+  }
+
+  window.clearDate = function () {
+    selectedDate = null;
+    panel.classList.remove('show');
+    layout.classList.remove('has-date');
+    setTimeout(() => { panel.style.display = 'none'; panel.style.display = ''; }, 50);
+    render();
+  };
+
+  document.getElementById('cal-prev').addEventListener('click', () => {
+    month--; if (month < 0) { month = 11; year--; } render();
+  });
+  document.getElementById('cal-next').addEventListener('click', () => {
+    month++; if (month > 11) { month = 0; year++; } render();
+  });
+
+  render();
+
+  window.handleSubmit = function (e) {
+    e.preventDefault();
+    document.getElementById('bk-form').style.display = 'none';
+    document.getElementById('form-success').style.display = 'block';
+  };
+})();
+</script>
+
+</body>
+</html>
