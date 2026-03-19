@@ -6,7 +6,7 @@
 <title>社團法人臺灣科技與社會工作協會網站</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600;700&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600;700&family=Noto+Sans+TC:wght@300;400;500;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
 <style>
 /* ══ VARIABLES ══ */
 :root {
@@ -206,93 +206,71 @@ body::after {
 }
 
 /* ══════════════════════════════════
-   SECTION 2 — MILESTONES SLIDER
+   SECTION 2 — EDITORIAL MILESTONES
 ══════════════════════════════════ */
---color-primary: #5C8EAD;
---color-border:  #e5e5e5;
---color-tag-bg:  #EBF4F9;
---color-tag-txt: #5C8EAD;
+.milestones-section { padding:6rem 5rem 7rem 6rem; position:relative; overflow:hidden; }
+.ms-hdr { margin-bottom:3rem; }
+.ms-two-col { display:flex; align-items:center; gap:4rem; width:100%; max-width:1100px; }
+.ms-left  { flex:0 0 56%; overflow:visible; }
+.ms-right { flex:1; padding-left:1rem; position:relative; }
 
-.milestones-section { padding:7rem 5rem 6rem 6rem; position:relative; }
-.ms-slider-wrap { position:relative; z-index:1; }
-.ms-slider-hdr { margin-bottom:2.5rem; }
-.ms-slider-outer { display:flex; align-items:center; gap:1.25rem; }
+/* Blob SVG */
+.ms-blob-svg { width:100%; height:auto; display:block; overflow:visible; }
 
-/* Arrows */
-.ms-arrow {
-  flex-shrink:0; width:46px; height:46px; border-radius:50%;
-  border:1.5px solid #e5e5e5; background:white; cursor:pointer;
-  font-size:1.1rem; display:flex; align-items:center; justify-content:center;
-  transition:border-color .2s, color .2s, background .2s; color:var(--ink);
+/* Photo upload overlay */
+.ms-photo-upload {
+  position:absolute; bottom:1rem; right:1rem;
+  width:36px; height:36px; border-radius:50%;
+  background:rgba(255,255,255,.85); border:1.5px solid var(--ink);
+  display:flex; align-items:center; justify-content:center;
+  cursor:pointer; overflow:hidden; transition:background .2s;
 }
-.ms-arrow:hover:not(:disabled) { border-color:var(--blue); color:var(--blue); background:#f5fafd; }
-.ms-arrow:disabled { opacity:.3; cursor:not-allowed; }
+.ms-photo-upload:hover { background:white; }
+.ms-photo-upload input { position:absolute; inset:0; opacity:0; cursor:pointer; }
 
-/* Viewport */
-.ms-slider-viewport { flex:1; overflow:hidden; border-radius:12px; }
-.ms-slider-track {
-  display:flex;
-  transition:transform .45s ease;
-  will-change:transform;
+/* Right column */
+.ms-tag {
+  display:inline-block; font-size:.7rem; font-weight:600;
+  letter-spacing:.18em; text-transform:uppercase;
+  color:var(--blue); border:1.5px solid var(--blue);
+  padding:.25rem .9rem; border-radius:20px; margin-bottom:1.1rem;
+  font-family:var(--fh);
 }
-
-/* Slide card */
-.ms-slide {
-  flex:0 0 100%; display:flex;
-  background:white; border-radius:12px;
-  border:1px solid #e5e5e5;
-  overflow:hidden; min-height:340px;
+.ms-title {
+  font-family:'Playfair Display','Noto Sans TC',serif;
+  font-size:clamp(22px,3vw,42px); font-weight:700;
+  line-height:1.2; color:var(--ink); margin-bottom:.5rem;
 }
-.ms-slide-img {
-  flex:0 0 42%; position:relative;
-  background:#f8f6f2; border-right:1px solid #e5e5e5; overflow:hidden;
+.ms-sub {
+  font-size:.7rem; font-weight:500; letter-spacing:.18em;
+  color:#aaa; text-transform:uppercase; margin-bottom:1.2rem;
+  font-family:var(--fh);
 }
-.ms-slide-img img { width:100%; height:100%; object-fit:cover; display:block; }
-.ms-slide-img-ph {
-  position:absolute; inset:0;
-  display:flex; flex-direction:column; align-items:center; justify-content:center;
-  gap:.5rem; color:#bbb; pointer-events:none;
+.ms-rule { width:40px; height:3px; background:var(--orange); margin-bottom:1.2rem; border-radius:2px; }
+.ms-body { font-size:.92rem; line-height:2; color:#6a5c50; margin-bottom:2rem; }
+.ms-nav { display:flex; align-items:center; gap:1rem; }
+.ms-nav-btn {
+  width:42px; height:42px; border-radius:50%; border:none; cursor:pointer;
+  display:flex; align-items:center; justify-content:center;
+  transition:transform .18s, opacity .18s;
 }
-.ms-slide-img-ph svg { opacity:.4; }
-.ms-slide-img-ph span { font-family:var(--fh); font-size:.78rem; }
-.ms-slide-img input[type=file] { position:absolute; inset:0; opacity:0; cursor:pointer; z-index:2; }
-
-.ms-slide-text {
-  flex:1; padding:2.5rem 3rem;
-  display:flex; flex-direction:column; justify-content:center;
+.ms-nav-btn.prev { background:var(--ink); color:white; }
+.ms-nav-btn.next { background:var(--orange); color:white; }
+.ms-nav-btn:disabled { opacity:.25; cursor:default; transform:none !important; }
+.ms-nav-btn:hover:not(:disabled) { transform:scale(1.09); }
+.ms-pg-num { font-size:.75rem; font-weight:700; letter-spacing:.2em; color:var(--ink); font-family:var(--fh); }
+.ms-dots { display:flex; gap:.5rem; margin-left:.5rem; align-items:center; }
+.ms-dot {
+  width:7px; height:7px; border-radius:50%; background:#ddd;
+  cursor:pointer; border:none; padding:0; transition:background .25s,transform .25s;
 }
-.ms-slide-tag {
-  display:inline-block; padding:.28rem .9rem; border-radius:20px;
-  background:#EBF4F9; color:#5C8EAD;
-  font-family:var(--fh); font-size:.78rem; font-weight:600;
-  letter-spacing:.05em; margin-bottom:1rem; width:fit-content;
+.ms-dot.active { background:var(--blue); transform:scale(1.5); }
+.ms-bg-num {
+  position:absolute; top:-1.5rem; right:0;
+  font-size:clamp(80px,10vw,140px); font-weight:900;
+  color:rgba(62,54,46,.04); line-height:1;
+  user-select:none; pointer-events:none; font-family:var(--fh);
 }
-.ms-slide-title {
-  font-family:var(--fh); font-size:1.35rem; font-weight:500;
-  color:var(--ink); margin-bottom:.85rem; line-height:1.3;
-}
-.ms-slide-desc {
-  font-size:.9rem; line-height:1.75; color:#6a5c50;
-  margin-bottom:1.5rem; flex:1;
-}
-.ms-slide-btn {
-  display:inline-flex; align-items:center; gap:.35rem;
-  padding:.5rem 1.2rem; border-radius:8px;
-  border:1.5px solid #e5e5e5; background:white;
-  font-family:var(--fh); font-size:.9rem; color:var(--ink);
-  cursor:pointer; text-decoration:none; width:fit-content;
-  transition:background .2s, border-color .2s;
-}
-.ms-slide-btn:hover { background:#f5f5f5; border-color:#ccc; }
-
-/* Dots */
-.ms-slider-dots { display:flex; justify-content:center; gap:.6rem; margin-top:1.5rem; }
-.ms-slider-dot {
-  width:8px; height:8px; border-radius:50%;
-  background:#e5e5e5; border:none; cursor:pointer; padding:0;
-  transition:background .25s, transform .25s;
-}
-.ms-slider-dot.active { background:var(--blue); transform:scale(1.35); }
 
 /* ══════════════════════════════════
    SECTION 3 — HORIZONTAL POLAROIDS
@@ -926,9 +904,9 @@ body::after {
   .hero-illo { width:110px; right:8px; }
   .milestones-section, .news-section,
   .team-section, .support-section { padding:4rem 1.5rem; }
-  .ms-inner { flex-direction:column; }
-  .ms-sticky { position:relative; top:auto; height:260px; flex:none; width:100%; }
-  .ms-scroll { gap:10vh; }
+  .ms-two-col { flex-direction:column; gap:2rem; }
+  .ms-left, .ms-right { flex:none; width:100%; }
+  .ms-right { padding-left:0; }
   .team-item,
   .team-item:nth-child(even) { flex-direction:column; align-items:flex-start; }
   .team-section::before { left:1.5rem; }
@@ -1141,85 +1119,154 @@ body::after {
 </section>
 
 <!-- ══════════════════════════════
-     SECTION 2 — MILESTONES SLIDER
+     SECTION 2 — EDITORIAL MILESTONES
 ══════════════════════════════ -->
 <section class="milestones-section" id="milestones">
-  <div class="ms-slider-wrap">
-    <div class="ms-slider-hdr">
-      <h2 class="sec-h">協會介紹</h2>
+  <div class="ms-hdr">
+    <h2 class="sec-h">協會介紹</h2>
+  </div>
+
+  <div class="ms-two-col">
+    <!-- ── Left: Mixed-media blob ── -->
+    <div class="ms-left" id="msLeft" style="position:relative;">
+      <svg class="ms-blob-svg" viewBox="0 0 600 380" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <!-- Union of two overlapping circles -->
+          <clipPath id="msBlobClip">
+            <path d="M 190 10 A 180 180 0 0 1 300 47.5 A 180 180 0 1 1 300 332.5 A 180 180 0 1 0 190 10 Z"/>
+          </clipPath>
+          <radialGradient id="msVign" cx="50%" cy="50%" r="70%">
+            <stop offset="55%" stop-color="transparent"/>
+            <stop offset="100%" stop-color="rgba(62,54,46,0.32)"/>
+          </radialGradient>
+        </defs>
+
+        <g clip-path="url(#msBlobClip)">
+          <!-- Background photo -->
+          <image id="msBlobPhoto"
+            href="https://picsum.photos/seed/swk1/700/500"
+            x="0" y="0" width="600" height="380"
+            preserveAspectRatio="xMidYMid slice"/>
+          <!-- Colour wash -->
+          <rect x="0" y="0" width="600" height="380" fill="rgba(242,109,91,0.07)"/>
+          <!-- Vignette -->
+          <rect x="0" y="0" width="600" height="380" fill="url(#msVign)"/>
+
+          <!-- ── Cartoon 1: Social Worker with Briefcase (bottom-left) ── -->
+          <g transform="translate(30,215) scale(1.05)">
+            <rect x="17" y="96" width="16" height="36" rx="7" fill="#3E362E" stroke="white" stroke-width="2.5"/>
+            <rect x="43" y="96" width="16" height="36" rx="7" fill="#3E362E" stroke="white" stroke-width="2.5"/>
+            <ellipse cx="25" cy="132" rx="12" ry="5" fill="#3E362E"/>
+            <ellipse cx="51" cy="132" rx="12" ry="5" fill="#3E362E"/>
+            <rect x="12" y="48" width="52" height="52" rx="9" fill="#F26D5B" stroke="white" stroke-width="3"/>
+            <path d="M28 48 L38 62 L48 48" fill="white" opacity=".45"/>
+            <line x1="12" y1="62" x2="-6" y2="84" stroke="#F4D35E" stroke-width="9" stroke-linecap="round"/>
+            <line x1="64" y1="62" x2="78" y2="80" stroke="#F4D35E" stroke-width="9" stroke-linecap="round"/>
+            <rect x="64" y="74" width="32" height="24" rx="4" fill="#3E362E" stroke="white" stroke-width="2.2"/>
+            <rect x="72" y="70" width="16" height="7" rx="3" fill="#3E362E" stroke="white" stroke-width="2"/>
+            <line x1="80" y1="74" x2="80" y2="98" stroke="white" stroke-width="1.5"/>
+            <line x1="64" y1="86" x2="96" y2="86" stroke="white" stroke-width="1.5"/>
+            <circle cx="38" cy="26" r="22" fill="#F4D35E" stroke="white" stroke-width="3"/>
+            <path d="M17 22 Q38 4 59 22" fill="#3E362E"/>
+            <circle cx="30" cy="24" r="3.5" fill="#3E362E"/>
+            <circle cx="46" cy="24" r="3.5" fill="#3E362E"/>
+            <circle cx="31.5" cy="22.5" r="1.3" fill="white"/>
+            <circle cx="47.5" cy="22.5" r="1.3" fill="white"/>
+            <path d="M28 32 Q38 42 48 32" fill="none" stroke="#3E362E" stroke-width="2.5" stroke-linecap="round"/>
+            <circle cx="24" cy="30" r="6" fill="#FF9999" opacity=".38"/>
+            <circle cx="52" cy="30" r="6" fill="#FF9999" opacity=".38"/>
+          </g>
+
+          <!-- ── Cartoon 2: AI Robot (top-center) ── -->
+          <g transform="translate(254,14) scale(0.88)">
+            <line x1="45" y1="0" x2="45" y2="18" stroke="white" stroke-width="3.5" stroke-linecap="round"/>
+            <circle cx="45" cy="0" r="6" fill="#F26D5B" stroke="white" stroke-width="2"/>
+            <rect x="8" y="18" width="74" height="62" rx="14" fill="#5C8EAD" stroke="white" stroke-width="3"/>
+            <rect x="16" y="26" width="58" height="46" rx="9" fill="#2a3a4a"/>
+            <rect x="22" y="34" width="19" height="13" rx="4" fill="#00E5A0"/>
+            <rect x="49" y="34" width="19" height="13" rx="4" fill="#00E5A0"/>
+            <rect x="28" y="37" width="7" height="7" rx="2" fill="#007A55"/>
+            <rect x="55" y="37" width="7" height="7" rx="2" fill="#007A55"/>
+            <rect x="22" y="54" width="46" height="9" rx="4" fill="#F4D35E"/>
+            <circle cx="6"  cy="49" r="7" fill="#3E7CAD" stroke="white" stroke-width="2"/>
+            <circle cx="84" cy="49" r="7" fill="#3E7CAD" stroke="white" stroke-width="2"/>
+            <circle cx="6"  cy="49" r="3" fill="#3E362E"/>
+            <circle cx="84" cy="49" r="3" fill="#3E362E"/>
+            <rect x="32" y="80" width="26" height="14" rx="5" fill="#5C8EAD" stroke="white" stroke-width="2"/>
+            <text x="-8" y="16" font-size="13" fill="white" opacity=".65">★</text>
+            <text x="82" y="14" font-size="10" fill="#F4D35E" opacity=".9">✦</text>
+            <text x="78" y="84" font-size="9"  fill="white" opacity=".55">♥</text>
+          </g>
+
+          <!-- ── Cartoon 3: Cheerful Helper (bottom-right) ── -->
+          <g transform="translate(418,218) scale(0.96)">
+            <rect x="16" y="92" width="15" height="34" rx="7" fill="#3E362E" stroke="white" stroke-width="2.5"/>
+            <rect x="41" y="92" width="15" height="34" rx="7" fill="#3E362E" stroke="white" stroke-width="2.5"/>
+            <rect x="10" y="44" width="52" height="52" rx="9" fill="#7D9D7F" stroke="white" stroke-width="3"/>
+            <text x="30" y="74" font-size="17" fill="white" font-family="sans-serif">♥</text>
+            <line x1="10" y1="58" x2="-10" y2="28" stroke="#F4D35E" stroke-width="9" stroke-linecap="round"/>
+            <circle cx="-10" cy="26" r="9" fill="#F4D35E" stroke="white" stroke-width="2.5"/>
+            <line x1="62" y1="58" x2="82"  y2="28" stroke="#F4D35E" stroke-width="9" stroke-linecap="round"/>
+            <circle cx="82" cy="26" r="9" fill="#F4D35E" stroke="white" stroke-width="2.5"/>
+            <circle cx="36" cy="22" r="21" fill="#F4D35E" stroke="white" stroke-width="3"/>
+            <path d="M26 20 Q29 16 32 20" fill="none" stroke="#3E362E" stroke-width="2.5" stroke-linecap="round"/>
+            <path d="M40 20 Q43 16 46 20" fill="none" stroke="#3E362E" stroke-width="2.5" stroke-linecap="round"/>
+            <path d="M24 28 Q36 40 48 28" fill="none" stroke="#3E362E" stroke-width="2.5" stroke-linecap="round"/>
+            <circle cx="22" cy="27" r="6" fill="#FF9999" opacity=".4"/>
+            <circle cx="50" cy="27" r="6" fill="#FF9999" opacity=".4"/>
+          </g>
+
+          <!-- Floating deco -->
+          <circle cx="155" cy="46"  r="7"  fill="white" opacity=".15"/>
+          <circle cx="490" cy="60"  r="5"  fill="white" opacity=".2"/>
+          <circle cx="520" cy="308" r="6"  fill="#F4D35E" opacity=".28"/>
+          <rect x="82"  y="76" width="13" height="13" rx="3" fill="white" opacity=".1"  transform="rotate(20,88,82)"/>
+          <rect x="460" y="178" width="11" height="11" rx="3" fill="#F26D5B" opacity=".18" transform="rotate(-15,465,183)"/>
+          <text x="472" y="138" font-size="17" fill="white"   opacity=".15" font-family="sans-serif">✦</text>
+          <text x="110" y="308" font-size="13" fill="white"   opacity=".2"  font-family="sans-serif">★</text>
+        </g>
+
+        <!-- Border hugging the shape -->
+        <path d="M 190 10 A 180 180 0 0 1 300 47.5 A 180 180 0 1 1 300 332.5 A 180 180 0 1 0 190 10 Z"
+              fill="none" stroke="#3E362E" stroke-width="7"/>
+        <!-- Accent dots at pinch -->
+        <circle cx="300" cy="47.5"  r="5" fill="#F26D5B" stroke="white" stroke-width="2"/>
+        <circle cx="300" cy="332.5" r="5" fill="#F26D5B" stroke="white" stroke-width="2"/>
+      </svg>
+
+      <!-- Photo upload button -->
+      <label class="ms-photo-upload" title="更換照片">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#3E362E" stroke-width="2" stroke-linecap="round">
+          <rect x="3" y="3" width="18" height="18" rx="2"/>
+          <circle cx="8.5" cy="8.5" r="1.5"/>
+          <path d="M21 15l-5-5L5 21"/>
+        </svg>
+        <input type="file" accept="image/*" onchange="loadMsBlobPhoto(this)">
+      </label>
     </div>
 
-    <div class="ms-slider-outer">
-      <!-- Left arrow -->
-      <button class="ms-arrow" id="ms-prev" aria-label="上一張" disabled>←</button>
-
-      <!-- Viewport -->
-      <div class="ms-slider-viewport">
-        <div class="ms-slider-track" id="ms-slider-track">
-
-          <!-- Slide 1：創立理念 -->
-          <div class="ms-slide">
-            <div class="ms-slide-img">
-              <div class="ms-slide-img-ph">
-                <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
-                <span>點擊新增照片</span>
-              </div>
-              <input type="file" accept="image/*" onchange="loadSlidePhoto(this)">
-            </div>
-            <div class="ms-slide-text">
-              <span class="ms-slide-tag">創立理念</span>
-              <h3 class="ms-slide-title">協會創立理念</h3>
-              <p class="ms-slide-desc">由一群對社會工作與科技充滿熱情的先行者共同創立，立志成為臺灣社工界數位轉型的推手，為社工師提供最前沿的科技應用知識與實務支持。</p>
-              <a href="#" class="ms-slide-btn">了解更多 →</a>
-            </div>
-          </div>
-
-          <!-- Slide 2：協會宗旨 -->
-          <div class="ms-slide">
-            <div class="ms-slide-img">
-              <div class="ms-slide-img-ph">
-                <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
-                <span>點擊新增照片</span>
-              </div>
-              <input type="file" accept="image/*" onchange="loadSlidePhoto(this)">
-            </div>
-            <div class="ms-slide-text">
-              <span class="ms-slide-tag">協會宗旨</span>
-              <h3 class="ms-slide-title">協會宗旨</h3>
-              <p class="ms-slide-desc">推廣科技與社會工作相關領域之研究與實務應用，促進科技與社會工作之協力，並加強跨專業合作實務經驗與交流。</p>
-              <a href="#" class="ms-slide-btn">了解更多 →</a>
-            </div>
-          </div>
-
-          <!-- Slide 3：出版作品 -->
-          <div class="ms-slide">
-            <div class="ms-slide-img">
-              <div class="ms-slide-img-ph">
-                <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
-                <span>點擊新增照片</span>
-              </div>
-              <input type="file" accept="image/*" onchange="loadSlidePhoto(this)">
-            </div>
-            <div class="ms-slide-text">
-              <span class="ms-slide-tag">出版作品</span>
-              <h3 class="ms-slide-title">協會出版作品</h3>
-              <p class="ms-slide-desc">請輸入協會出版作品相關資訊。</p>
-              <a href="#" class="ms-slide-btn">了解更多 →</a>
-            </div>
-          </div>
-
-        </div>
+    <!-- ── Right: Text content ── -->
+    <div class="ms-right" id="msRight">
+      <div class="ms-bg-num" id="msBgNum">01</div>
+      <span class="ms-tag"   id="msTag">創立理念</span>
+      <h3  class="ms-title"  id="msTitle">協會創立理念</h3>
+      <p   class="ms-sub"    id="msSub">(FOUNDING PRINCIPLE)</p>
+      <div class="ms-rule"></div>
+      <p   class="ms-body"   id="msBody">由一群對社會工作與科技充滿熱情的先行者共同創立，立志成為臺灣社工界數位轉型的推手，為社工師提供最前沿的科技應用知識與實務支持。</p>
+      <div class="ms-nav">
+        <button class="ms-nav-btn prev" id="msPrev" aria-label="上一張" disabled>
+          <svg width="15" height="12" viewBox="0 0 15 12" fill="none">
+            <path d="M15 6H1M6 1L1 6L6 11" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+        <button class="ms-nav-btn next" id="msNext" aria-label="下一張">
+          <svg width="15" height="12" viewBox="0 0 15 12" fill="none">
+            <path d="M0 6H14M9 1L14 6L9 11" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+        <span class="ms-pg-num" id="msPgNum">01 / 03</span>
+        <div  class="ms-dots"   id="msDots"></div>
       </div>
-
-      <!-- Right arrow -->
-      <button class="ms-arrow" id="ms-next" aria-label="下一張">→</button>
-    </div>
-
-    <!-- Dots -->
-    <div class="ms-slider-dots" id="ms-slider-dots">
-      <button class="ms-slider-dot active"></button>
-      <button class="ms-slider-dot"></button>
-      <button class="ms-slider-dot"></button>
     </div>
   </div>
 </section>
@@ -1533,53 +1580,110 @@ gsap.timeline({ delay: 0.2 })
   .from('.hero-svg-illo',     { opacity:0, scale:.85, duration:.8, ease:'back.out(1.4)' }, '-=.7');
 
 /* ══════════════════════════════════════════
-   MILESTONES SLIDER
+   EDITORIAL MILESTONES
 ══════════════════════════════════════════ */
 (function () {
-  const track   = document.getElementById('ms-slider-track');
-  const prev    = document.getElementById('ms-prev');
-  const next    = document.getElementById('ms-next');
-  const dotsWrap = document.getElementById('ms-slider-dots');
-  const dots    = dotsWrap.querySelectorAll('.ms-slider-dot');
-  const slides  = track.querySelectorAll('.ms-slide');
-  const total   = slides.length;
-  let cur = 0;
+  const SLIDES = [
+    {
+      tag:'創立理念', num:'01', sub:'(FOUNDING PRINCIPLE)',
+      title:'協會創立理念',
+      body:'由一群對社會工作與科技充滿熱情的先行者共同創立，立志成為臺灣社工界數位轉型的推手，為社工師提供最前沿的科技應用知識與實務支持。',
+      photo:'https://picsum.photos/seed/swk1/700/500'
+    },
+    {
+      tag:'協會宗旨', num:'02', sub:'(OUR MISSION)',
+      title:'協會宗旨',
+      body:'推廣科技與社會工作相關領域之研究與實務應用，促進科技與社會工作之協力，並加強跨專業合作實務經驗與交流，共同推動台灣社工界的知識創新。',
+      photo:'https://picsum.photos/seed/swk2/700/500'
+    },
+    {
+      tag:'出版作品', num:'03', sub:'(PUBLICATIONS)',
+      title:'協會出版作品',
+      body:'協會持續出版科技與社會工作相關學術著作及實務手冊，提供社工師最新的數位應用知識與工具，引領台灣社工界的知識創新與實務發展。',
+      photo:'https://picsum.photos/seed/swk3/700/500'
+    }
+  ];
+  const TOTAL = SLIDES.length;
+  let cur = 0, busy = false;
 
-  function goTo(idx) {
-    cur = Math.max(0, Math.min(idx, total - 1));
-    track.style.transform = `translateX(-${cur * 100}%)`;
-    prev.disabled = cur === 0;
-    next.disabled = cur === total - 1;
-    dots.forEach((d, i) => d.classList.toggle('active', i === cur));
+  const msLeft      = document.getElementById('msLeft');
+  const msRight     = document.getElementById('msRight');
+  const msBlobPhoto = document.getElementById('msBlobPhoto');
+  const msTag       = document.getElementById('msTag');
+  const msTitle     = document.getElementById('msTitle');
+  const msSub       = document.getElementById('msSub');
+  const msBody      = document.getElementById('msBody');
+  const msBgNum     = document.getElementById('msBgNum');
+  const msPrev      = document.getElementById('msPrev');
+  const msNext      = document.getElementById('msNext');
+  const msPgNum     = document.getElementById('msPgNum');
+  const msDots      = document.getElementById('msDots');
+
+  /* Build dots */
+  for (let i = 0; i < TOTAL; i++) {
+    const d = document.createElement('button');
+    d.className = 'ms-dot' + (i === 0 ? ' active' : '');
+    d.addEventListener('click', () => goTo(i));
+    msDots.appendChild(d);
   }
 
-  prev.addEventListener('click', () => goTo(cur - 1));
-  next.addEventListener('click', () => goTo(cur + 1));
-  dots.forEach((d, i) => d.addEventListener('click', () => goTo(i)));
+  function updateUI() {
+    msPgNum.textContent = `${String(cur+1).padStart(2,'0')} / ${String(TOTAL).padStart(2,'0')}`;
+    msPrev.disabled = cur === 0;
+    msNext.disabled = cur === TOTAL - 1;
+    msDots.querySelectorAll('.ms-dot').forEach((d,i) => d.classList.toggle('active', i === cur));
+  }
+
+  function setContent(idx) {
+    const s = SLIDES[idx];
+    msBlobPhoto.setAttribute('href', s.photo);
+    msTag.textContent   = s.tag;
+    msTitle.textContent = s.title;
+    msSub.textContent   = s.sub;
+    msBody.textContent  = s.body;
+    msBgNum.textContent = s.num;
+  }
+
+  function goTo(idx) {
+    if (idx === cur || busy || idx < 0 || idx >= TOTAL) return;
+    busy = true;
+    const dir = idx > cur ? 1 : -1;
+    cur = idx;
+    updateUI();
+    const tl = gsap.timeline({ onComplete: () => { busy = false; } });
+    tl.to(msLeft,  { xPercent: dir * -50, opacity: 0, duration: .44, ease: 'power3.inOut' }, 0);
+    tl.to(msRight, { y: dir * -22, opacity: 0, duration: .34, ease: 'power3.inOut' }, 0);
+    tl.call(() => { setContent(idx); gsap.set(msLeft, { xPercent: dir * 50 }); });
+    tl.to(msLeft,  { xPercent: 0, opacity: 1, duration: .52, ease: 'power3.out' });
+    tl.to(msRight, { y: 0, opacity: 1, duration: .45, ease: 'power3.out' }, '<.08');
+  }
+
+  msPrev.addEventListener('click', () => goTo(cur - 1));
+  msNext.addEventListener('click', () => goTo(cur + 1));
 
   /* Touch swipe */
   let tx = 0;
-  track.addEventListener('touchstart', e => { tx = e.touches[0].clientX; }, { passive: true });
-  track.addEventListener('touchend', e => {
-    const diff = tx - e.changedTouches[0].clientX;
-    if (Math.abs(diff) > 50) goTo(diff > 0 ? cur + 1 : cur - 1);
+  msLeft.addEventListener('touchstart', e => { tx = e.touches[0].clientX; }, { passive: true });
+  msLeft.addEventListener('touchend',   e => {
+    const d = tx - e.changedTouches[0].clientX;
+    if (Math.abs(d) > 50) goTo(d > 0 ? cur + 1 : cur - 1);
   });
 
-  goTo(0);
+  setContent(0);
+  updateUI();
+
+  /* Scroll entrance */
+  gsap.from(msLeft,  { xPercent: -18, opacity: 0, duration: .9, ease: 'power3.out',
+    scrollTrigger: { trigger: '#milestones', start: 'top 75%', once: true } });
+  gsap.from(msRight, { y: 30, opacity: 0, duration: .75, ease: 'power3.out', delay: .18,
+    scrollTrigger: { trigger: '#milestones', start: 'top 75%', once: true } });
 })();
 
-/* Photo upload — slides */
-function loadSlidePhoto(input) {
+/* Photo upload — blob image */
+function loadMsBlobPhoto(input) {
   const file = input.files[0]; if (!file) return;
   const reader = new FileReader();
-  reader.onload = e => {
-    const box = input.closest('.ms-slide-img');
-    let img = box.querySelector('img');
-    if (!img) { img = document.createElement('img'); box.insertBefore(img, box.firstChild); }
-    img.src = e.target.result;
-    const ph = box.querySelector('.ms-slide-img-ph');
-    if (ph) ph.style.display = 'none';
-  };
+  reader.onload = e => document.getElementById('msBlobPhoto').setAttribute('href', e.target.result);
   reader.readAsDataURL(file);
 }
 
