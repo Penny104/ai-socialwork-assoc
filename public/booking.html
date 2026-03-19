@@ -160,7 +160,12 @@ body::after {
 .booking-layout.has-date .cal-day { font-size:.82rem; border-radius:7px; }
 .cal-day.cal-empty { pointer-events:none; }
 .cal-day.cal-past { color:#ccc; cursor:not-allowed; }
-.cal-day.cal-today { color:var(--blue); font-weight:700; }
+.cal-day.cal-today {
+  color:white !important; font-weight:700;
+  background:var(--blue) !important;
+  border-radius:50%;
+}
+.cal-day.cal-today::after { display:none !important; }
 .cal-day.cal-avail:not(.cal-past):hover { background:#f0faf4; color:var(--green); }
 .cal-day.cal-avail::after {
   content:''; position:absolute; bottom:4px; left:50%;
@@ -362,6 +367,7 @@ body::after {
         </div>
         <div class="cal-grid" id="cal-grid"></div>
         <div class="cal-legend">
+          <span class="leg-dot" style="background:var(--blue);"></span> 今日 &nbsp;&nbsp;
           <span class="leg-dot" style="background:var(--green);"></span> 可預約 &nbsp;&nbsp;
           <span class="leg-dot" style="background:var(--orange);"></span> 已選取
         </div>
