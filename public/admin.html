@@ -272,10 +272,10 @@ function showDash(){
   document.getElementById('login-wrap').style.display='none';
   document.getElementById('dashboard').style.display='block';
   renderBookings(); renderSlides(); renderNews(); renderTeam(); renderMembers(); renderCourses(); renderLecturers(); loadCfg();
-  // 即時同步：其他分頁有新預約時立刻更新
+  // 切回此分頁時立刻刷新（最可靠的方式）
+  document.addEventListener('visibilitychange', ()=>{ if(document.visibilityState==='visible') renderBookings(); });
+  // 其他分頁寫入 localStorage 時也即時更新
   window.addEventListener('storage', e=>{ if(e.key==='bookings') renderBookings(); });
-  // 每 5 秒也自動刷新一次（同分頁內送出時使用）
-  setInterval(renderBookings, 5000);
 }
 function doLogout(){sessionStorage.removeItem('admin_ok');location.reload();}
 
