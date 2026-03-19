@@ -209,57 +209,57 @@ body::after {
    SECTION 2 — EDITORIAL MILESTONES
 ══════════════════════════════════ */
 .milestones-section { padding:6rem 5rem 7rem 6rem; position:relative; overflow:hidden; }
-.ms-hdr { margin-bottom:3rem; }
-.ms-two-col { display:flex; align-items:center; gap:4rem; width:100%; max-width:1100px; }
-.ms-left  { flex:0 0 56%; overflow:visible; }
-.ms-right { flex:1; padding-left:1rem; position:relative; }
+.ms-two-col { display:flex; align-items:center; gap:5rem; width:100%; margin-top:3rem; }
+.ms-left  { flex:0 0 55%; position:relative; overflow:visible; }
+.ms-right { flex:1; position:relative; }
 
 /* Blob SVG */
 .ms-blob-svg { width:100%; height:auto; display:block; overflow:visible; }
 
 /* Photo upload overlay */
 .ms-photo-upload {
-  position:absolute; bottom:1rem; right:1rem;
-  width:36px; height:36px; border-radius:50%;
-  background:rgba(255,255,255,.85); border:1.5px solid var(--ink);
+  position:absolute; bottom:.8rem; right:.8rem;
+  width:34px; height:34px; border-radius:50%;
+  background:rgba(255,255,255,.88); border:1.5px solid var(--ink);
   display:flex; align-items:center; justify-content:center;
   cursor:pointer; overflow:hidden; transition:background .2s;
+  z-index:2;
 }
 .ms-photo-upload:hover { background:white; }
 .ms-photo-upload input { position:absolute; inset:0; opacity:0; cursor:pointer; }
 
 /* Right column */
 .ms-tag {
-  display:inline-block; font-size:.7rem; font-weight:600;
-  letter-spacing:.18em; text-transform:uppercase;
-  color:var(--blue); border:1.5px solid var(--blue);
-  padding:.25rem .9rem; border-radius:20px; margin-bottom:1.1rem;
+  display:inline-block; font-size:.68rem; font-weight:600;
+  letter-spacing:.2em; text-transform:uppercase;
+  color:var(--orange); border:1.5px solid var(--orange);
+  padding:.28rem 1rem; border-radius:20px; margin-bottom:1.2rem;
   font-family:var(--fh);
 }
 .ms-title {
   font-family:'Playfair Display','Noto Sans TC',serif;
-  font-size:clamp(22px,3vw,42px); font-weight:700;
-  line-height:1.2; color:var(--ink); margin-bottom:.5rem;
+  font-size:clamp(24px,3.2vw,46px); font-weight:700;
+  line-height:1.15; color:var(--ink); margin-bottom:.6rem;
 }
 .ms-sub {
-  font-size:.7rem; font-weight:500; letter-spacing:.18em;
-  color:#aaa; text-transform:uppercase; margin-bottom:1.2rem;
+  font-size:.68rem; font-weight:500; letter-spacing:.22em;
+  color:#bbb; text-transform:uppercase; margin-bottom:1.4rem;
   font-family:var(--fh);
 }
-.ms-rule { width:40px; height:3px; background:var(--orange); margin-bottom:1.2rem; border-radius:2px; }
-.ms-body { font-size:.92rem; line-height:2; color:#6a5c50; margin-bottom:2rem; }
+.ms-rule { width:44px; height:3px; background:var(--orange); margin-bottom:1.4rem; border-radius:2px; }
+.ms-body { font-size:.93rem; line-height:2.1; color:#6a5c50; margin-bottom:2.2rem; }
 .ms-nav { display:flex; align-items:center; gap:1rem; }
 .ms-nav-btn {
-  width:42px; height:42px; border-radius:50%; border:none; cursor:pointer;
+  width:44px; height:44px; border-radius:50%; border:none; cursor:pointer;
   display:flex; align-items:center; justify-content:center;
   transition:transform .18s, opacity .18s;
 }
-.ms-nav-btn.prev { background:var(--ink); color:white; }
-.ms-nav-btn.next { background:var(--orange); color:white; }
+.ms-nav-btn.prev { background:var(--ink); }
+.ms-nav-btn.next { background:var(--orange); }
 .ms-nav-btn:disabled { opacity:.25; cursor:default; transform:none !important; }
 .ms-nav-btn:hover:not(:disabled) { transform:scale(1.09); }
-.ms-pg-num { font-size:.75rem; font-weight:700; letter-spacing:.2em; color:var(--ink); font-family:var(--fh); }
-.ms-dots { display:flex; gap:.5rem; margin-left:.5rem; align-items:center; }
+.ms-pg-num { font-size:.8rem; font-weight:700; letter-spacing:.22em; color:var(--ink); font-family:var(--fh); min-width:56px; }
+.ms-dots { display:flex; gap:.5rem; align-items:center; }
 .ms-dot {
   width:7px; height:7px; border-radius:50%; background:#ddd;
   cursor:pointer; border:none; padding:0; transition:background .25s,transform .25s;
@@ -267,8 +267,8 @@ body::after {
 .ms-dot.active { background:var(--blue); transform:scale(1.5); }
 .ms-bg-num {
   position:absolute; top:-1.5rem; right:0;
-  font-size:clamp(80px,10vw,140px); font-weight:900;
-  color:rgba(62,54,46,.04); line-height:1;
+  font-size:clamp(90px,11vw,150px); font-weight:900;
+  color:rgba(62,54,46,.035); line-height:1;
   user-select:none; pointer-events:none; font-family:var(--fh);
 }
 
@@ -1122,9 +1122,7 @@ body::after {
      SECTION 2 — EDITORIAL MILESTONES
 ══════════════════════════════ -->
 <section class="milestones-section" id="milestones">
-  <div class="ms-hdr">
-    <h2 class="sec-h">協會介紹</h2>
-  </div>
+  <h2 class="sec-h">協會介紹</h2>
 
   <div class="ms-two-col">
     <!-- ── Left: Mixed-media blob ── -->
