@@ -1529,7 +1529,7 @@ gsap.timeline({ delay: 0.2 })
    EDITORIAL MILESTONES
 ══════════════════════════════════════════ */
 (function () {
-  const SLIDES = [
+  const _DEFAULT_SLIDES = [
     {
       title:'協會創立理念',
       body:'由一群對社會工作與科技充滿熱情的先行者共同創立，立志成為臺灣社工界數位轉型的推手，為社工師提供最前沿的科技應用知識與實務支持。',
@@ -1546,6 +1546,8 @@ gsap.timeline({ delay: 0.2 })
       photo:'https://picsum.photos/seed/swk3/700/500'
     }
   ];
+  const _saved = JSON.parse(localStorage.getItem('siteContent') || '{}');
+  const SLIDES = _saved.milestoneSlides || _DEFAULT_SLIDES;
   const TOTAL = SLIDES.length;
   let cur = 0, busy = false;
 

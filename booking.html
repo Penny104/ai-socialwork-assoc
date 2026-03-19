@@ -416,7 +416,7 @@ body::after {
           <form id="bk-form" onsubmit="handleSubmit(event)">
             <div class="form-field">
               <label>機構名稱 <span class="req">*</span></label>
-              <input type="text" placeholder="例：臺北市家庭服務中心" required>
+              <input type="text" name="institution" placeholder="例：臺北市家庭服務中心" required>
             </div>
             <div class="form-field">
               <label>授課時數<span class="req">*</span></label>
@@ -439,20 +439,20 @@ body::after {
             </div>
             <div class="form-field">
               <label>授課地點 <span class="req">*</span></label>
-              <input type="text" placeholder="例：臺北市中正區" required>
+              <input type="text" name="location" placeholder="例：臺北市中正區" required>
             </div>
             <div class="form-field">
               <label>對課程的期待 <span class="req">*</span></label>
-              <textarea placeholder="請描述貴機構的學員背景、期待學習方向、特殊需求等…" required></textarea>
+              <textarea name="expectations" placeholder="請描述貴機構的學員背景、期待學習方向、特殊需求等…" required></textarea>
             </div>
             <div class="form-row">
               <div class="form-field">
                 <label>聯絡電話 <span class="req">*</span></label>
-                <input type="tel" placeholder="02-1234-5678" required>
+                <input type="tel" name="phone" placeholder="02-1234-5678" required>
               </div>
               <div class="form-field">
                 <label>聯絡 Email <span class="req">*</span></label>
-                <input type="email" placeholder="contact@org.tw" required>
+                <input type="email" name="email" placeholder="contact@org.tw" required>
               </div>
             </div>
             <button type="submit" class="form-submit">送出預約申請 →</button>
@@ -524,7 +524,9 @@ body::after {
 (function () {
   const _init = new Date();
   const pad = n => String(n).padStart(2,'0');
-  const blocked = new Set();
+  const blocked = new Set(
+    JSON.parse(localStorage.getItem('bookings') || '[]').map(b => b.date)
+  );
 
   let year  = _init.getFullYear();
   let month = _init.getMonth();
@@ -601,7 +603,23 @@ body::after {
 
   window.handleSubmit = function (e) {
     e.preventDefault();
-    document.getElementById('bk-form').style.display = 'none';
+    const form = document.getElementById('bk-form');
+    const booking = {
+      id: Date.now().toString(),
+      date: selectedDate,
+      institution: form.querySelector('[name="institution"]').value,
+      hours: document.getElementById('hours-value').value,
+      location: form.querySelector('[name="location"]').value,
+      expectations: form.querySelector('[name="expectations"]').value,
+      phone: form.querySelector('[name="phone"]').value,
+      email: form.querySelector('[name="email"]').value,
+      bookedAt: new Date().toISOString()
+    };
+    const all = JSON.parse(localStorage.getItem('bookings') || '[]');
+    all.push(booking);
+    localStorage.setItem('bookings', JSON.stringify(all));
+    blocked.add(selectedDate);
+    form.style.display = 'none';
     document.getElementById('form-success').style.display = 'block';
   };
 })();
