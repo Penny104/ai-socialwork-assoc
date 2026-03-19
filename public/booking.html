@@ -235,10 +235,21 @@ body::after {
 }
 .form-field input::placeholder,
 .form-field textarea::placeholder { color:#b8a898; }
-.form-field select { appearance:none; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23b8a898'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right .85rem center; padding-right:2.2rem; cursor:pointer; }
+.form-field select {
+  appearance:none;
+  font-family:var(--fh); font-size:.95rem; font-weight:500;
+  border:2px solid var(--ink); border-radius:8px;
+  padding:.65rem 2.6rem .65rem .9rem;
+  background:white; color:var(--ink);
+  box-shadow:3px 3px 0 var(--ink);
+  cursor:pointer;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M0 0l6 8 6-8z' fill='%233E362E'/%3E%3C/svg%3E");
+  background-repeat:no-repeat; background-position:right .9rem center;
+  transition:box-shadow .2s, transform .15s;
+}
 .form-field input:focus,
 .form-field textarea:focus,
-.form-field select:focus { border-color:var(--orange); background:white; }
+.form-field select:focus { border-color:var(--orange); box-shadow:3px 3px 0 var(--orange); outline:none; }
 .form-field textarea { resize:vertical; min-height:80px; }
 .form-row { display:grid; grid-template-columns:1fr 1fr; gap:.75rem; }
 .form-submit {
@@ -318,7 +329,7 @@ body::after {
 
 <!-- NAV -->
 <nav class="nav">
-  <a class="nav-logo" href="scrapbook.html">
+  <a class="nav-logo" href="index.html">
     <img style="height:32px;width:auto;" src="logo-icon.png" alt="協會Logo">
     <span>社團法人臺灣科技與社會工作協會</span>
   </a>
@@ -466,9 +477,8 @@ body::after {
 /* ── Calendar ── */
 (function () {
   const now = new Date();
-  const minDate = new Date(now);
-  minDate.setDate(now.getDate() + 3);
-  const minDateStr = minDate.toISOString().slice(0, 10);
+  const pad = n => String(n).padStart(2,'0');
+  const todayLocal = `${now.getFullYear()}-${pad(now.getMonth()+1)}-${pad(now.getDate())}`;
   const blocked = new Set();
 
   let year  = now.getFullYear();
@@ -485,7 +495,7 @@ body::after {
   function render() {
     const firstDay = new Date(year, month, 1).getDay();
     const daysInMonth = new Date(year, month + 1, 0).getDate();
-    const todayStr = now.toISOString().slice(0, 10);
+    const todayStr = todayLocal;
     monthLbl.textContent = `${year} 年 ${fullMonths[month]}`;
     gridEl.innerHTML = '';
 
@@ -495,15 +505,14 @@ body::after {
       gridEl.appendChild(el);
     }
     for (let d = 1; d <= daysInMonth; d++) {
-      const ds = `${year}-${String(month+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+      const ds = `${year}-${pad(month+1)}-${pad(d)}`;
       const el = document.createElement('div');
       el.className = 'cal-day';
       el.textContent = d;
-      const past = new Date(ds) < new Date(todayStr);
-      if (ds === todayStr)       el.classList.add('cal-today');
+      const past = ds < todayStr;
+      if (ds === todayStr)         el.classList.add('cal-today');
       if (past || blocked.has(ds)) el.classList.add('cal-past');
-      else if (ds >= minDateStr)   el.classList.add('cal-avail');
-      else                         el.classList.add('cal-past');
+      else                         el.classList.add('cal-avail');
       if (ds === selectedDate)   el.classList.add('cal-selected');
 
       el.addEventListener('click', () => {
