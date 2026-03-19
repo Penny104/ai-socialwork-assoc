@@ -208,46 +208,17 @@ body::after {
 /* ══════════════════════════════════
    SECTION 2 — EDITORIAL MILESTONES
 ══════════════════════════════════ */
-.milestones-section { padding:6rem 5rem 7rem 6rem; position:relative; overflow:hidden; }
-.ms-two-col { display:flex; align-items:center; gap:5rem; width:100%; margin-top:3rem; }
-.ms-left  { flex:0 0 55%; position:relative; overflow:visible; }
+.milestones-section { padding:6rem 4rem 7rem 6rem; position:relative; overflow:hidden; }
+.ms-two-col { display:flex; align-items:center; gap:3.5rem; width:100%; margin-top:3rem; }
+.ms-left  { flex:0 0 62%; position:relative; overflow:visible; }
 .ms-right { flex:1; position:relative; }
-
-/* Blob SVG */
 .ms-blob-svg { width:100%; height:auto; display:block; overflow:visible; }
-
-/* Photo upload overlay */
-.ms-photo-upload {
-  position:absolute; bottom:.8rem; right:.8rem;
-  width:34px; height:34px; border-radius:50%;
-  background:rgba(255,255,255,.88); border:1.5px solid var(--ink);
-  display:flex; align-items:center; justify-content:center;
-  cursor:pointer; overflow:hidden; transition:background .2s;
-  z-index:2;
-}
-.ms-photo-upload:hover { background:white; }
-.ms-photo-upload input { position:absolute; inset:0; opacity:0; cursor:pointer; }
-
-/* Right column */
-.ms-tag {
-  display:inline-block; font-size:.68rem; font-weight:600;
-  letter-spacing:.2em; text-transform:uppercase;
-  color:var(--orange); border:1.5px solid var(--orange);
-  padding:.28rem 1rem; border-radius:20px; margin-bottom:1.2rem;
-  font-family:var(--fh);
-}
 .ms-title {
   font-family:'Playfair Display','Noto Sans TC',serif;
-  font-size:clamp(24px,3.2vw,46px); font-weight:700;
-  line-height:1.15; color:var(--ink); margin-bottom:.6rem;
+  font-size:clamp(26px,3.8vw,52px); font-weight:700;
+  line-height:1.15; color:var(--ink); margin-bottom:1.6rem;
 }
-.ms-sub {
-  font-size:.68rem; font-weight:500; letter-spacing:.22em;
-  color:#bbb; text-transform:uppercase; margin-bottom:1.4rem;
-  font-family:var(--fh);
-}
-.ms-rule { width:44px; height:3px; background:var(--orange); margin-bottom:1.4rem; border-radius:2px; }
-.ms-body { font-size:.93rem; line-height:2.1; color:#6a5c50; margin-bottom:2.2rem; }
+.ms-body { font-size:.95rem; line-height:2.1; color:#6a5c50; margin-bottom:2.5rem; }
 .ms-nav { display:flex; align-items:center; gap:1rem; }
 .ms-nav-btn {
   width:44px; height:44px; border-radius:50%; border:none; cursor:pointer;
@@ -265,12 +236,6 @@ body::after {
   cursor:pointer; border:none; padding:0; transition:background .25s,transform .25s;
 }
 .ms-dot.active { background:var(--blue); transform:scale(1.5); }
-.ms-bg-num {
-  position:absolute; top:-1.5rem; right:0;
-  font-size:clamp(90px,11vw,150px); font-weight:900;
-  color:rgba(62,54,46,.035); line-height:1;
-  user-select:none; pointer-events:none; font-family:var(--fh);
-}
 
 /* ══════════════════════════════════
    SECTION 3 — HORIZONTAL POLAROIDS
@@ -1125,17 +1090,30 @@ body::after {
   <h2 class="sec-h">協會介紹</h2>
 
   <div class="ms-two-col">
-    <!-- ── Left: Mixed-media blob ── -->
+    <!-- ── Left: Mixed-media cloud ── -->
     <div class="ms-left" id="msLeft" style="position:relative;">
-      <svg class="ms-blob-svg" viewBox="0 0 600 380" xmlns="http://www.w3.org/2000/svg">
+      <svg class="ms-blob-svg" viewBox="0 0 620 390" xmlns="http://www.w3.org/2000/svg">
         <defs>
-          <!-- Union of two overlapping circles -->
+          <!-- Irregular cloud shape clip-path -->
           <clipPath id="msBlobClip">
-            <path d="M 190 10 A 180 180 0 0 1 300 47.5 A 180 180 0 1 1 300 332.5 A 180 180 0 1 0 190 10 Z"/>
+            <path d="M 25 358
+              C 8 358 -5 334 8 306
+              C -6 286 4 252 32 238
+              C 16 210 28 176 64 172
+              C 58 126 94 96 135 114
+              C 142 72 182 48 222 68
+              C 236 26 288 10 318 48
+              C 340 8 394 20 402 66
+              C 444 46 476 82 460 130
+              C 500 124 525 160 506 200
+              C 540 212 544 252 514 272
+              C 534 300 522 338 490 350
+              C 514 370 550 374 574 354
+              Z"/>
           </clipPath>
           <radialGradient id="msVign" cx="50%" cy="50%" r="70%">
             <stop offset="55%" stop-color="transparent"/>
-            <stop offset="100%" stop-color="rgba(62,54,46,0.32)"/>
+            <stop offset="100%" stop-color="rgba(62,54,46,0.28)"/>
           </radialGradient>
         </defs>
 
@@ -1143,12 +1121,12 @@ body::after {
           <!-- Background photo -->
           <image id="msBlobPhoto"
             href="https://picsum.photos/seed/swk1/700/500"
-            x="0" y="0" width="600" height="380"
+            x="0" y="0" width="620" height="390"
             preserveAspectRatio="xMidYMid slice"/>
           <!-- Colour wash -->
-          <rect x="0" y="0" width="600" height="380" fill="rgba(242,109,91,0.07)"/>
+          <rect x="0" y="0" width="620" height="390" fill="rgba(242,109,91,0.06)"/>
           <!-- Vignette -->
-          <rect x="0" y="0" width="600" height="380" fill="url(#msVign)"/>
+          <rect x="0" y="0" width="620" height="390" fill="url(#msVign)"/>
 
           <!-- ── Cartoon 1: Social Worker with Briefcase (bottom-left) ── -->
           <g transform="translate(30,215) scale(1.05)">
@@ -1224,33 +1202,29 @@ body::after {
           <text x="110" y="308" font-size="13" fill="white"   opacity=".2"  font-family="sans-serif">★</text>
         </g>
 
-        <!-- Border hugging the shape -->
-        <path d="M 190 10 A 180 180 0 0 1 300 47.5 A 180 180 0 1 1 300 332.5 A 180 180 0 1 0 190 10 Z"
-              fill="none" stroke="#3E362E" stroke-width="7"/>
-        <!-- Accent dots at pinch -->
-        <circle cx="300" cy="47.5"  r="5" fill="#F26D5B" stroke="white" stroke-width="2"/>
-        <circle cx="300" cy="332.5" r="5" fill="#F26D5B" stroke="white" stroke-width="2"/>
+        <!-- Cloud border hugging the shape -->
+        <path d="M 25 358
+              C 8 358 -5 334 8 306
+              C -6 286 4 252 32 238
+              C 16 210 28 176 64 172
+              C 58 126 94 96 135 114
+              C 142 72 182 48 222 68
+              C 236 26 288 10 318 48
+              C 340 8 394 20 402 66
+              C 444 46 476 82 460 130
+              C 500 124 525 160 506 200
+              C 540 212 544 252 514 272
+              C 534 300 522 338 490 350
+              C 514 370 550 374 574 354
+              Z"
+              fill="none" stroke="#3E362E" stroke-width="7" stroke-linejoin="round"/>
       </svg>
-
-      <!-- Photo upload button -->
-      <label class="ms-photo-upload" title="更換照片">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#3E362E" stroke-width="2" stroke-linecap="round">
-          <rect x="3" y="3" width="18" height="18" rx="2"/>
-          <circle cx="8.5" cy="8.5" r="1.5"/>
-          <path d="M21 15l-5-5L5 21"/>
-        </svg>
-        <input type="file" accept="image/*" onchange="loadMsBlobPhoto(this)">
-      </label>
     </div>
 
     <!-- ── Right: Text content ── -->
     <div class="ms-right" id="msRight">
-      <div class="ms-bg-num" id="msBgNum">01</div>
-      <span class="ms-tag"   id="msTag">創立理念</span>
-      <h3  class="ms-title"  id="msTitle">協會創立理念</h3>
-      <p   class="ms-sub"    id="msSub">(FOUNDING PRINCIPLE)</p>
-      <div class="ms-rule"></div>
-      <p   class="ms-body"   id="msBody">由一群對社會工作與科技充滿熱情的先行者共同創立，立志成為臺灣社工界數位轉型的推手，為社工師提供最前沿的科技應用知識與實務支持。</p>
+      <h3 class="ms-title" id="msTitle">協會創立理念</h3>
+      <p  class="ms-body"  id="msBody">由一群對社會工作與科技充滿熱情的先行者共同創立，立志成為臺灣社工界數位轉型的推手，為社工師提供最前沿的科技應用知識與實務支持。</p>
       <div class="ms-nav">
         <button class="ms-nav-btn prev" id="msPrev" aria-label="上一張" disabled>
           <svg width="15" height="12" viewBox="0 0 15 12" fill="none">
@@ -1583,19 +1557,16 @@ gsap.timeline({ delay: 0.2 })
 (function () {
   const SLIDES = [
     {
-      tag:'創立理念', num:'01', sub:'(FOUNDING PRINCIPLE)',
       title:'協會創立理念',
       body:'由一群對社會工作與科技充滿熱情的先行者共同創立，立志成為臺灣社工界數位轉型的推手，為社工師提供最前沿的科技應用知識與實務支持。',
       photo:'https://picsum.photos/seed/swk1/700/500'
     },
     {
-      tag:'協會宗旨', num:'02', sub:'(OUR MISSION)',
       title:'協會宗旨',
       body:'推廣科技與社會工作相關領域之研究與實務應用，促進科技與社會工作之協力，並加強跨專業合作實務經驗與交流，共同推動台灣社工界的知識創新。',
       photo:'https://picsum.photos/seed/swk2/700/500'
     },
     {
-      tag:'出版作品', num:'03', sub:'(PUBLICATIONS)',
       title:'協會出版作品',
       body:'協會持續出版科技與社會工作相關學術著作及實務手冊，提供社工師最新的數位應用知識與工具，引領台灣社工界的知識創新與實務發展。',
       photo:'https://picsum.photos/seed/swk3/700/500'
@@ -1607,11 +1578,8 @@ gsap.timeline({ delay: 0.2 })
   const msLeft      = document.getElementById('msLeft');
   const msRight     = document.getElementById('msRight');
   const msBlobPhoto = document.getElementById('msBlobPhoto');
-  const msTag       = document.getElementById('msTag');
   const msTitle     = document.getElementById('msTitle');
-  const msSub       = document.getElementById('msSub');
   const msBody      = document.getElementById('msBody');
-  const msBgNum     = document.getElementById('msBgNum');
   const msPrev      = document.getElementById('msPrev');
   const msNext      = document.getElementById('msNext');
   const msPgNum     = document.getElementById('msPgNum');
@@ -1635,11 +1603,8 @@ gsap.timeline({ delay: 0.2 })
   function setContent(idx) {
     const s = SLIDES[idx];
     msBlobPhoto.setAttribute('href', s.photo);
-    msTag.textContent   = s.tag;
     msTitle.textContent = s.title;
-    msSub.textContent   = s.sub;
     msBody.textContent  = s.body;
-    msBgNum.textContent = s.num;
   }
 
   function goTo(idx) {
@@ -1676,14 +1641,6 @@ gsap.timeline({ delay: 0.2 })
   gsap.from(msRight, { y: 30, opacity: 0, duration: .75, ease: 'power3.out', delay: .18,
     scrollTrigger: { trigger: '#milestones', start: 'top 75%', once: true } });
 })();
-
-/* Photo upload — blob image */
-function loadMsBlobPhoto(input) {
-  const file = input.files[0]; if (!file) return;
-  const reader = new FileReader();
-  reader.onload = e => document.getElementById('msBlobPhoto').setAttribute('href', e.target.result);
-  reader.readAsDataURL(file);
-}
 
 /* Photo upload — accordion */
 function loadFolderPhoto(input) {
