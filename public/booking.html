@@ -248,18 +248,43 @@ body::after {
 }
 .form-field input::placeholder,
 .form-field textarea::placeholder { color:#b8a898; }
-.form-field select {
-  appearance:none;
+/* custom dropdown */
+.custom-select { position:relative; }
+.custom-select-trigger {
+  display:flex; align-items:center; justify-content:space-between;
   font-family:var(--fh); font-size:.95rem; font-weight:500;
   border:2px solid var(--ink); border-radius:8px;
-  padding:.65rem 2.6rem .65rem .9rem;
+  padding:.65rem 1rem;
   background:white; color:var(--ink);
   box-shadow:3px 3px 0 var(--ink);
-  cursor:pointer;
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M0 0l6 8 6-8z' fill='%233E362E'/%3E%3C/svg%3E");
-  background-repeat:no-repeat; background-position:right .9rem center;
+  cursor:pointer; user-select:none;
   transition:box-shadow .2s, transform .15s;
 }
+.custom-select-trigger:hover { box-shadow:4px 4px 0 var(--orange); border-color:var(--orange); }
+.custom-select.open .custom-select-trigger { border-color:var(--orange); box-shadow:3px 3px 0 var(--orange); }
+.custom-select-arrow {
+  width:10px; height:7px; flex-shrink:0; margin-left:.75rem;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='7'%3E%3Cpath d='M0 0l5 7 5-7z' fill='%233E362E'/%3E%3C/svg%3E");
+  background-repeat:no-repeat; background-size:contain;
+  transition:transform .2s;
+}
+.custom-select.open .custom-select-arrow { transform:rotate(180deg); }
+.custom-select-dropdown {
+  display:none; position:absolute; top:calc(100% + 6px); left:0; right:0; z-index:200;
+  background:white; border:2px solid var(--ink); border-radius:10px;
+  box-shadow:4px 5px 0 var(--ink); overflow:hidden;
+}
+.custom-select.open .custom-select-dropdown { display:block; }
+.custom-select-option {
+  padding:.7rem 1rem; font-family:var(--fh); font-size:.92rem;
+  color:var(--ink); cursor:pointer;
+  transition:background .15s, color .15s;
+  border-bottom:1px solid var(--grid);
+}
+.custom-select-option:last-child { border-bottom:none; }
+.custom-select-option:hover { background:var(--yellow); }
+.custom-select-option.selected { background:#fff8ec; font-weight:600; color:var(--orange); }
+.custom-select-option.placeholder { color:#b8a898; }
 .form-field input:focus,
 .form-field textarea:focus,
 .form-field select:focus { border-color:var(--orange); box-shadow:3px 3px 0 var(--orange); outline:none; }
@@ -395,15 +420,22 @@ body::after {
             </div>
             <div class="form-field">
               <label>授課時數<span class="req">*</span></label>
-              <select required>
-                <option value="" disabled selected>請選擇授課時數</option>
-                <option value="3">3 小時</option>
-                <option value="4">4 小時</option>
-                <option value="5">5 小時</option>
-                <option value="6">6 小時</option>
-                <option value="7">7 小時</option>
-                <option value="8">8 小時</option>
-              </select>
+              <div class="custom-select" id="hours-select">
+                <div class="custom-select-trigger" id="hours-trigger">
+                  <span id="hours-label" style="color:#b8a898;">請選擇授課時數</span>
+                  <span class="custom-select-arrow"></span>
+                </div>
+                <div class="custom-select-dropdown">
+                  <div class="custom-select-option placeholder" data-value="">請選擇授課時數</div>
+                  <div class="custom-select-option" data-value="3">3 小時</div>
+                  <div class="custom-select-option" data-value="4">4 小時</div>
+                  <div class="custom-select-option" data-value="5">5 小時</div>
+                  <div class="custom-select-option" data-value="6">6 小時</div>
+                  <div class="custom-select-option" data-value="7">7 小時</div>
+                  <div class="custom-select-option" data-value="8">8 小時</div>
+                </div>
+              </div>
+              <input type="hidden" id="hours-value" name="hours" required>
             </div>
             <div class="form-field">
               <label>授課地點 <span class="req">*</span></label>
@@ -572,6 +604,34 @@ body::after {
     document.getElementById('bk-form').style.display = 'none';
     document.getElementById('form-success').style.display = 'block';
   };
+})();
+
+/* ── Custom select ── */
+(function () {
+  const sel     = document.getElementById('hours-select');
+  const trigger = document.getElementById('hours-trigger');
+  const label   = document.getElementById('hours-label');
+  const hidden  = document.getElementById('hours-value');
+
+  trigger.addEventListener('click', e => {
+    e.stopPropagation();
+    sel.classList.toggle('open');
+  });
+
+  sel.querySelectorAll('.custom-select-option').forEach(opt => {
+    opt.addEventListener('click', () => {
+      const val = opt.dataset.value;
+      if (!val) return;
+      hidden.value = val;
+      label.textContent = opt.textContent;
+      label.style.color = 'var(--ink)';
+      sel.querySelectorAll('.custom-select-option').forEach(o => o.classList.remove('selected'));
+      opt.classList.add('selected');
+      sel.classList.remove('open');
+    });
+  });
+
+  document.addEventListener('click', () => sel.classList.remove('open'));
 })();
 </script>
 
