@@ -69,6 +69,14 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;bac
 .bk-time{font-size:.78rem;color:#ccc;font-family:var(--fh);margin-top:.4rem;}
 .btn-cancel{flex-shrink:0;padding:.65rem 1.25rem;background:white;color:var(--orange);border:2px solid var(--orange);border-radius:9px;font-family:var(--fh);font-size:.95rem;font-weight:700;cursor:pointer;transition:.18s;white-space:nowrap;box-shadow:3px 4px 0 var(--orange);}
 .btn-cancel:hover{background:var(--orange);color:white;transform:translate(-1px,-1px);}
+.bk-actions{display:flex;flex-direction:column;gap:.65rem;align-items:flex-end;flex-shrink:0;}
+.bk-done-label{display:flex;align-items:center;gap:.5rem;font-family:var(--fh);font-size:.9rem;font-weight:600;color:var(--green);cursor:pointer;border:2px solid var(--green);border-radius:9px;padding:.55rem 1rem;background:white;box-shadow:3px 4px 0 rgba(125,157,127,.25);transition:.18s;white-space:nowrap;}
+.bk-done-label:hover{background:#f0faf4;}
+.bk-done-label input{width:17px;height:17px;accent-color:var(--green);cursor:pointer;}
+.bk-card.bk-done{border-color:var(--green);box-shadow:4px 5px 0 var(--green);}
+.bk-card.bk-done .bk-date-box{background:#e8f5ea;border-color:var(--green);}
+.stat-done-list{margin-top:.6rem;display:flex;flex-direction:column;gap:.25rem;}
+.stat-done-list span{font-size:.78rem;color:var(--green);font-family:var(--fh);font-weight:600;background:#e8f5ea;border-radius:5px;padding:.18rem .55rem;}
 .bk-past{opacity:.55;}
 .empty-state{text-align:center;padding:3.5rem 2rem;color:#bbb;font-family:var(--fh);font-size:1rem;}
 .empty-icon{font-size:2.5rem;display:block;margin-bottom:.6rem;}
@@ -302,16 +310,19 @@ const CLR_OPTS=`<option value="orange">橘色</option><option value="blue">藍�
 function renderBookings(){
   const all=JSON.parse(localStorage.getItem('bookings')||'[]').sort((a,b)=>a.date.localeCompare(b.date));
   const today=new Date().toISOString().slice(0,10);
-  const up=all.filter(b=>b.date>=today);
+  const done=all.filter(b=>b.completed);
   document.getElementById('stats-row').innerHTML=`
     <div class="stat-card"><div class="stat-num">${all.length}</div><div class="stat-lbl">總預約數</div></div>
-    <div class="stat-card"><div class="stat-num" style="color:var(--blue);">${up.length}</div><div class="stat-lbl">即將到來</div></div>
-    <div class="stat-card"><div class="stat-num" style="color:var(--green);">${all.length-up.length}</div><div class="stat-lbl">已完成</div></div>`;
+    <div class="stat-card">
+      <div class="stat-num" style="color:var(--green);">${done.length}</div>
+      <div class="stat-lbl">已完成</div>
+      ${done.length?`<div class="stat-done-list">${done.map(b=>`<span>${esc(b.institution)}</span>`).join('')}</div>`:''}
+    </div>`;
   const list=document.getElementById('bk-list');
   if(!all.length){list.innerHTML='<div class="empty-state"><span class="empty-icon">📭</span>目前尚無預約記錄</div>';return;}
   list.innerHTML=all.map(b=>{
     const dt=new Date(b.date+'T00:00:00');
-    return `<div class="bk-card${b.date<today?' bk-past':''}">
+    return `<div class="bk-card${b.completed?' bk-done':''}">
       <div class="bk-date-box"><div class="bk-date-m">${MZ[dt.getMonth()]}</div><div class="bk-date-d">${dt.getDate()}</div></div>
       <div class="bk-info">
         <div class="bk-inst">${esc(b.institution)}</div>
@@ -324,9 +335,21 @@ function renderBookings(){
           <span style="color:#bbb;font-size:.78rem;">🕐&nbsp; 預約時間：${new Date(b.bookedAt).toLocaleString('zh-TW')}</span>
         </div>
       </div>
-      <button class="btn-cancel" onclick="cancelBooking('${b.id}')">取消預約</button>
+      <div class="bk-actions">
+        <label class="bk-done-label">
+          <input type="checkbox" ${b.completed?'checked':''} onchange="toggleComplete('${b.id}',this.checked)">
+          已完成
+        </label>
+        <button class="btn-cancel" onclick="cancelBooking('${b.id}')">取消預約</button>
+      </div>
     </div>`;
   }).join('');
+}
+function toggleComplete(id, checked){
+  let all=JSON.parse(localStorage.getItem('bookings')||'[]');
+  all=all.map(b=>b.id===id?{...b,completed:checked}:b);
+  localStorage.setItem('bookings',JSON.stringify(all));
+  renderBookings();
 }
 function cancelBooking(id){
   if(!confirm('確定取消此預約？取消後該日期將重新開放預約。'))return;
