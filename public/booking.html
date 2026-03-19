@@ -162,10 +162,10 @@ body::after {
 .cal-day.cal-past { color:#ccc; cursor:not-allowed; }
 .cal-day.cal-today {
   font-weight:700;
-  outline:2px solid var(--blue);
-  outline-offset:-2px;
+  background:var(--yellow) !important;
+  color:var(--ink) !important;
   border-radius:8px;
-  color:var(--blue);
+  box-shadow:inset 0 0 0 2px var(--ink);
 }
 .cal-day.cal-avail:not(.cal-past):hover { background:#f0faf4; color:var(--green); }
 .cal-day.cal-avail::after {
@@ -368,7 +368,7 @@ body::after {
         </div>
         <div class="cal-grid" id="cal-grid"></div>
         <div class="cal-legend">
-          <span class="leg-dot" style="background:var(--blue);"></span> 今日 &nbsp;&nbsp;
+          <span class="leg-dot" style="background:var(--yellow);border:1.5px solid var(--ink);"></span> 今日 &nbsp;&nbsp;
           <span class="leg-dot" style="background:var(--green);"></span> 可預約 &nbsp;&nbsp;
           <span class="leg-dot" style="background:var(--orange);"></span> 已選取
         </div>
