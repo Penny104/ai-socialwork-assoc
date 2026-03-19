@@ -279,11 +279,15 @@ function showDash(){
   document.getElementById('login-wrap').style.display='none';
   document.getElementById('dashboard').style.display='block';
   renderBookings(); renderSlides(); renderNews(); renderTeam(); renderMembers(); renderCourses(); renderLecturers(); loadCfg();
-  // 切回此分頁時立刻刷新（最可靠的方式）
+  // 切回此分頁時立刻刷新
   document.addEventListener('visibilitychange', ()=>{ if(document.visibilityState==='visible') renderBookings(); });
-  // 其他分頁寫入 localStorage 時也即時更新
+  // 其他分頁寫入 localStorage 時即時更新
   window.addEventListener('storage', e=>{ if(e.key==='bookings') renderBookings(); });
 }
+// 修正 bfcache：瀏覽器從返回快取還原頁面時重新讀取最新預約
+window.addEventListener('pageshow', e=>{
+  if(e.persisted && sessionStorage.getItem('admin_ok')==='1') renderBookings();
+});
 function doLogout(){sessionStorage.removeItem('admin_ok');location.reload();}
 
 /* ═══ TABS ═══ */
