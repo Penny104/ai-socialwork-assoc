@@ -8,493 +8,537 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600;700&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
 <style>
-:root {
-  --bg:#FDFBF7; --grid:#E8DCC4; --ink:#3E362E;
-  --orange:#F26D5B; --yellow:#F4D35E; --blue:#5C8EAD; --green:#7D9D7F;
-  --fh:'Fredoka',sans-serif; --fb:'Noto Sans TC',sans-serif;
-}
-*,*::before,*::after { margin:0; padding:0; box-sizing:border-box; }
-html { scroll-behavior:smooth; }
-body { background:var(--bg); color:var(--ink); font-family:var(--fb); min-height:100vh; }
-body::before {
-  content:''; position:fixed; inset:0; z-index:0; pointer-events:none;
-  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
-  background-size:40px 40px; opacity:.35;
-}
+:root{--bg:#FDFBF7;--grid:#E8DCC4;--ink:#3E362E;--orange:#F26D5B;--yellow:#F4D35E;--blue:#5C8EAD;--green:#7D9D7F;--fh:'Fredoka',sans-serif;--fb:'Noto Sans TC',sans-serif;}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--ink);font-family:var(--fb);min-height:100vh;}
+body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:40px 40px;opacity:.35;}
 
-/* ─── LOGIN ─── */
-#login-wrap {
-  position:fixed; inset:0; z-index:100;
-  display:flex; align-items:center; justify-content:center;
-}
-.login-card {
-  background:white; border:2px solid var(--ink); border-radius:20px;
-  padding:3rem 2.75rem; width:100%; max-width:440px;
-  box-shadow:7px 8px 0 var(--ink); position:relative; z-index:1;
-}
-.login-badge {
-  display:inline-block; background:var(--yellow); color:var(--ink);
-  font-family:var(--fh); font-size:.75rem; font-weight:700;
-  padding:.2rem .85rem; border-radius:4px; border:1.5px solid var(--ink);
-  margin-bottom:1.1rem; letter-spacing:.08em;
-}
-.login-title { font-family:var(--fh); font-size:2rem; font-weight:700; margin-bottom:.2rem; }
-.login-sub { font-size:.84rem; color:#9a8a7a; margin-bottom:2.25rem; }
-.lf { display:flex; flex-direction:column; gap:.35rem; margin-bottom:1.1rem; }
-.lf label { font-family:var(--fh); font-size:.82rem; font-weight:600; letter-spacing:.04em; }
-.lf input {
-  border:2px solid var(--grid); border-radius:9px; padding:.7rem .95rem;
-  font-family:var(--fb); font-size:.95rem; color:var(--ink); background:var(--bg);
-  outline:none; transition:border-color .2s;
-}
-.lf input:focus { border-color:var(--orange); }
-.login-err { color:var(--orange); font-family:var(--fh); font-size:.82rem; min-height:1.4rem; margin-bottom:.5rem; }
-.btn-login {
-  width:100%; padding:.9rem; background:var(--ink); color:white;
-  border:none; border-radius:11px; font-family:var(--fh); font-size:1.05rem; font-weight:700;
-  cursor:pointer; box-shadow:4px 4px 0 var(--orange); transition:.2s;
-}
-.btn-login:hover { transform:translate(-2px,-2px); box-shadow:6px 6px 0 var(--orange); }
+/* LOGIN */
+#login-wrap{position:fixed;inset:0;z-index:100;display:flex;align-items:center;justify-content:center;}
+.login-card{background:white;border:2px solid var(--ink);border-radius:20px;padding:3rem 2.75rem;width:100%;max-width:440px;box-shadow:7px 8px 0 var(--ink);position:relative;z-index:1;}
+.login-badge{display:inline-block;background:var(--yellow);color:var(--ink);font-family:var(--fh);font-size:.75rem;font-weight:700;padding:.2rem .85rem;border-radius:4px;border:1.5px solid var(--ink);margin-bottom:1.1rem;letter-spacing:.08em;}
+.login-title{font-family:var(--fh);font-size:2rem;font-weight:700;margin-bottom:.2rem;}
+.login-sub{font-size:.84rem;color:#9a8a7a;margin-bottom:2.25rem;}
+.lf{display:flex;flex-direction:column;gap:.35rem;margin-bottom:1.1rem;}
+.lf label{font-family:var(--fh);font-size:.82rem;font-weight:600;letter-spacing:.04em;}
+.lf input{border:2px solid var(--grid);border-radius:9px;padding:.7rem .95rem;font-family:var(--fb);font-size:.95rem;color:var(--ink);background:var(--bg);outline:none;transition:border-color .2s;}
+.lf input:focus{border-color:var(--orange);}
+.login-err{color:var(--orange);font-family:var(--fh);font-size:.82rem;min-height:1.4rem;margin-bottom:.5rem;}
+.btn-login{width:100%;padding:.9rem;background:var(--ink);color:white;border:none;border-radius:11px;font-family:var(--fh);font-size:1.05rem;font-weight:700;cursor:pointer;box-shadow:4px 4px 0 var(--orange);transition:.2s;}
+.btn-login:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--orange);}
 
-/* ─── NAV ─── */
-.admin-nav {
-  position:sticky; top:0; z-index:200;
-  display:flex; align-items:center; gap:.75rem; flex-wrap:wrap;
-  padding:.8rem 2.5rem .8rem 2rem;
-  background:rgba(253,251,247,.96); backdrop-filter:blur(14px);
-  border-bottom:2px solid var(--ink); box-shadow:0 3px 0 var(--orange);
-}
-.admin-brand {
-  font-family:var(--fh); font-size:.95rem; font-weight:700;
-  display:flex; align-items:center; gap:.55rem; margin-right:auto; text-decoration:none; color:var(--ink);
-}
-.admin-brand-mark {
-  width:36px; height:36px; background:var(--ink); color:white; border-radius:8px;
-  display:flex; align-items:center; justify-content:center;
-  font-family:var(--fh); font-size:9px; font-weight:700; line-height:1.25; text-align:center;
-}
-.admin-tabs { display:flex; gap:.4rem; }
-.a-tab {
-  font-family:var(--fh); font-size:.88rem; font-weight:600;
-  padding:.48rem 1.1rem; border-radius:8px; border:2px solid transparent;
-  background:transparent; cursor:pointer; color:var(--ink); transition:.18s;
-}
-.a-tab:hover { background:#fff0ee; border-color:var(--orange); color:var(--orange); }
-.a-tab.active { background:var(--ink); color:white; border-color:var(--ink); }
-.nav-front {
-  font-family:var(--fh); font-size:.8rem; color:#9a8a7a; text-decoration:none;
-  padding:.4rem .85rem; border-radius:7px; border:1.5px solid var(--grid); transition:.18s;
-}
-.nav-front:hover { border-color:var(--blue); color:var(--blue); }
-.btn-logout {
-  font-family:var(--fh); font-size:.82rem; font-weight:600;
-  padding:.45rem 1rem; border-radius:8px; border:2px solid var(--grid);
-  background:white; cursor:pointer; color:#9a8a7a; transition:.18s;
-}
-.btn-logout:hover { border-color:var(--orange); color:var(--orange); }
+/* NAV */
+.admin-nav{position:sticky;top:0;z-index:200;display:flex;align-items:center;gap:.5rem;flex-wrap:wrap;padding:.75rem 2rem;background:rgba(253,251,247,.96);backdrop-filter:blur(14px);border-bottom:2px solid var(--ink);box-shadow:0 3px 0 var(--orange);}
+.admin-brand{font-family:var(--fh);font-size:.9rem;font-weight:700;display:flex;align-items:center;gap:.5rem;margin-right:auto;text-decoration:none;color:var(--ink);}
+.admin-brand-mark{width:34px;height:34px;background:var(--ink);color:white;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:8.5px;font-weight:700;line-height:1.25;text-align:center;flex-shrink:0;}
+.tabs-row{display:flex;gap:.3rem;flex-wrap:wrap;}
+.a-tab{font-family:var(--fh);font-size:.8rem;font-weight:600;padding:.42rem .85rem;border-radius:7px;border:2px solid transparent;background:transparent;cursor:pointer;color:var(--ink);transition:.18s;white-space:nowrap;}
+.a-tab:hover{background:#fff0ee;border-color:var(--orange);color:var(--orange);}
+.a-tab.active{background:var(--ink);color:white;border-color:var(--ink);}
+.nav-front{font-family:var(--fh);font-size:.78rem;color:#9a8a7a;text-decoration:none;padding:.38rem .8rem;border-radius:7px;border:1.5px solid var(--grid);transition:.18s;white-space:nowrap;}
+.nav-front:hover{border-color:var(--blue);color:var(--blue);}
+.btn-logout{font-family:var(--fh);font-size:.78rem;font-weight:600;padding:.38rem .85rem;border-radius:7px;border:2px solid var(--grid);background:white;cursor:pointer;color:#9a8a7a;transition:.18s;}
+.btn-logout:hover{border-color:var(--orange);color:var(--orange);}
 
-/* ─── MAIN ─── */
-#dashboard > main { position:relative; z-index:1; padding:2.5rem 3rem; max-width:1120px; margin:0 auto; }
-.tab-panel { display:none; }
-.tab-panel.active { display:block; }
+/* MAIN */
+#dashboard>main{position:relative;z-index:1;padding:2.25rem 2.5rem;max-width:1120px;margin:0 auto;}
+.tab-panel{display:none;}.tab-panel.active{display:block;}
 
-/* ─── STATS ─── */
-.stats-row { display:flex; gap:1.25rem; margin-bottom:2.5rem; flex-wrap:wrap; }
-.stat-card {
-  flex:1; min-width:130px; background:white;
-  border:2px solid var(--ink); border-radius:14px; padding:1.2rem 1.5rem;
-  box-shadow:3px 4px 0 var(--ink);
-}
-.stat-num { font-family:var(--fh); font-size:2.2rem; font-weight:700; }
-.stat-lbl { font-size:.76rem; color:#9a8a7a; font-family:var(--fh); margin-top:.1rem; }
+/* STATS */
+.stats-row{display:flex;gap:1rem;margin-bottom:2rem;flex-wrap:wrap;}
+.stat-card{flex:1;min-width:120px;background:white;border:2px solid var(--ink);border-radius:13px;padding:1.1rem 1.4rem;box-shadow:3px 4px 0 var(--ink);}
+.stat-num{font-family:var(--fh);font-size:2rem;font-weight:700;}
+.stat-lbl{font-size:.74rem;color:#9a8a7a;font-family:var(--fh);margin-top:.1rem;}
 
-/* ─── SECTION TITLE ─── */
-.sec-title {
-  font-family:var(--fh); font-size:1.25rem; font-weight:700;
-  margin-bottom:1.25rem; padding-bottom:.55rem; border-bottom:2px solid var(--grid);
-}
+/* SEC TITLE */
+.sec-title{font-family:var(--fh);font-size:1.15rem;font-weight:700;margin-bottom:1.1rem;padding-bottom:.5rem;border-bottom:2px solid var(--grid);}
 
-/* ─── BOOKING CARDS ─── */
-.bk-list { display:flex; flex-direction:column; gap:1rem; }
-.bk-card {
-  background:white; border:2px solid var(--ink); border-radius:14px;
-  padding:1.35rem 1.75rem; box-shadow:3px 4px 0 var(--ink);
-  display:flex; align-items:flex-start; gap:1.5rem;
-}
-.bk-date-box {
-  flex-shrink:0; background:var(--yellow); border:2px solid var(--ink);
-  border-radius:10px; padding:.55rem .9rem; text-align:center; min-width:68px;
-  box-shadow:2px 3px 0 var(--ink);
-}
-.bk-date-m { font-family:var(--fh); font-size:.7rem; font-weight:700; }
-.bk-date-d { font-family:var(--fh); font-size:1.75rem; font-weight:700; line-height:1; }
-.bk-info { flex:1; min-width:0; }
-.bk-inst { font-family:var(--fh); font-size:1.05rem; font-weight:700; margin-bottom:.3rem; }
-.bk-meta { font-size:.81rem; color:#7a6c60; line-height:2; }
-.bk-meta span { display:inline-block; margin-right:1rem; }
-.bk-expect {
-  font-size:.81rem; color:#6a5c50; margin-top:.4rem; line-height:1.8;
-  padding:.45rem .7rem; background:#faf6f0; border-radius:7px; border:1px solid var(--grid);
-}
-.bk-time { font-size:.7rem; color:#ccc; font-family:var(--fh); margin-top:.45rem; }
-.btn-cancel {
-  flex-shrink:0; padding:.55rem 1.15rem;
-  background:white; color:var(--orange);
-  border:2px solid var(--orange); border-radius:8px;
-  font-family:var(--fh); font-size:.85rem; font-weight:700; cursor:pointer;
-  transition:.18s; white-space:nowrap; box-shadow:2px 3px 0 var(--orange);
-}
-.btn-cancel:hover { background:var(--orange); color:white; transform:translate(-1px,-1px); box-shadow:3px 4px 0 rgba(242,109,91,.4); }
-.bk-past { opacity:.55; }
-.empty-state { text-align:center; padding:4rem 2rem; color:#bbb; font-family:var(--fh); font-size:1.1rem; }
-.empty-icon { font-size:3rem; display:block; margin-bottom:.75rem; }
+/* BOOKING */
+.bk-list{display:flex;flex-direction:column;gap:.9rem;}
+.bk-card{background:white;border:2px solid var(--ink);border-radius:13px;padding:1.25rem 1.6rem;box-shadow:3px 4px 0 var(--ink);display:flex;align-items:flex-start;gap:1.25rem;}
+.bk-date-box{flex-shrink:0;background:var(--yellow);border:2px solid var(--ink);border-radius:9px;padding:.5rem .8rem;text-align:center;min-width:64px;box-shadow:2px 3px 0 var(--ink);}
+.bk-date-m{font-family:var(--fh);font-size:.66rem;font-weight:700;}
+.bk-date-d{font-family:var(--fh);font-size:1.65rem;font-weight:700;line-height:1;}
+.bk-info{flex:1;min-width:0;}
+.bk-inst{font-family:var(--fh);font-size:1rem;font-weight:700;margin-bottom:.25rem;}
+.bk-meta{font-size:.79rem;color:#7a6c60;line-height:2;}
+.bk-meta span{display:inline-block;margin-right:.9rem;}
+.bk-expect{font-size:.79rem;color:#6a5c50;margin-top:.35rem;line-height:1.7;padding:.4rem .65rem;background:#faf6f0;border-radius:6px;border:1px solid var(--grid);}
+.bk-time{font-size:.68rem;color:#ccc;font-family:var(--fh);margin-top:.4rem;}
+.btn-cancel{flex-shrink:0;padding:.5rem 1rem;background:white;color:var(--orange);border:2px solid var(--orange);border-radius:7px;font-family:var(--fh);font-size:.82rem;font-weight:700;cursor:pointer;transition:.18s;white-space:nowrap;box-shadow:2px 3px 0 var(--orange);}
+.btn-cancel:hover{background:var(--orange);color:white;transform:translate(-1px,-1px);}
+.bk-past{opacity:.55;}
+.empty-state{text-align:center;padding:3.5rem 2rem;color:#bbb;font-family:var(--fh);font-size:1rem;}
+.empty-icon{font-size:2.5rem;display:block;margin-bottom:.6rem;}
 
-/* ─── EDITOR SECTIONS ─── */
-.editor-box {
-  background:white; border:2px solid var(--ink); border-radius:16px;
-  padding:1.75rem 2rem; box-shadow:4px 5px 0 var(--ink); margin-bottom:2rem;
-}
-.editor-box-title {
-  font-family:var(--fh); font-size:1.05rem; font-weight:700;
-  margin-bottom:1.5rem; display:flex; align-items:center; gap:.6rem;
-}
-.e-badge {
-  font-size:.68rem; font-weight:700; padding:.15rem .6rem; border-radius:4px;
-  background:var(--yellow); color:var(--ink); border:1.5px solid var(--ink); letter-spacing:.06em;
-}
-.slide-item, .lect-item {
-  border:1.5px solid var(--grid); border-radius:10px;
-  padding:1.25rem; margin-bottom:1rem; background:var(--bg);
-}
-.item-num {
-  font-family:var(--fh); font-size:.72rem; font-weight:700;
-  color:var(--orange); letter-spacing:.1em; margin-bottom:.85rem;
-}
-.ef { display:flex; flex-direction:column; gap:.3rem; margin-bottom:.75rem; }
-.ef label { font-family:var(--fh); font-size:.76rem; font-weight:600; letter-spacing:.04em; }
-.ef input, .ef textarea {
-  border:1.5px solid var(--grid); border-radius:7px; padding:.55rem .8rem;
-  font-family:var(--fb); font-size:.88rem; color:var(--ink); background:white;
-  outline:none; transition:border-color .2s; width:100%;
-}
-.ef input:focus, .ef textarea:focus { border-color:var(--orange); }
-.ef textarea { resize:vertical; min-height:78px; }
-.photo-row { display:flex; gap:.65rem; align-items:center; }
-.photo-row .ef { flex:1; margin-bottom:0; }
-.photo-prev {
-  width:76px; height:54px; border-radius:8px; border:1.5px solid var(--grid);
-  object-fit:cover; background:#f3ede4; flex-shrink:0;
-}
-.btn-upload {
-  padding:.5rem .9rem; background:var(--bg); color:var(--ink);
-  border:1.5px solid var(--grid); border-radius:7px;
-  font-family:var(--fh); font-size:.76rem; font-weight:600;
-  cursor:pointer; transition:.18s; white-space:nowrap; display:inline-block;
-}
-.btn-upload:hover { border-color:var(--orange); color:var(--orange); }
-.two-col { display:grid; grid-template-columns:1fr 1fr; gap:.75rem; }
-.save-row { display:flex; align-items:center; justify-content:flex-end; gap:1rem; margin-top:1.1rem; }
-.save-toast {
-  font-family:var(--fh); font-size:.85rem; color:var(--green); font-weight:600;
-  display:flex; align-items:center; gap:.3rem; opacity:0; transition:opacity .3s;
-}
-.save-toast.show { opacity:1; }
-.btn-save {
-  padding:.65rem 1.85rem; background:var(--ink); color:white;
-  border:none; border-radius:9px; font-family:var(--fh); font-size:.95rem; font-weight:700;
-  cursor:pointer; box-shadow:3px 3px 0 var(--orange); transition:.18s;
-}
-.btn-save:hover { transform:translate(-1px,-1px); box-shadow:4px 4px 0 var(--orange); }
+/* EDITOR BOX */
+.editor-box{background:white;border:2px solid var(--ink);border-radius:15px;padding:1.6rem 1.85rem;box-shadow:4px 5px 0 var(--ink);margin-bottom:1.75rem;}
+.editor-box-title{font-family:var(--fh);font-size:1rem;font-weight:700;margin-bottom:1.35rem;display:flex;align-items:center;gap:.55rem;}
+.e-badge{font-size:.66rem;font-weight:700;padding:.14rem .55rem;border-radius:4px;background:var(--yellow);color:var(--ink);border:1.5px solid var(--ink);letter-spacing:.06em;}
+.item-card{border:1.5px solid var(--grid);border-radius:9px;padding:1.1rem 1.2rem;margin-bottom:.9rem;background:var(--bg);position:relative;}
+.item-num{font-family:var(--fh);font-size:.68rem;font-weight:700;color:var(--orange);letter-spacing:.1em;margin-bottom:.75rem;}
+.ef{display:flex;flex-direction:column;gap:.28rem;margin-bottom:.65rem;}
+.ef label{font-family:var(--fh);font-size:.74rem;font-weight:600;letter-spacing:.03em;}
+.ef input,.ef textarea,.ef select{border:1.5px solid var(--grid);border-radius:6px;padding:.5rem .75rem;font-family:var(--fb);font-size:.86rem;color:var(--ink);background:white;outline:none;transition:border-color .2s;width:100%;}
+.ef input:focus,.ef textarea:focus,.ef select:focus{border-color:var(--orange);}
+.ef textarea{resize:vertical;min-height:72px;}
+.ef select{font-family:var(--fh);cursor:pointer;}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:.65rem;}
+.three-col{display:grid;grid-template-columns:1fr 1fr 1fr;gap:.65rem;}
+.photo-row{display:flex;gap:.55rem;align-items:center;}
+.photo-row .ef{flex:1;margin-bottom:0;}
+.photo-prev{width:68px;height:50px;border-radius:7px;border:1.5px solid var(--grid);object-fit:cover;background:#f3ede4;flex-shrink:0;}
+.btn-upload{padding:.44rem .8rem;background:var(--bg);color:var(--ink);border:1.5px solid var(--grid);border-radius:6px;font-family:var(--fh);font-size:.73rem;font-weight:600;cursor:pointer;transition:.18s;white-space:nowrap;display:inline-block;}
+.btn-upload:hover{border-color:var(--orange);color:var(--orange);}
+.save-row{display:flex;align-items:center;justify-content:flex-end;gap:.85rem;margin-top:1rem;}
+.save-toast{font-family:var(--fh);font-size:.82rem;color:var(--green);font-weight:600;opacity:0;transition:opacity .3s;}
+.save-toast.show{opacity:1;}
+.btn-save{padding:.6rem 1.65rem;background:var(--ink);color:white;border:none;border-radius:8px;font-family:var(--fh);font-size:.9rem;font-weight:700;cursor:pointer;box-shadow:3px 3px 0 var(--orange);transition:.18s;}
+.btn-save:hover{transform:translate(-1px,-1px);box-shadow:4px 4px 0 var(--orange);}
+.btn-add{display:inline-flex;align-items:center;gap:.4rem;padding:.5rem 1.1rem;background:white;color:var(--ink);border:2px solid var(--grid);border-radius:8px;font-family:var(--fh);font-size:.82rem;font-weight:600;cursor:pointer;transition:.18s;margin-bottom:1rem;}
+.btn-add:hover{border-color:var(--green);color:var(--green);}
+.btn-del{position:absolute;top:.7rem;right:.7rem;width:26px;height:26px;background:white;border:1.5px solid var(--grid);border-radius:6px;cursor:pointer;font-size:.85rem;display:flex;align-items:center;justify-content:center;transition:.18s;}
+.btn-del:hover{background:var(--orange);border-color:var(--orange);color:white;}
+.course-items-ed{display:flex;flex-direction:column;gap:.5rem;margin-top:.5rem;}
+.ci-row{display:flex;gap:.5rem;align-items:flex-start;}
+.ci-row input{flex:0 0 34%;font-size:.82rem;}
+.ci-row textarea{flex:1;min-height:50px;font-size:.82rem;}
+.ci-row .btn-del{position:static;width:28px;height:28px;flex-shrink:0;margin-top:.25rem;}
+.btn-add-item{font-family:var(--fh);font-size:.75rem;font-weight:600;color:var(--blue);background:transparent;border:none;cursor:pointer;padding:.25rem 0;display:inline-flex;align-items:center;gap:.3rem;}
+.btn-add-item:hover{text-decoration:underline;}
 
-/* responsive */
-@media(max-width:768px) {
-  #dashboard > main { padding:1.5rem 1rem; }
-  .bk-card { flex-direction:column; gap:.75rem; }
-  .btn-cancel { width:100%; }
-  .two-col { grid-template-columns:1fr; }
-  .admin-nav { padding:.7rem 1rem; }
+@media(max-width:768px){
+  #dashboard>main{padding:1.25rem .9rem;}
+  .bk-card{flex-direction:column;gap:.65rem;}
+  .btn-cancel{width:100%;}
+  .two-col,.three-col{grid-template-columns:1fr;}
+  .admin-nav{padding:.65rem 1rem;}
+  .tabs-row{gap:.2rem;}
+  .a-tab{font-size:.72rem;padding:.36rem .65rem;}
 }
 </style>
 </head>
 <body>
 
-<!-- ══ LOGIN ══ -->
+<!-- LOGIN -->
 <div id="login-wrap">
   <div class="login-card">
     <div class="login-badge">ADMIN PANEL</div>
     <h1 class="login-title">後台管理系統</h1>
     <p class="login-sub">社團法人臺灣科技與社會工作協會</p>
     <form id="login-form" autocomplete="on">
-      <div class="lf">
-        <label>帳號</label>
-        <input type="text" id="u" autocomplete="username" placeholder="請輸入帳號">
-      </div>
-      <div class="lf">
-        <label>密碼</label>
-        <input type="password" id="p" autocomplete="current-password" placeholder="請輸入密碼">
-      </div>
+      <div class="lf"><label>帳號</label><input type="text" id="u" autocomplete="username" placeholder="請輸入帳號"></div>
+      <div class="lf"><label>密碼</label><input type="password" id="p" autocomplete="current-password" placeholder="請輸入密碼"></div>
       <p class="login-err" id="login-err"></p>
       <button type="submit" class="btn-login">登入後台 →</button>
     </form>
   </div>
 </div>
 
-<!-- ══ DASHBOARD ══ -->
+<!-- DASHBOARD -->
 <div id="dashboard" style="display:none;">
   <nav class="admin-nav">
     <a class="admin-brand" href="#">
-      <div class="admin-brand-mark">後台<br>管理</div>
-      科技與社會工作協會
+      <div class="admin-brand-mark">後台<br>管理</div>科技與社會工作協會
     </a>
-    <div class="admin-tabs">
+    <div class="tabs-row">
       <button class="a-tab active" data-tab="bookings">📋 預約管理</button>
-      <button class="a-tab" data-tab="content">✏️ 內容管理</button>
+      <button class="a-tab" data-tab="milestones">🏠 協會介紹</button>
+      <button class="a-tab" data-tab="news">📰 最新動態</button>
+      <button class="a-tab" data-tab="team">👥 核心團隊</button>
+      <button class="a-tab" data-tab="members">👤 全體成員</button>
+      <button class="a-tab" data-tab="courses">📚 課程簡介</button>
+      <button class="a-tab" data-tab="lecturers">👩‍🏫 講師管理</button>
+      <button class="a-tab" data-tab="settings">⚙️ 設定</button>
     </div>
-    <a class="nav-front" href="index.html" target="_blank">檢視前台 ↗</a>
+    <a class="nav-front" href="index.html" target="_blank">前台 ↗</a>
     <button class="btn-logout" onclick="doLogout()">登出</button>
   </nav>
 
   <main>
 
-    <!-- ── 預約管理 ── -->
+    <!-- ① 預約管理 -->
     <div class="tab-panel active" id="tab-bookings">
       <div class="stats-row" id="stats-row"></div>
       <div class="sec-title">預約記錄</div>
       <div class="bk-list" id="bk-list"></div>
     </div>
 
-    <!-- ── 內容管理 ── -->
-    <div class="tab-panel" id="tab-content">
-
-      <!-- 協會介紹投影片 -->
+    <!-- ② 協會介紹 -->
+    <div class="tab-panel" id="tab-milestones">
       <div class="editor-box">
-        <div class="editor-box-title">
-          協會介紹投影片
-          <span class="e-badge">MILESTONES</span>
-        </div>
+        <div class="editor-box-title">協會介紹投影片 <span class="e-badge">MILESTONES</span></div>
         <div id="slides-ed"></div>
-        <div class="save-row">
-          <span class="save-toast" id="t-slides">✓ 已儲存</span>
-          <button class="btn-save" onclick="saveSlides()">儲存變更</button>
-        </div>
+        <div class="save-row"><span class="save-toast" id="t-slides">✓ 已儲存</span><button class="btn-save" onclick="saveSlides()">儲存變更</button></div>
       </div>
+    </div>
 
-      <!-- 授課講師 -->
+    <!-- ③ 最新動態 -->
+    <div class="tab-panel" id="tab-news">
       <div class="editor-box">
-        <div class="editor-box-title">
-          授課講師資訊
-          <span class="e-badge">LECTURERS</span>
-        </div>
+        <div class="editor-box-title">最新動態與消息 <span class="e-badge">NEWS</span></div>
+        <button class="btn-add" onclick="addNews()">＋ 新增消息</button>
+        <div id="news-ed"></div>
+        <div class="save-row"><span class="save-toast" id="t-news">✓ 已儲存</span><button class="btn-save" onclick="saveNews()">儲存變更</button></div>
+      </div>
+    </div>
+
+    <!-- ④ 核心團隊 -->
+    <div class="tab-panel" id="tab-team">
+      <div class="editor-box">
+        <div class="editor-box-title">核心團隊成員 <span class="e-badge">CORE TEAM</span></div>
+        <button class="btn-add" onclick="addTeam()">＋ 新增成員</button>
+        <div id="team-ed"></div>
+        <div class="save-row"><span class="save-toast" id="t-team">✓ 已儲存</span><button class="btn-save" onclick="saveTeam()">儲存變更</button></div>
+      </div>
+    </div>
+
+    <!-- ⑤ 全體成員 -->
+    <div class="tab-panel" id="tab-members">
+      <div class="editor-box">
+        <div class="editor-box-title">全體成員 <span class="e-badge">ALL MEMBERS</span></div>
+        <button class="btn-add" onclick="addMember()">＋ 新增成員</button>
+        <div id="members-ed"></div>
+        <div class="save-row"><span class="save-toast" id="t-members">✓ 已儲存</span><button class="btn-save" onclick="saveMembers()">儲存變更</button></div>
+      </div>
+    </div>
+
+    <!-- ⑥ 課程簡介 -->
+    <div class="tab-panel" id="tab-courses">
+      <div class="editor-box">
+        <div class="editor-box-title">課程簡介與大綱 <span class="e-badge">COURSES</span></div>
+        <button class="btn-add" onclick="addCourse()">＋ 新增課程卡片</button>
+        <div id="courses-ed"></div>
+        <div class="save-row"><span class="save-toast" id="t-courses">✓ 已儲存</span><button class="btn-save" onclick="saveCourses()">儲存變更</button></div>
+      </div>
+    </div>
+
+    <!-- ⑦ 講師管理 -->
+    <div class="tab-panel" id="tab-lecturers">
+      <div class="editor-box">
+        <div class="editor-box-title">授課講師資訊 <span class="e-badge">LECTURERS</span></div>
         <div id="lect-ed"></div>
-        <div class="save-row">
-          <span class="save-toast" id="t-lect">✓ 已儲存</span>
-          <button class="btn-save" onclick="saveLecturers()">儲存變更</button>
-        </div>
+        <div class="save-row"><span class="save-toast" id="t-lect">✓ 已儲存</span><button class="btn-save" onclick="saveLecturers()">儲存變更</button></div>
       </div>
+    </div>
 
-      <!-- 基本設定 -->
+    <!-- ⑧ 基本設定 -->
+    <div class="tab-panel" id="tab-settings">
       <div class="editor-box">
-        <div class="editor-box-title">
-          基本設定
-          <span class="e-badge">SETTINGS</span>
-        </div>
+        <div class="editor-box-title">基本設定 <span class="e-badge">SETTINGS</span></div>
         <div class="two-col">
-          <div class="ef">
-            <label>聯絡 Email</label>
-            <input type="email" id="cfg-email" placeholder="tatswin2022@gmail.com">
-          </div>
-          <div class="ef">
-            <label>聯絡電話</label>
-            <input type="tel" id="cfg-phone" placeholder="+886-2-0000-0000">
-          </div>
+          <div class="ef"><label>聯絡 Email</label><input type="email" id="cfg-email" placeholder="tatswin2022@gmail.com"></div>
+          <div class="ef"><label>聯絡電話</label><input type="tel" id="cfg-phone" placeholder="+886-2-0000-0000"></div>
         </div>
-        <div class="save-row">
-          <span class="save-toast" id="t-cfg">✓ 已儲存</span>
-          <button class="btn-save" onclick="saveCfg()">儲存變更</button>
-        </div>
+        <div class="save-row"><span class="save-toast" id="t-cfg">✓ 已儲存</span><button class="btn-save" onclick="saveCfg()">儲存變更</button></div>
       </div>
+    </div>
 
-    </div><!-- /tab-content -->
   </main>
-</div><!-- /dashboard -->
+</div>
 
 <script>
-/* ════════ AUTH ════════ */
-const CRED = { u:'admin', p:'tatswin2024' };
+/* ═══ AUTH ═══ */
+const CRED={u:'admin',p:'tatswin2024'};
+if(sessionStorage.getItem('admin_ok')==='1') showDash();
 
-(function () {
-  if (sessionStorage.getItem('admin_ok') === '1') showDash();
-})();
-
-document.getElementById('login-form').addEventListener('submit', function (e) {
+document.getElementById('login-form').addEventListener('submit',function(e){
   e.preventDefault();
-  const u = document.getElementById('u').value.trim();
-  const p = document.getElementById('p').value;
-  if (u === CRED.u && p === CRED.p) {
-    sessionStorage.setItem('admin_ok', '1');
-    showDash();
+  if(document.getElementById('u').value.trim()===CRED.u && document.getElementById('p').value===CRED.p){
+    sessionStorage.setItem('admin_ok','1'); showDash();
   } else {
-    document.getElementById('login-err').textContent = '帳號或密碼錯誤，請重試';
-    document.getElementById('p').value = '';
+    document.getElementById('login-err').textContent='帳號或密碼錯誤，請重試';
+    document.getElementById('p').value='';
   }
 });
-
-function showDash() {
-  document.getElementById('login-wrap').style.display = 'none';
-  document.getElementById('dashboard').style.display = 'block';
-  renderBookings();
-  renderSlides();
-  renderLecturers();
-  loadCfg();
+function showDash(){
+  document.getElementById('login-wrap').style.display='none';
+  document.getElementById('dashboard').style.display='block';
+  renderBookings(); renderSlides(); renderNews(); renderTeam(); renderMembers(); renderCourses(); renderLecturers(); loadCfg();
 }
+function doLogout(){sessionStorage.removeItem('admin_ok');location.reload();}
 
-function doLogout() {
-  sessionStorage.removeItem('admin_ok');
-  location.reload();
-}
+/* ═══ TABS ═══ */
+document.querySelectorAll('.a-tab').forEach(t=>t.addEventListener('click',()=>{
+  document.querySelectorAll('.a-tab').forEach(x=>x.classList.remove('active'));
+  document.querySelectorAll('.tab-panel').forEach(x=>x.classList.remove('active'));
+  t.classList.add('active');
+  document.getElementById('tab-'+t.dataset.tab).classList.add('active');
+}));
 
-/* ════════ TABS ════════ */
-document.querySelectorAll('.a-tab').forEach(tab => {
-  tab.addEventListener('click', () => {
-    document.querySelectorAll('.a-tab').forEach(t => t.classList.remove('active'));
-    document.querySelectorAll('.tab-panel').forEach(t => t.classList.remove('active'));
-    tab.classList.add('active');
-    document.getElementById('tab-' + tab.dataset.tab).classList.add('active');
-  });
-});
+/* ═══ UTIL ═══ */
+const MZ=['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'];
+function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+function sc(){return JSON.parse(localStorage.getItem('siteContent')||'{}');}
+function saveSC(obj){localStorage.setItem('siteContent',JSON.stringify(obj));}
+function toast(id){const el=document.getElementById(id);el.classList.add('show');setTimeout(()=>el.classList.remove('show'),2500);}
+function upload(e,cb){const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=ev=>cb(ev.target.result);r.readAsDataURL(f);}
 
-/* ════════ BOOKINGS ════════ */
-const MZ = ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'];
+const CLR_OPTS=`<option value="orange">橘色</option><option value="blue">藍色</option><option value="green">綠色</option><option value="yellow">黃色</option>`;
 
-function renderBookings() {
-  const all = JSON.parse(localStorage.getItem('bookings') || '[]')
-    .sort((a, b) => a.date.localeCompare(b.date));
-  const today = new Date().toISOString().slice(0, 10);
-  const upcoming = all.filter(b => b.date >= today);
-
-  document.getElementById('stats-row').innerHTML = `
-    <div class="stat-card">
-      <div class="stat-num">${all.length}</div>
-      <div class="stat-lbl">總預約數</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-num" style="color:var(--blue);">${upcoming.length}</div>
-      <div class="stat-lbl">即將到來</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-num" style="color:var(--green);">${all.length - upcoming.length}</div>
-      <div class="stat-lbl">已完成</div>
+/* ═══ BOOKINGS ═══ */
+function renderBookings(){
+  const all=JSON.parse(localStorage.getItem('bookings')||'[]').sort((a,b)=>a.date.localeCompare(b.date));
+  const today=new Date().toISOString().slice(0,10);
+  const up=all.filter(b=>b.date>=today);
+  document.getElementById('stats-row').innerHTML=`
+    <div class="stat-card"><div class="stat-num">${all.length}</div><div class="stat-lbl">總預約數</div></div>
+    <div class="stat-card"><div class="stat-num" style="color:var(--blue);">${up.length}</div><div class="stat-lbl">即將到來</div></div>
+    <div class="stat-card"><div class="stat-num" style="color:var(--green);">${all.length-up.length}</div><div class="stat-lbl">已完成</div></div>`;
+  const list=document.getElementById('bk-list');
+  if(!all.length){list.innerHTML='<div class="empty-state"><span class="empty-icon">📭</span>目前尚無預約記錄</div>';return;}
+  list.innerHTML=all.map(b=>{
+    const dt=new Date(b.date+'T00:00:00');
+    return `<div class="bk-card${b.date<today?' bk-past':''}">
+      <div class="bk-date-box"><div class="bk-date-m">${MZ[dt.getMonth()]}</div><div class="bk-date-d">${dt.getDate()}</div></div>
+      <div class="bk-info">
+        <div class="bk-inst">${esc(b.institution)}</div>
+        <div class="bk-meta"><span>⏱ ${esc(b.hours)} 小時</span><span>📍 ${esc(b.location)}</span><span>📞 ${esc(b.phone)}</span><span>✉ ${esc(b.email)}</span></div>
+        ${b.expectations?`<div class="bk-expect">${esc(b.expectations)}</div>`:''}
+        <div class="bk-time">預約時間：${new Date(b.bookedAt).toLocaleString('zh-TW')}</div>
+      </div>
+      <button class="btn-cancel" onclick="cancelBooking('${b.id}')">取消預約</button>
     </div>`;
-
-  const list = document.getElementById('bk-list');
-  if (!all.length) {
-    list.innerHTML = '<div class="empty-state"><span class="empty-icon">📭</span>目前尚無預約記錄</div>';
-    return;
-  }
-  list.innerHTML = all.map(b => {
-    const dt = new Date(b.date + 'T00:00:00');
-    const past = b.date < today;
-    return `
-      <div class="bk-card${past ? ' bk-past' : ''}">
-        <div class="bk-date-box">
-          <div class="bk-date-m">${MZ[dt.getMonth()]}</div>
-          <div class="bk-date-d">${dt.getDate()}</div>
-        </div>
-        <div class="bk-info">
-          <div class="bk-inst">${esc(b.institution)}</div>
-          <div class="bk-meta">
-            <span>⏱ ${esc(b.hours)} 小時</span>
-            <span>📍 ${esc(b.location)}</span>
-            <span>📞 ${esc(b.phone)}</span>
-            <span>✉ ${esc(b.email)}</span>
-          </div>
-          ${b.expectations ? `<div class="bk-expect">${esc(b.expectations)}</div>` : ''}
-          <div class="bk-time">預約時間：${new Date(b.bookedAt).toLocaleString('zh-TW')}</div>
-        </div>
-        <button class="btn-cancel" onclick="cancelBooking('${b.id}')">取消預約</button>
-      </div>`;
   }).join('');
 }
-
-function cancelBooking(id) {
-  if (!confirm('確定要取消此預約？取消後該日期將重新開放預約。')) return;
-  let all = JSON.parse(localStorage.getItem('bookings') || '[]');
-  all = all.filter(b => b.id !== id);
-  localStorage.setItem('bookings', JSON.stringify(all));
+function cancelBooking(id){
+  if(!confirm('確定取消此預約？取消後該日期將重新開放預約。'))return;
+  let all=JSON.parse(localStorage.getItem('bookings')||'[]');
+  all=all.filter(b=>b.id!==id);
+  localStorage.setItem('bookings',JSON.stringify(all));
   renderBookings();
 }
 
-function esc(s) {
-  return String(s || '')
-    .replace(/&/g,'&amp;').replace(/</g,'&lt;')
-    .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-}
-
-/* ════════ SLIDES ════════ */
-const DEF_SLIDES = [
-  { title:'協會創立理念', body:'由一群對社會工作與科技充滿熱情的先行者共同創立，立志成為臺灣社工界數位轉型的推手，為社工師提供最前沿的科技應用知識與實務支持。', photo:'https://picsum.photos/seed/swk1/700/500' },
-  { title:'協會宗旨',     body:'推廣科技與社會工作相關領域之研究與實務應用，促進科技與社會工作之協力，並加強跨專業合作實務經驗與交流，共同推動台灣社工界的知識創新。', photo:'https://picsum.photos/seed/swk2/700/500' },
-  { title:'協會出版作品', body:'協會持續出版科技與社會工作相關學術著作及實務手冊，提供社工師最新的數位應用知識與工具，引領台灣社工界的知識創新與實務發展。',   photo:'https://picsum.photos/seed/swk3/700/500' },
+/* ═══ MILESTONES (協會介紹) ═══ */
+const DEF_SLIDES=[
+  {title:'協會創立理念',body:'由一群對社會工作與科技充滿熱情的先行者共同創立，立志成為臺灣社工界數位轉型的推手，為社工師提供最前沿的科技應用知識與實務支持。',photo:'https://picsum.photos/seed/swk1/700/500'},
+  {title:'協會宗旨',body:'推廣科技與社會工作相關領域之研究與實務應用，促進科技與社會工作之協力，並加強跨專業合作實務經驗與交流，共同推動台灣社工界的知識創新。',photo:'https://picsum.photos/seed/swk2/700/500'},
+  {title:'協會出版作品',body:'協會持續出版科技與社會工作相關學術著作及實務手冊，提供社工師最新的數位應用知識與工具，引領台灣社工界的知識創新與實務發展。',photo:'https://picsum.photos/seed/swk3/700/500'},
 ];
-
-function renderSlides() {
-  const saved = JSON.parse(localStorage.getItem('siteContent') || '{}');
-  const slides = saved.milestoneSlides || DEF_SLIDES;
-  document.getElementById('slides-ed').innerHTML = slides.map((s, i) => `
-    <div class="slide-item">
-      <div class="item-num">SLIDE ${i + 1}</div>
-      <div class="ef"><label>標題</label><input type="text" id="s-t-${i}" value="${esc(s.title)}"></div>
+function renderSlides(){
+  const slides=(sc().milestoneSlides||DEF_SLIDES);
+  document.getElementById('slides-ed').innerHTML=slides.map((s,i)=>`
+    <div class="item-card">
+      <div class="item-num">SLIDE ${i+1}</div>
+      <div class="ef"><label>標題</label><input id="s-t-${i}" value="${esc(s.title)}"></div>
       <div class="ef"><label>內文</label><textarea id="s-b-${i}" rows="3">${esc(s.body)}</textarea></div>
-      <div class="ef">
-        <label>照片</label>
+      <div class="ef"><label>照片</label>
         <div class="photo-row">
-          <div class="ef" style="margin-bottom:0;flex:1;">
-            <input type="text" id="s-p-${i}" value="${esc(s.photo)}" placeholder="圖片 URL 或上傳">
-          </div>
+          <div class="ef" style="margin-bottom:0;flex:1;"><input id="s-p-${i}" value="${esc(s.photo)}" placeholder="圖片 URL 或上傳" oninput="document.getElementById('s-img-${i}').src=this.value"></div>
           <img class="photo-prev" id="s-img-${i}" src="${s.photo}" alt="" onerror="this.style.opacity='.3'">
-          <label class="btn-upload">上傳照片<input type="file" accept="image/*" style="display:none" onchange="uploadSlidePhoto(event,${i})"></label>
+          <label class="btn-upload">上傳<input type="file" accept="image/*" style="display:none" onchange="upload(event,v=>{document.getElementById('s-p-${i}').value=v;document.getElementById('s-img-${i}').src=v;})"></label>
         </div>
       </div>
     </div>`).join('');
 }
-
-function uploadSlidePhoto(e, i) {
-  const f = e.target.files[0]; if (!f) return;
-  const r = new FileReader();
-  r.onload = ev => {
-    document.getElementById(`s-p-${i}`).value = ev.target.result;
-    document.getElementById(`s-img-${i}`).src = ev.target.result;
-  };
-  r.readAsDataURL(f);
+function saveSlides(){
+  const s=sc(); s.milestoneSlides=DEF_SLIDES.map((_,i)=>({title:document.getElementById(`s-t-${i}`).value,body:document.getElementById(`s-b-${i}`).value,photo:document.getElementById(`s-p-${i}`).value})); saveSC(s); toast('t-slides');
 }
 
-function saveSlides() {
-  const saved = JSON.parse(localStorage.getItem('siteContent') || '{}');
-  saved.milestoneSlides = DEF_SLIDES.map((_, i) => ({
-    title: document.getElementById(`s-t-${i}`).value,
-    body:  document.getElementById(`s-b-${i}`).value,
-    photo: document.getElementById(`s-p-${i}`).value,
-  }));
-  localStorage.setItem('siteContent', JSON.stringify(saved));
-  toast('t-slides');
-}
-
-/* ════════ LECTURERS ════════ */
-const DEF_LECT = [
-  { avatar:'👩‍🏫', tag:'理事長 · 社工師', name:'陳雅慧', role:'國立臺灣大學社工系教授',
-    skills:'AI 社工倫理,數位轉型實務,政策倡議,個案管理科技化',
-    bio:'擁有 20 年社工實務與教學經驗，長期關注科技融入社會服務的理論與實踐，曾多次受邀至立法院及衛福部進行政策諮詢。授課風格深入淺出，擅長以真實案例引導學員思考，學員評分均超過 4.7／5.0。' },
-  { avatar:'👨‍💻', tag:'技術總監 · 工程師', name:'林建宏', role:'前大廠 AI 研究員 · 台大資工碩士',
-    skills:'AI 工具實作,ChatGPT 應用,數據分析,自動化流程',
-    bio:'多年 AI 產業研發經歷，專注於將複雜的科技知識轉化為社工師能立即上手的實用技能。授課以「做中學」為核心，每場工作坊皆提供可帶走的工具模板，學員平均滿意度達 4.8／5.0。' },
+/* ═══ NEWS ═══ */
+const DEF_NEWS=[
+  {emoji:'🤖',caption:'AI 社工工具箱\n正式發佈',date:'2024.11',color:'orange'},
+  {emoji:'📚',caption:'科技 × 社工\n年度研討會',date:'2024.10',color:'blue'},
+  {emoji:'🌏',caption:'亞太社工大會\n臺灣代表團',date:'2024.09',color:'yellow'},
+  {emoji:'🎓',caption:'數位社工認證\n課程開班',date:'2024.08',color:'green'},
+  {emoji:'💡',caption:'AI 倫理白皮書\n正式發表',date:'2024.07',color:'orange'},
+  {emoji:'🤝',caption:'三方合作備忘錄\n正式簽署',date:'2024.06',color:'blue'},
+  {emoji:'📱',caption:'社工行動 App\nBeta 版上線',date:'2024.05',color:'yellow'},
 ];
+let newsData=[];
+function renderNews(){
+  newsData=[...(sc().news||DEF_NEWS)];
+  buildNewsUI();
+}
+function buildNewsUI(){
+  document.getElementById('news-ed').innerHTML=newsData.map((n,i)=>`
+    <div class="item-card">
+      <button class="btn-del" onclick="newsData.splice(${i},1);buildNewsUI()">✕</button>
+      <div class="item-num">消息 ${i+1}</div>
+      <div class="two-col">
+        <div class="ef"><label>Emoji / 圖示</label><input id="n-e-${i}" value="${esc(n.emoji||'')}"></div>
+        <div class="ef"><label>日期</label><input id="n-d-${i}" value="${esc(n.date)}"></div>
+      </div>
+      <div class="ef"><label>標題（換行用 \\n）</label><input id="n-c-${i}" value="${esc(n.caption)}"></div>
+      <div class="ef"><label>膠帶顏色</label><select id="n-col-${i}">${CLR_OPTS}</select></div>
+      <div class="ef"><label>照片（可選）</label>
+        <div class="photo-row">
+          <div class="ef" style="margin-bottom:0;flex:1;"><input id="n-p-${i}" value="${esc(n.photo||'')}" placeholder="圖片 URL 或上傳" oninput="document.getElementById('n-img-${i}').src=this.value"></div>
+          <img class="photo-prev" id="n-img-${i}" src="${n.photo||''}" alt="" style="${n.photo?'':'opacity:.2;'}">
+          <label class="btn-upload">上傳<input type="file" accept="image/*" style="display:none" onchange="upload(event,v=>{document.getElementById('n-p-${i}').value=v;document.getElementById('n-img-${i}').src=v;document.getElementById('n-img-${i}').style.opacity=1;})"></label>
+        </div>
+      </div>
+    </div>`).join('');
+  // Set select values
+  newsData.forEach((n,i)=>{const el=document.getElementById(`n-col-${i}`);if(el)el.value=n.color||'orange';});
+}
+function addNews(){newsData.push({emoji:'📢',caption:'新消息標題\n副標題',date:'2024.12',color:'orange',photo:''});buildNewsUI();}
+function saveNews(){
+  const s=sc();
+  s.news=newsData.map((_,i)=>({
+    emoji:document.getElementById(`n-e-${i}`).value,
+    caption:document.getElementById(`n-c-${i}`).value,
+    date:document.getElementById(`n-d-${i}`).value,
+    color:document.getElementById(`n-col-${i}`).value,
+    photo:document.getElementById(`n-p-${i}`).value,
+  }));
+  saveSC(s);newsData=[...s.news];buildNewsUI();toast('t-news');
+}
 
-function renderLecturers() {
-  const saved = JSON.parse(localStorage.getItem('siteContent') || '{}');
-  const lects = saved.lecturers || DEF_LECT;
-  document.getElementById('lect-ed').innerHTML = lects.map((l, i) => `
-    <div class="lect-item">
-      <div class="item-num">講師 ${i + 1}</div>
+/* ═══ CORE TEAM ═══ */
+const DEF_TEAM=[
+  {emoji:'👩‍💼',dept:'理事長',color:'orange',name:'陳雅慧',role:'社工師 · 理事長 · 社工系教授',bio:'擁有 20 年社工實務經驗，專長於科技融入社會服務的政策推動與教學設計。相信每一個科技工具，背後都應有溫暖的初心。'},
+  {emoji:'👨‍💻',dept:'技術部',color:'blue',  name:'林建宏',role:'資深工程師 · 技術總監',       bio:'畢業於台大資工所，前大廠 AI 研究員。深信科技不只是工具，更是連結人與人之間愛的橋樑。負責協會所有數位平台建置。'},
+  {emoji:'👩‍🔬',dept:'研究部',color:'green', name:'黃怡婷',role:'研究員 · AI 倫理專家',         bio:'專注於 AI 在社會福利領域的倫理研究，著有《數位社工的可能與邊界》，長期推動「以人為本的 AI 治理」政策倡議。'},
+];
+let teamData=[];
+function renderTeam(){teamData=[...(sc().coreTeam||DEF_TEAM)];buildTeamUI();}
+function buildTeamUI(){
+  document.getElementById('team-ed').innerHTML=teamData.map((m,i)=>`
+    <div class="item-card">
+      <button class="btn-del" onclick="teamData.splice(${i},1);buildTeamUI()">✕</button>
+      <div class="item-num">成員 ${i+1}</div>
+      <div class="two-col">
+        <div class="ef"><label>Emoji 頭像</label><input id="tm-e-${i}" value="${esc(m.emoji)}"></div>
+        <div class="ef"><label>部門標籤</label><input id="tm-dept-${i}" value="${esc(m.dept)}"></div>
+        <div class="ef"><label>姓名</label><input id="tm-n-${i}" value="${esc(m.name)}"></div>
+        <div class="ef"><label>顏色主題</label><select id="tm-col-${i}">${CLR_OPTS}</select></div>
+      </div>
+      <div class="ef"><label>職位</label><input id="tm-r-${i}" value="${esc(m.role)}"></div>
+      <div class="ef"><label>個人簡介</label><textarea id="tm-b-${i}" rows="3">${esc(m.bio)}</textarea></div>
+      <div class="ef"><label>照片（可選）</label>
+        <div class="photo-row">
+          <div class="ef" style="margin-bottom:0;flex:1;"><input id="tm-p-${i}" value="${esc(m.photo||'')}" placeholder="圖片 URL 或上傳" oninput="document.getElementById('tm-img-${i}').src=this.value"></div>
+          <img class="photo-prev" id="tm-img-${i}" src="${m.photo||''}" alt="" style="${m.photo?'':'opacity:.2;'}">
+          <label class="btn-upload">上傳<input type="file" accept="image/*" style="display:none" onchange="upload(event,v=>{document.getElementById('tm-p-${i}').value=v;document.getElementById('tm-img-${i}').src=v;})"></label>
+        </div>
+      </div>
+    </div>`).join('');
+  teamData.forEach((m,i)=>{const el=document.getElementById(`tm-col-${i}`);if(el)el.value=m.color||'orange';});
+}
+function addTeam(){teamData.push({emoji:'👤',dept:'部門',color:'blue',name:'新成員',role:'職位',bio:'簡介...',photo:''});buildTeamUI();}
+function saveTeam(){
+  const s=sc();
+  s.coreTeam=teamData.map((_,i)=>({
+    emoji:document.getElementById(`tm-e-${i}`).value,
+    dept:document.getElementById(`tm-dept-${i}`).value,
+    color:document.getElementById(`tm-col-${i}`).value,
+    name:document.getElementById(`tm-n-${i}`).value,
+    role:document.getElementById(`tm-r-${i}`).value,
+    bio:document.getElementById(`tm-b-${i}`).value,
+    photo:document.getElementById(`tm-p-${i}`).value,
+  }));
+  saveSC(s);teamData=[...s.coreTeam];buildTeamUI();toast('t-team');
+}
+
+/* ═══ ALL MEMBERS ═══ */
+const DEF_MEM=Array.from({length:18},()=>({emoji:'👤',name:'成員姓名',role:'職稱',title:'職稱',org:'現職單位',service:'服務單位職稱',contact:'聯絡方式',photo:''}));
+let memData=[];
+function renderMembers(){memData=[...(sc().members||DEF_MEM)];buildMembersUI();}
+function buildMembersUI(){
+  document.getElementById('members-ed').innerHTML=memData.map((m,i)=>`
+    <div class="item-card">
+      <button class="btn-del" onclick="memData.splice(${i},1);buildMembersUI()">✕</button>
+      <div class="item-num">成員 ${i+1}</div>
+      <div class="three-col">
+        <div class="ef"><label>Emoji</label><input id="mb-e-${i}" value="${esc(m.emoji||'👤')}"></div>
+        <div class="ef"><label>姓名</label><input id="mb-n-${i}" value="${esc(m.name)}"></div>
+        <div class="ef"><label>職稱</label><input id="mb-r-${i}" value="${esc(m.role)}"></div>
+      </div>
+      <div class="two-col">
+        <div class="ef"><label>現職單位</label><input id="mb-org-${i}" value="${esc(m.org||'')}"></div>
+        <div class="ef"><label>服務職稱</label><input id="mb-svc-${i}" value="${esc(m.service||'')}"></div>
+      </div>
+      <div class="ef"><label>聯絡方式</label><input id="mb-c-${i}" value="${esc(m.contact||'')}"></div>
+      <div class="ef"><label>照片（可選）</label>
+        <div class="photo-row">
+          <div class="ef" style="margin-bottom:0;flex:1;"><input id="mb-p-${i}" value="${esc(m.photo||'')}" placeholder="圖片 URL 或上傳"></div>
+          <img class="photo-prev" id="mb-img-${i}" src="${m.photo||''}" alt="" style="${m.photo?'':'opacity:.2;'}">
+          <label class="btn-upload">上傳<input type="file" accept="image/*" style="display:none" onchange="upload(event,v=>{document.getElementById('mb-p-${i}').value=v;document.getElementById('mb-img-${i}').src=v;})"></label>
+        </div>
+      </div>
+    </div>`).join('');
+}
+function addMember(){memData.push({emoji:'👤',name:'新成員',role:'職稱',title:'職稱',org:'',service:'',contact:'',photo:''});buildMembersUI();}
+function saveMembers(){
+  const s=sc();
+  s.members=memData.map((_,i)=>({
+    emoji:document.getElementById(`mb-e-${i}`).value,
+    name:document.getElementById(`mb-n-${i}`).value,
+    role:document.getElementById(`mb-r-${i}`).value,
+    title:document.getElementById(`mb-r-${i}`).value,
+    org:document.getElementById(`mb-org-${i}`).value,
+    service:document.getElementById(`mb-svc-${i}`).value,
+    contact:document.getElementById(`mb-c-${i}`).value,
+    photo:document.getElementById(`mb-p-${i}`).value,
+  }));
+  saveSC(s);memData=[...s.members];buildMembersUI();toast('t-members');
+}
+
+/* ═══ COURSES ═══ */
+const DEF_CRS=[
+  {tag:'培訓課程',color:'orange',rot:'-1.2deg',title:'繼續教育培訓課程',items:[{bold:'AI 工具實戰工作坊',text:'每月定期舉辦，手把手教您運用 ChatGPT、Copilot 等工具提升個案記錄效率。'},{bold:'數位社工認證課程',text:'系統性 40 小時課程，通過考核後頒發協會認證，可作繼續教育積分。'},{bold:'機構客製培訓',text:'可至貴單位辦理客製化內訓，依實際業務需求規劃課程。'}]},
+  {tag:'技術支援',color:'blue',  rot:'.8deg',  title:'數位工具技術支援',  items:[{bold:'免費諮詢服務',text:'會員每月可預約 2 次免費的數位工具導入諮詢，由技術專員一對一協助。'},{bold:'工具資源庫',text:'精選超過 80 款適合社工使用的免費或低成本數位工具，附中文操作指引。'}]},
+  {tag:'社群交流',color:'green', rot:'.5deg',  title:'專業社群與交流平台',items:[{bold:'會員專屬社群',text:'加入由 300+ 名社工師組成的 LINE 社群，分享經驗、互助解惑。'},{bold:'年度實體大會',text:'每年舉辦「科技社工年會」，邀請國內外講師分享最新趨勢。'},{bold:'研究發表平台',text:'協助會員發表研究成果，提供投稿資源與學術交流機會。'}]},
+  {tag:'倡議研究',color:'yellow',rot:'-0.6deg',title:'政策倡議與研究出版',items:[{bold:'AI 社工倫理指引',text:'每年更新發布，提供實務工作者清晰的使用規範與案例參考。'},{bold:'政府政策參與',text:'定期出席立法院及衛福部諮詢會議，代表社工師為 AI 相關政策發聲。'}]},
+];
+let crsData=[];
+function renderCourses(){crsData=JSON.parse(JSON.stringify(sc().courses||DEF_CRS));buildCoursesUI();}
+function buildCoursesUI(){
+  document.getElementById('courses-ed').innerHTML=crsData.map((c,i)=>`
+    <div class="item-card">
+      <button class="btn-del" onclick="crsData.splice(${i},1);buildCoursesUI()">✕</button>
+      <div class="item-num">課程卡片 ${i+1}</div>
+      <div class="three-col">
+        <div class="ef"><label>分類標籤</label><input id="cr-tag-${i}" value="${esc(c.tag)}"></div>
+        <div class="ef"><label>顏色主題</label><select id="cr-col-${i}">${CLR_OPTS}</select></div>
+        <div class="ef"><label>傾斜角度</label><input id="cr-rot-${i}" value="${esc(c.rot)}" placeholder="-1.2deg"></div>
+      </div>
+      <div class="ef"><label>課程標題</label><input id="cr-tit-${i}" value="${esc(c.title)}"></div>
+      <div style="margin-top:.5rem;">
+        <div style="font-family:var(--fh);font-size:.74rem;font-weight:600;margin-bottom:.4rem;">課程項目</div>
+        <div class="course-items-ed" id="cr-items-${i}"></div>
+        <button class="btn-add-item" onclick="crsData[${i}].items.push({bold:'項目名稱',text:'說明文字...'});buildCoursesUI()">＋ 新增項目</button>
+      </div>
+    </div>`).join('');
+  crsData.forEach((c,i)=>{
+    const el=document.getElementById(`cr-col-${i}`);if(el)el.value=c.color||'orange';
+    const itemsEl=document.getElementById(`cr-items-${i}`);
+    if(itemsEl)itemsEl.innerHTML=c.items.map((it,j)=>`
+      <div class="ci-row">
+        <input id="cr-ib-${i}-${j}" value="${esc(it.bold)}" placeholder="粗體標題">
+        <textarea id="cr-it-${i}-${j}" rows="2">${esc(it.text)}</textarea>
+        <button class="btn-del" onclick="crsData[${i}].items.splice(${j},1);buildCoursesUI()">✕</button>
+      </div>`).join('');
+  });
+}
+function addCourse(){crsData.push({tag:'新課程',color:'orange',rot:'0deg',title:'課程標題',items:[{bold:'項目名稱',text:'說明文字...'}]});buildCoursesUI();}
+function saveCourses(){
+  const s=sc();
+  s.courses=crsData.map((c,i)=>({
+    tag:document.getElementById(`cr-tag-${i}`).value,
+    color:document.getElementById(`cr-col-${i}`).value,
+    rot:document.getElementById(`cr-rot-${i}`).value,
+    title:document.getElementById(`cr-tit-${i}`).value,
+    items:c.items.map((_,j)=>({
+      bold:document.getElementById(`cr-ib-${i}-${j}`).value,
+      text:document.getElementById(`cr-it-${i}-${j}`).value,
+    })),
+  }));
+  saveSC(s);crsData=JSON.parse(JSON.stringify(s.courses));buildCoursesUI();toast('t-courses');
+}
+
+/* ═══ LECTURERS ═══ */
+const DEF_LECT=[
+  {avatar:'👩‍🏫',tag:'理事長 · 社工師',name:'陳雅慧',role:'國立臺灣大學社工系教授',skills:'AI 社工倫理,數位轉型實務,政策倡議,個案管理科技化',bio:'擁有 20 年社工實務與教學經驗，長期關注科技融入社會服務的理論與實踐，曾多次受邀至立法院及衛福部進行政策諮詢。授課風格深入淺出，擅長以真實案例引導學員思考，學員評分均超過 4.7／5.0。'},
+  {avatar:'👨‍💻',tag:'技術總監 · 工程師',name:'林建宏',role:'前大廠 AI 研究員 · 台大資工碩士',skills:'AI 工具實作,ChatGPT 應用,數據分析,自動化流程',bio:'多年 AI 產業研發經歷，專注於將複雜的科技知識轉化為社工師能立即上手的實用技能。授課以「做中學」為核心，每場工作坊皆提供可帶走的工具模板，學員平均滿意度達 4.8／5.0。'},
+];
+function renderLecturers(){
+  const lects=sc().lecturers||DEF_LECT;
+  document.getElementById('lect-ed').innerHTML=lects.map((l,i)=>`
+    <div class="item-card">
+      <div class="item-num">講師 ${i+1}</div>
       <div class="two-col">
         <div class="ef"><label>頭像 Emoji</label><input id="l-a-${i}" value="${esc(l.avatar)}"></div>
         <div class="ef"><label>標籤</label><input id="l-g-${i}" value="${esc(l.tag)}"></div>
@@ -505,44 +549,22 @@ function renderLecturers() {
       <div class="ef"><label>個人簡介</label><textarea id="l-b-${i}" rows="3">${esc(l.bio)}</textarea></div>
     </div>`).join('');
 }
-
-function saveLecturers() {
-  const saved = JSON.parse(localStorage.getItem('siteContent') || '{}');
-  saved.lecturers = DEF_LECT.map((_, i) => ({
-    avatar: document.getElementById(`l-a-${i}`).value,
-    tag:    document.getElementById(`l-g-${i}`).value,
-    name:   document.getElementById(`l-n-${i}`).value,
-    role:   document.getElementById(`l-r-${i}`).value,
-    skills: document.getElementById(`l-s-${i}`).value,
-    bio:    document.getElementById(`l-b-${i}`).value,
+function saveLecturers(){
+  const s=sc();
+  s.lecturers=DEF_LECT.map((_,i)=>({
+    avatar:document.getElementById(`l-a-${i}`).value,
+    tag:document.getElementById(`l-g-${i}`).value,
+    name:document.getElementById(`l-n-${i}`).value,
+    role:document.getElementById(`l-r-${i}`).value,
+    skills:document.getElementById(`l-s-${i}`).value,
+    bio:document.getElementById(`l-b-${i}`).value,
   }));
-  localStorage.setItem('siteContent', JSON.stringify(saved));
-  toast('t-lect');
+  saveSC(s);toast('t-lect');
 }
 
-/* ════════ CONFIG ════════ */
-function loadCfg() {
-  const cfg = (JSON.parse(localStorage.getItem('siteContent') || '{}').config) || {};
-  document.getElementById('cfg-email').value = cfg.email || 'tatswin2022@gmail.com';
-  document.getElementById('cfg-phone').value = cfg.phone || '+886-2-0000-0000';
-}
-
-function saveCfg() {
-  const saved = JSON.parse(localStorage.getItem('siteContent') || '{}');
-  saved.config = {
-    email: document.getElementById('cfg-email').value,
-    phone: document.getElementById('cfg-phone').value,
-  };
-  localStorage.setItem('siteContent', JSON.stringify(saved));
-  toast('t-cfg');
-}
-
-/* ════════ UTIL ════════ */
-function toast(id) {
-  const el = document.getElementById(id);
-  el.classList.add('show');
-  setTimeout(() => el.classList.remove('show'), 2500);
-}
+/* ═══ CONFIG ═══ */
+function loadCfg(){const cfg=(sc().config)||{};document.getElementById('cfg-email').value=cfg.email||'tatswin2022@gmail.com';document.getElementById('cfg-phone').value=cfg.phone||'+886-2-0000-0000';}
+function saveCfg(){const s=sc();s.config={email:document.getElementById('cfg-email').value,phone:document.getElementById('cfg-phone').value};saveSC(s);toast('t-cfg');}
 </script>
 </body>
 </html>

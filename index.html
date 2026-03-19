@@ -1225,50 +1225,7 @@ body::after {
     <h2 class="sec-h" style="margin-bottom:0;">最新動態與消息</h2>
   </div>
   <div class="news-outer">
-    <div class="news-track" id="news-track">
-      <div class="polaroid">
-        <div class="pol-tape" style="background:rgba(242,109,91,.55);"></div>
-        <div class="pol-img">🤖</div>
-        <div class="pol-cap">AI 社工工具箱<br>正式發佈</div>
-        <div class="pol-date">2024.11</div>
-      </div>
-      <div class="polaroid">
-        <div class="pol-tape" style="background:rgba(92,142,173,.55);"></div>
-        <div class="pol-img">📚</div>
-        <div class="pol-cap">科技 × 社工<br>年度研討會</div>
-        <div class="pol-date">2024.10</div>
-      </div>
-      <div class="polaroid">
-        <div class="pol-tape" style="background:rgba(244,211,94,.65);"></div>
-        <div class="pol-img">🌏</div>
-        <div class="pol-cap">亞太社工大會<br>臺灣代表團</div>
-        <div class="pol-date">2024.09</div>
-      </div>
-      <div class="polaroid">
-        <div class="pol-tape" style="background:rgba(125,157,127,.55);"></div>
-        <div class="pol-img">🎓</div>
-        <div class="pol-cap">數位社工認證<br>課程開班</div>
-        <div class="pol-date">2024.08</div>
-      </div>
-      <div class="polaroid">
-        <div class="pol-tape" style="background:rgba(242,109,91,.5);"></div>
-        <div class="pol-img">💡</div>
-        <div class="pol-cap">AI 倫理白皮書<br>正式發表</div>
-        <div class="pol-date">2024.07</div>
-      </div>
-      <div class="polaroid">
-        <div class="pol-tape" style="background:rgba(92,142,173,.5);"></div>
-        <div class="pol-img">🤝</div>
-        <div class="pol-cap">三方合作備忘錄<br>正式簽署</div>
-        <div class="pol-date">2024.06</div>
-      </div>
-      <div class="polaroid">
-        <div class="pol-tape" style="background:rgba(244,211,94,.6);"></div>
-        <div class="pol-img">📱</div>
-        <div class="pol-cap">社工行動 App<br>Beta 版上線</div>
-        <div class="pol-date">2024.05</div>
-      </div>
-    </div>
+    <div class="news-track" id="news-track"></div>
   </div>
 </section>
 
@@ -1278,46 +1235,7 @@ body::after {
 <section class="team-section" id="team">
   <h2 class="sec-h" style="position:relative;z-index:1;">核心團隊</h2>
 
-  <div class="team-list">
-    <div class="team-item">
-      <div class="team-photo-wrap">
-        <div class="team-circle"><div class="team-inner">👩‍💼</div></div>
-      </div>
-      <div class="team-card">
-        <div class="team-card-tape" style="background:rgba(242,109,91,.5);"></div>
-        <span class="team-dept" style="background:rgba(242,109,91,.1);border-color:var(--orange);color:var(--orange);">理事長</span>
-        <h3 class="team-name">陳雅慧</h3>
-        <p class="team-role">社工師 · 理事長 · 社工系教授</p>
-        <p class="team-bio">擁有 20 年社工實務經驗，專長於科技融入社會服務的政策推動與教學設計。相信每一個科技工具，背後都應有溫暖的初心。</p>
-      </div>
-    </div>
-
-    <div class="team-item">
-      <div class="team-photo-wrap">
-        <div class="team-circle"><div class="team-inner">👨‍💻</div></div>
-      </div>
-      <div class="team-card">
-        <div class="team-card-tape" style="background:rgba(92,142,173,.5);"></div>
-        <span class="team-dept" style="background:rgba(92,142,173,.1);border-color:var(--blue);color:var(--blue);">技術部</span>
-        <h3 class="team-name">林建宏</h3>
-        <p class="team-role">資深工程師 · 技術總監</p>
-        <p class="team-bio">畢業於台大資工所，前大廠 AI 研究員。深信科技不只是工具，更是連結人與人之間愛的橋樑。負責協會所有數位平台建置。</p>
-      </div>
-    </div>
-
-    <div class="team-item">
-      <div class="team-photo-wrap">
-        <div class="team-circle"><div class="team-inner">👩‍🔬</div></div>
-      </div>
-      <div class="team-card">
-        <div class="team-card-tape" style="background:rgba(125,157,127,.5);"></div>
-        <span class="team-dept" style="background:rgba(125,157,127,.1);border-color:var(--green);color:var(--green);">研究部</span>
-        <h3 class="team-name">黃怡婷</h3>
-        <p class="team-role">研究員 · AI 倫理專家</p>
-        <p class="team-bio">專注於 AI 在社會福利領域的倫理研究，著有《數位社工的可能與邊界》，長期推動「以人為本的 AI 治理」政策倡議。</p>
-      </div>
-    </div>
-  </div>
+  <div class="team-list" id="team-list"></div>
 
   <!-- 18 member blob circles -->
   <div class="member-grid-wrap" id="member-wrap">
@@ -1329,17 +1247,12 @@ body::after {
     </div>
 
     <!-- First 4 always visible -->
-    <div class="member-grid member-grid-top">
-      <div class="member-blob" data-name="成員姓名" data-title="職稱" data-org="現職單位" data-service="服務單位職稱" data-contact="聯絡方式"><div class="member-blob-circle">👤</div><div class="member-blob-info"><div class="member-blob-name">成員姓名</div><div class="member-blob-role">職稱</div></div></div>
-      <div class="member-blob" data-name="成員姓名" data-title="職稱" data-org="現職單位" data-service="服務單位職稱" data-contact="聯絡方式"><div class="member-blob-circle">👤</div><div class="member-blob-info"><div class="member-blob-name">成員姓名</div><div class="member-blob-role">職稱</div></div></div>
-      <div class="member-blob" data-name="成員姓名" data-title="職稱" data-org="現職單位" data-service="服務單位職稱" data-contact="聯絡方式"><div class="member-blob-circle">👤</div><div class="member-blob-info"><div class="member-blob-name">成員姓名</div><div class="member-blob-role">職稱</div></div></div>
-      <div class="member-blob" data-name="成員姓名" data-title="職稱" data-org="現職單位" data-service="服務單位職稱" data-contact="聯絡方式"><div class="member-blob-circle">👤</div><div class="member-blob-info"><div class="member-blob-name">成員姓名</div><div class="member-blob-role">職稱</div></div></div>
-    </div>
+    <div class="member-grid member-grid-top" id="member-top"></div>
 
     <!-- Remaining 14 collapsible -->
     <div class="member-grid-collapse">
       <div class="member-grid-collapse-inner">
-        <div class="member-grid">
+        <div class="member-grid" id="member-collapse">
           <div class="member-blob" data-name="成員姓名" data-title="職稱" data-org="現職單位" data-service="服務單位職稱" data-contact="聯絡方式"><div class="member-blob-circle">👤</div><div class="member-blob-info"><div class="member-blob-name">成員姓名</div><div class="member-blob-role">職稱</div></div></div>
           <div class="member-blob" data-name="成員姓名" data-title="職稱" data-org="現職單位" data-service="服務單位職稱" data-contact="聯絡方式"><div class="member-blob-circle">👤</div><div class="member-blob-info"><div class="member-blob-name">成員姓名</div><div class="member-blob-role">職稱</div></div></div>
           <div class="member-blob" data-name="成員姓名" data-title="職稱" data-org="現職單位" data-service="服務單位職稱" data-contact="聯絡方式"><div class="member-blob-circle">👤</div><div class="member-blob-info"><div class="member-blob-name">成員姓名</div><div class="member-blob-role">職稱</div></div></div>
@@ -1381,87 +1294,7 @@ body::after {
 <section class="support-section" id="support">
   <h2 class="sec-h">課程簡介與大綱</h2>
 
-  <div class="course-grid">
-
-    <!-- Card 1 -->
-    <div class="course-card" style="--accent:var(--orange);--rot:-1.2deg;">
-      <div class="course-card-pin">
-        <svg viewBox="0 0 20 30" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="10" cy="9" r="8" fill="var(--orange)" stroke="var(--ink)" stroke-width="1.5"/>
-          <ellipse cx="7.5" cy="6.5" rx="2.5" ry="1.5" fill="white" opacity=".35" transform="rotate(-20,7.5,6.5)"/>
-          <rect x="9" y="16" width="2" height="12" rx="1" fill="var(--ink)" opacity=".55"/>
-        </svg>
-      </div>
-      <div class="course-card-body">
-        <div class="course-tag" style="background:var(--orange);color:white;">培訓課程</div>
-        <h3 class="course-title">繼續教育培訓課程</h3>
-        <ul class="course-items">
-          <li><strong>AI 工具實戰工作坊</strong>每月定期舉辦，手把手教您運用 ChatGPT、Copilot 等工具提升個案記錄效率。</li>
-          <li><strong>數位社工認證課程</strong>系統性 40 小時課程，通過考核後頒發協會認證，可作繼續教育積分。</li>
-          <li><strong>機構客製培訓</strong>可至貴單位辦理客製化內訓，依實際業務需求規劃課程。</li>
-        </ul>
-      </div>
-    </div>
-
-    <!-- Card 2 -->
-    <div class="course-card" style="--accent:var(--blue);--rot:.8deg;">
-      <div class="course-card-pin">
-        <svg viewBox="0 0 20 30" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="10" cy="9" r="8" fill="var(--blue)" stroke="var(--ink)" stroke-width="1.5"/>
-          <ellipse cx="7.5" cy="6.5" rx="2.5" ry="1.5" fill="white" opacity=".35" transform="rotate(-20,7.5,6.5)"/>
-          <rect x="9" y="16" width="2" height="12" rx="1" fill="var(--ink)" opacity=".55"/>
-        </svg>
-      </div>
-      <div class="course-card-body">
-        <div class="course-tag" style="background:var(--blue);color:white;">技術支援</div>
-        <h3 class="course-title">數位工具技術支援</h3>
-        <ul class="course-items" style="--accent:var(--blue);">
-          <li><strong>免費諮詢服務</strong>會員每月可預約 2 次免費的數位工具導入諮詢，由技術專員一對一協助。</li>
-          <li><strong>工具資源庫</strong>精選超過 80 款適合社工使用的免費或低成本數位工具，附中文操作指引。</li>
-        </ul>
-      </div>
-    </div>
-
-    <!-- Card 3 -->
-    <div class="course-card" style="--accent:var(--green);--rot:.5deg;">
-      <div class="course-card-pin">
-        <svg viewBox="0 0 20 30" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="10" cy="9" r="8" fill="var(--green)" stroke="var(--ink)" stroke-width="1.5"/>
-          <ellipse cx="7.5" cy="6.5" rx="2.5" ry="1.5" fill="white" opacity=".35" transform="rotate(-20,7.5,6.5)"/>
-          <rect x="9" y="16" width="2" height="12" rx="1" fill="var(--ink)" opacity=".55"/>
-        </svg>
-      </div>
-      <div class="course-card-body">
-        <div class="course-tag" style="background:var(--green);color:white;">社群交流</div>
-        <h3 class="course-title">專業社群與交流平台</h3>
-        <ul class="course-items" style="--accent:var(--green);">
-          <li><strong>會員專屬社群</strong>加入由 300+ 名社工師組成的 LINE 社群，分享經驗、互助解惑。</li>
-          <li><strong>年度實體大會</strong>每年舉辦「科技社工年會」，邀請國內外講師分享最新趨勢。</li>
-          <li><strong>研究發表平台</strong>協助會員發表研究成果，提供投稿資源與學術交流機會。</li>
-        </ul>
-      </div>
-    </div>
-
-    <!-- Card 4 -->
-    <div class="course-card" style="--accent:var(--yellow);--rot:-0.6deg;">
-      <div class="course-card-pin">
-        <svg viewBox="0 0 20 30" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="10" cy="9" r="8" fill="var(--yellow)" stroke="var(--ink)" stroke-width="1.5"/>
-          <ellipse cx="7.5" cy="6.5" rx="2.5" ry="1.5" fill="white" opacity=".35" transform="rotate(-20,7.5,6.5)"/>
-          <rect x="9" y="16" width="2" height="12" rx="1" fill="var(--ink)" opacity=".55"/>
-        </svg>
-      </div>
-      <div class="course-card-body">
-        <div class="course-tag" style="background:var(--yellow);color:var(--ink);">倡議研究</div>
-        <h3 class="course-title">政策倡議與研究出版</h3>
-        <ul class="course-items" style="--accent:var(--ink);">
-          <li><strong>AI 社工倫理指引</strong>每年更新發布，提供實務工作者清晰的使用規範與案例參考。</li>
-          <li><strong>政府政策參與</strong>定期出席立法院及衛福部諮詢會議，代表社工師為 AI 相關政策發聲。</li>
-        </ul>
-      </div>
-    </div>
-
-  </div>
+  <div class="course-grid" id="course-grid"></div>
 </section>
 
 <!-- FOOTER -->
@@ -1479,6 +1312,39 @@ body::after {
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script>
+/* ══════════════════════════════════════════
+   DYNAMIC SECTION RENDERING (localStorage)
+══════════════════════════════════════════ */
+(function renderDynamic() {
+  const sc = JSON.parse(localStorage.getItem('siteContent') || '{}');
+  const CLR = {
+    orange:{ bg:'var(--orange)', text:'white',      deptBg:'rgba(242,109,91,.1)', deptBorder:'var(--orange)', deptText:'var(--orange)', tape:'rgba(242,109,91,.55)' },
+    blue:  { bg:'var(--blue)',   text:'white',      deptBg:'rgba(92,142,173,.1)', deptBorder:'var(--blue)',   deptText:'var(--blue)',   tape:'rgba(92,142,173,.55)'  },
+    green: { bg:'var(--green)',  text:'white',      deptBg:'rgba(125,157,127,.1)',deptBorder:'var(--green)',  deptText:'var(--green)',  tape:'rgba(125,157,127,.55)' },
+    yellow:{ bg:'var(--yellow)', text:'var(--ink)', deptBg:'rgba(244,211,94,.15)',deptBorder:'var(--yellow)', deptText:'var(--ink)',   tape:'rgba(244,211,94,.65)'  },
+  };
+  /* NEWS */
+  const DEF_NEWS=[{emoji:'🤖',caption:'AI 社工工具箱\n正式發佈',date:'2024.11',color:'orange'},{emoji:'📚',caption:'科技 × 社工\n年度研討會',date:'2024.10',color:'blue'},{emoji:'🌏',caption:'亞太社工大會\n臺灣代表團',date:'2024.09',color:'yellow'},{emoji:'🎓',caption:'數位社工認證\n課程開班',date:'2024.08',color:'green'},{emoji:'💡',caption:'AI 倫理白皮書\n正式發表',date:'2024.07',color:'orange'},{emoji:'🤝',caption:'三方合作備忘錄\n正式簽署',date:'2024.06',color:'blue'},{emoji:'📱',caption:'社工行動 App\nBeta 版上線',date:'2024.05',color:'yellow'}];
+  const newsEl=document.getElementById('news-track');
+  if(newsEl)(sc.news||DEF_NEWS).forEach(n=>{const c=CLR[n.color]||CLR.orange;const d=document.createElement('div');d.className='polaroid';d.innerHTML=`<div class="pol-tape" style="background:${c.tape};"></div>${n.photo?`<div class="pol-img" style="padding:0;overflow:hidden;"><img src="${n.photo}" style="width:100%;height:100%;object-fit:cover;border-radius:2px;"></div>`:`<div class="pol-img">${n.emoji}</div>`}<div class="pol-cap">${n.caption.replace(/\n/g,'<br>')}</div><div class="pol-date">${n.date}</div>`;newsEl.appendChild(d);});
+  /* CORE TEAM */
+  const DEF_TEAM=[{emoji:'👩‍💼',dept:'理事長',color:'orange',name:'陳雅慧',role:'社工師 · 理事長 · 社工系教授',bio:'擁有 20 年社工實務經驗，專長於科技融入社會服務的政策推動與教學設計。相信每一個科技工具，背後都應有溫暖的初心。'},{emoji:'👨‍💻',dept:'技術部',color:'blue',name:'林建宏',role:'資深工程師 · 技術總監',bio:'畢業於台大資工所，前大廠 AI 研究員。深信科技不只是工具，更是連結人與人之間愛的橋樑。負責協會所有數位平台建置。'},{emoji:'👩‍🔬',dept:'研究部',color:'green',name:'黃怡婷',role:'研究員 · AI 倫理專家',bio:'專注於 AI 在社會福利領域的倫理研究，著有《數位社工的可能與邊界》，長期推動「以人為本的 AI 治理」政策倡議。'}];
+  const teamEl=document.getElementById('team-list');
+  if(teamEl)teamEl.innerHTML=(sc.coreTeam||DEF_TEAM).map(m=>{const c=CLR[m.color]||CLR.orange;const av=m.photo?`<img src="${m.photo}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">`:`<div class="team-inner">${m.emoji}</div>`;return `<div class="team-item"><div class="team-photo-wrap"><div class="team-circle">${av}</div></div><div class="team-card"><div class="team-card-tape" style="background:${c.tape};"></div><span class="team-dept" style="background:${c.deptBg};border-color:${c.deptBorder};color:${c.deptText};">${m.dept}</span><h3 class="team-name">${m.name}</h3><p class="team-role">${m.role}</p><p class="team-bio">${m.bio}</p></div></div>`;}).join('');
+  /* ALL MEMBERS */
+  const DEF_MEM=Array.from({length:18},()=>({emoji:'👤',name:'成員姓名',role:'職稱',title:'職稱',org:'現職單位',service:'服務單位職稱',contact:'聯絡方式'}));
+  const mems=sc.members||DEF_MEM;
+  const mkB=m=>`<div class="member-blob" data-name="${m.name}" data-title="${m.title||m.role}" data-org="${m.org||''}" data-service="${m.service||''}" data-contact="${m.contact||''}"><div class="member-blob-circle">${m.photo?`<img src="${m.photo}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">`:(m.emoji||'👤')}</div><div class="member-blob-info"><div class="member-blob-name">${m.name}</div><div class="member-blob-role">${m.role}</div></div></div>`;
+  const topEl=document.getElementById('member-top');const colEl=document.getElementById('member-collapse');
+  if(topEl)topEl.innerHTML=mems.slice(0,4).map(mkB).join('');
+  if(colEl)colEl.innerHTML=mems.slice(4).map(mkB).join('');
+  /* COURSES */
+  const PIN=bg=>`<svg viewBox="0 0 20 30" xmlns="http://www.w3.org/2000/svg"><circle cx="10" cy="9" r="8" fill="${bg}" stroke="var(--ink)" stroke-width="1.5"/><ellipse cx="7.5" cy="6.5" rx="2.5" ry="1.5" fill="white" opacity=".35" transform="rotate(-20,7.5,6.5)"/><rect x="9" y="16" width="2" height="12" rx="1" fill="var(--ink)" opacity=".55"/></svg>`;
+  const DEF_CRS=[{tag:'培訓課程',color:'orange',rot:'-1.2deg',title:'繼續教育培訓課程',items:[{bold:'AI 工具實戰工作坊',text:'每月定期舉辦，手把手教您運用 ChatGPT、Copilot 等工具提升個案記錄效率。'},{bold:'數位社工認證課程',text:'系統性 40 小時課程，通過考核後頒發協會認證，可作繼續教育積分。'},{bold:'機構客製培訓',text:'可至貴單位辦理客製化內訓，依實際業務需求規劃課程。'}]},{tag:'技術支援',color:'blue',rot:'.8deg',title:'數位工具技術支援',items:[{bold:'免費諮詢服務',text:'會員每月可預約 2 次免費的數位工具導入諮詢，由技術專員一對一協助。'},{bold:'工具資源庫',text:'精選超過 80 款適合社工使用的免費或低成本數位工具，附中文操作指引。'}]},{tag:'社群交流',color:'green',rot:'.5deg',title:'專業社群與交流平台',items:[{bold:'會員專屬社群',text:'加入由 300+ 名社工師組成的 LINE 社群，分享經驗、互助解惑。'},{bold:'年度實體大會',text:'每年舉辦「科技社工年會」，邀請國內外講師分享最新趨勢。'},{bold:'研究發表平台',text:'協助會員發表研究成果，提供投稿資源與學術交流機會。'}]},{tag:'倡議研究',color:'yellow',rot:'-0.6deg',title:'政策倡議與研究出版',items:[{bold:'AI 社工倫理指引',text:'每年更新發布，提供實務工作者清晰的使用規範與案例參考。'},{bold:'政府政策參與',text:'定期出席立法院及衛福部諮詢會議，代表社工師為 AI 相關政策發聲。'}]}];
+  const gridEl=document.getElementById('course-grid');
+  if(gridEl)gridEl.innerHTML=(sc.courses||DEF_CRS).map(c=>{const cl=CLR[c.color]||CLR.orange;return `<div class="course-card" style="--accent:${cl.bg};--rot:${c.rot};"><div class="course-card-pin">${PIN(cl.bg)}</div><div class="course-card-body"><div class="course-tag" style="background:${cl.bg};color:${cl.text};">${c.tag}</div><h3 class="course-title">${c.title}</h3><ul class="course-items" style="--accent:${cl.bg};">${c.items.map(it=>`<li><strong>${it.bold}</strong>${it.text}</li>`).join('')}</ul></div></div>`;}).join('');
+})();
+
 /* ══════════════════════════════════════════
    INTRO ANIMATION
 ══════════════════════════════════════════ */
