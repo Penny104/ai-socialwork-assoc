@@ -214,11 +214,11 @@ body::after {
 .ms-right { flex:1; position:relative; }
 .ms-blob-svg { width:100%; height:auto; display:block; overflow:visible; }
 .ms-title {
-  font-family:'Playfair Display','Noto Sans TC',serif;
-  font-size:clamp(28px,4.2vw,58px); font-weight:700;
-  line-height:1.15; color:var(--ink); margin-bottom:1.6rem;
+  font-family:var(--fh);
+  font-size:clamp(1.1rem,1.8vw,1.5rem); font-weight:500;
+  line-height:1.3; color:var(--ink); margin-bottom:1.2rem;
 }
-.ms-body { font-size:1.05rem; line-height:2.1; color:#6a5c50; margin-bottom:2.5rem; }
+.ms-body { font-size:.95rem; line-height:2.1; color:#6a5c50; margin-bottom:2.5rem; }
 .ms-nav { display:flex; align-items:center; gap:1rem; }
 .ms-nav-btn {
   width:44px; height:44px; border-radius:50%; border:none; cursor:pointer;
@@ -1096,20 +1096,17 @@ body::after {
         <defs>
           <!-- Irregular cloud shape clip-path -->
           <clipPath id="msBlobClip">
-            <path d="M 25 358
-              C 8 358 -5 334 8 306
-              C -6 286 4 252 32 238
-              C 16 210 28 176 64 172
-              C 58 126 94 96 135 114
-              C 142 72 182 48 222 68
-              C 236 26 288 10 318 48
-              C 340 8 394 20 402 66
-              C 444 46 476 82 460 130
-              C 500 124 525 160 506 200
-              C 540 212 544 252 514 272
-              C 534 300 522 338 490 350
-              C 514 370 550 374 574 354
-              Z"/>
+            <path d="M 30 348
+              C 8 348 -4 322 12 295
+              C -2 270 10 235 42 230
+              C 34 178 75 148 122 165
+              C 135 115 185 88 232 112
+              C 250 65 312 50 346 90
+              C 375 52 435 68 438 122
+              C 482 105 508 152 486 202
+              C 522 218 528 262 498 282
+              C 518 312 504 348 468 356
+              Q 248 374 30 348 Z"/>
           </clipPath>
           <radialGradient id="msVign" cx="50%" cy="50%" r="70%">
             <stop offset="55%" stop-color="transparent"/>
