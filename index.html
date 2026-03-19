@@ -206,133 +206,93 @@ body::after {
 }
 
 /* ══════════════════════════════════
-   SECTION 2 — MILESTONES (STICKY)
+   SECTION 2 — MILESTONES SLIDER
 ══════════════════════════════════ */
-.milestones-section {
-  padding:7rem 5rem 6rem 6rem;
-  position:relative;
+--color-primary: #5C8EAD;
+--color-border:  #e5e5e5;
+--color-tag-bg:  #EBF4F9;
+--color-tag-txt: #5C8EAD;
+
+.milestones-section { padding:7rem 5rem 6rem 6rem; position:relative; }
+.ms-slider-wrap { position:relative; z-index:1; }
+.ms-slider-hdr { margin-bottom:2.5rem; }
+.ms-slider-outer { display:flex; align-items:center; gap:1.25rem; }
+
+/* Arrows */
+.ms-arrow {
+  flex-shrink:0; width:46px; height:46px; border-radius:50%;
+  border:1.5px solid #e5e5e5; background:white; cursor:pointer;
+  font-size:1.1rem; display:flex; align-items:center; justify-content:center;
+  transition:border-color .2s, color .2s, background .2s; color:var(--ink);
 }
-.ms-watermark {
-  position:absolute; top:50%; left:50%;
-  transform:translate(-50%,-50%);
-  font-family:var(--fh); font-size:clamp(80px,14vw,170px);
-  font-weight:700; color:transparent;
-  -webkit-text-stroke:2px rgba(62,54,46,0.055);
-  white-space:nowrap; pointer-events:none;
-  user-select:none; z-index:0;
-}
-.ms-inner {
-  display:flex; gap:4rem;
-  position:relative; z-index:1;
+.ms-arrow:hover:not(:disabled) { border-color:var(--blue); color:var(--blue); background:#f5fafd; }
+.ms-arrow:disabled { opacity:.3; cursor:not-allowed; }
+
+/* Viewport */
+.ms-slider-viewport { flex:1; overflow:hidden; border-radius:12px; }
+.ms-slider-track {
+  display:flex;
+  transition:transform .45s ease;
+  will-change:transform;
 }
 
-/* LEFT STICKY */
-.ms-sticky {
-  flex:0 0 350px;
-  position:sticky; top:20vh; height:60vh;
-  align-self:flex-start;
+/* Slide card */
+.ms-slide {
+  flex:0 0 100%; display:flex;
+  background:white; border-radius:12px;
+  border:1px solid #e5e5e5;
+  overflow:hidden; min-height:340px;
 }
-.ms-frame {
-  width:100%; height:100%;
-  border:3px solid var(--ink); border-radius:8px;
-  background:white; position:relative;
-  box-shadow:6px 8px 0 var(--ink);
-  transform:rotate(1.2deg);
+.ms-slide-img {
+  flex:0 0 42%; position:relative;
+  background:#f8f6f2; border-right:1px solid #e5e5e5; overflow:hidden;
 }
-.ms-carousel {
-  position:absolute; inset:0; opacity:0; pointer-events:none;
-  transition:opacity .55s;
-  display:flex; flex-direction:column; border-radius:5px; overflow:hidden;
-}
-.ms-carousel.vis { opacity:1; pointer-events:all; }
-.ms-carousel-track {
-  flex:1; display:flex;
-  overflow-x:scroll; overflow-y:hidden;
-  scroll-snap-type:x mandatory;
-  -webkit-overflow-scrolling:touch;
-  scrollbar-width:none;
-}
-.ms-carousel-track::-webkit-scrollbar { display:none; }
-.ms-photo {
-  flex:0 0 100%; height:100%;
-  scroll-snap-align:start;
-  background:linear-gradient(135deg,#faf5ee,#f0e8dc);
+.ms-slide-img img { width:100%; height:100%; object-fit:cover; display:block; }
+.ms-slide-img-ph {
+  position:absolute; inset:0;
   display:flex; flex-direction:column; align-items:center; justify-content:center;
-  gap:.4rem; position:relative; overflow:hidden;
+  gap:.5rem; color:#bbb; pointer-events:none;
 }
-.ms-photo img { width:100%; height:100%; object-fit:cover; position:absolute; inset:0; z-index:0; }
-.ms-photo-icon  { font-size:2rem; opacity:.3; pointer-events:none; z-index:1; }
-.ms-photo-label { font-family:var(--fh); font-size:.75rem; color:#aaa; pointer-events:none; z-index:1; }
-.ms-photo input[type=file] { position:absolute; inset:0; opacity:0; cursor:pointer; z-index:3; }
-.ms-dots {
-  display:flex; gap:5px; justify-content:center;
-  padding:.45rem 0; background:rgba(253,251,247,.92); flex-shrink:0;
-}
-.ms-dot {
-  width:7px; height:7px; border-radius:50%;
-  background:var(--grid); transition:background .2s, transform .2s; cursor:pointer;
-}
-.ms-dot.active { background:var(--orange); transform:scale(1.3); }
+.ms-slide-img-ph svg { opacity:.4; }
+.ms-slide-img-ph span { font-family:var(--fh); font-size:.78rem; }
+.ms-slide-img input[type=file] { position:absolute; inset:0; opacity:0; cursor:pointer; z-index:2; }
 
-/* RIGHT SCROLL */
-.ms-scroll {
-  flex:1; display:flex; flex-direction:column;
-  gap:22vh; padding-bottom:22vh;
+.ms-slide-text {
+  flex:1; padding:2.5rem 3rem;
+  display:flex; flex-direction:column; justify-content:center;
 }
-.ms-item { opacity:.2; transition:opacity .5s; }
-.ms-item.vis { opacity:1; }
+.ms-slide-tag {
+  display:inline-block; padding:.28rem .9rem; border-radius:20px;
+  background:#EBF4F9; color:#5C8EAD;
+  font-family:var(--fh); font-size:.78rem; font-weight:600;
+  letter-spacing:.05em; margin-bottom:1rem; width:fit-content;
+}
+.ms-slide-title {
+  font-family:var(--fh); font-size:1.35rem; font-weight:500;
+  color:var(--ink); margin-bottom:.85rem; line-height:1.3;
+}
+.ms-slide-desc {
+  font-size:.9rem; line-height:1.75; color:#6a5c50;
+  margin-bottom:1.5rem; flex:1;
+}
+.ms-slide-btn {
+  display:inline-flex; align-items:center; gap:.35rem;
+  padding:.5rem 1.2rem; border-radius:8px;
+  border:1.5px solid #e5e5e5; background:white;
+  font-family:var(--fh); font-size:.9rem; color:var(--ink);
+  cursor:pointer; text-decoration:none; width:fit-content;
+  transition:background .2s, border-color .2s;
+}
+.ms-slide-btn:hover { background:#f5f5f5; border-color:#ccc; }
 
-/* ── 手帳卡片 ── */
-.ms-card {
-  background:white;
-  border:2.5px solid var(--ink); border-radius:12px;
-  box-shadow:5px 6px 0 var(--ink);
-  overflow:hidden; width:100%;
-  transform:rotate(-.4deg);
-  transition:transform .3s;
+/* Dots */
+.ms-slider-dots { display:flex; justify-content:center; gap:.6rem; margin-top:1.5rem; }
+.ms-slider-dot {
+  width:8px; height:8px; border-radius:50%;
+  background:#e5e5e5; border:none; cursor:pointer; padding:0;
+  transition:background .25s, transform .25s;
 }
-.ms-item.vis .ms-card { transform:rotate(0deg); }
-.ms-card-hdr {
-  padding:.7rem 1.3rem;
-  border-bottom:2.5px solid var(--ink);
-  display:flex; align-items:center; gap:.6rem;
-}
-.ms-card-hdr-dot {
-  width:10px; height:10px; border-radius:50%; flex-shrink:0;
-}
-.ms-year {
-  font-family:var(--fh); font-size:1.1rem; font-weight:700;
-  color:white; line-height:1.2;
-}
-/* Per-item colour */
-.ms-item:nth-child(1) .ms-card-hdr { background:var(--orange); }
-.ms-item:nth-child(2) .ms-card-hdr { background:var(--blue); }
-.ms-item:nth-child(3) .ms-card-hdr { background:var(--green); }
-.ms-item:nth-child(1) .ms-card-hdr-dot { background:rgba(255,255,255,.5); }
-.ms-item:nth-child(2) .ms-card-hdr-dot { background:rgba(255,255,255,.5); }
-.ms-item:nth-child(3) .ms-card-hdr-dot { background:rgba(255,255,255,.5); }
-
-/* Tape strip on card */
-.ms-card-tape {
-  position:absolute; top:-8px; left:2rem;
-  width:54px; height:16px; border-radius:2px;
-  mix-blend-mode:multiply; opacity:.7;
-}
-
-.ms-editable {
-  /* Ruled paper lines */
-  background-image: repeating-linear-gradient(
-    transparent, transparent 31px, #E8DCC4 31px, #E8DCC4 32px
-  );
-  line-height:32px;
-  min-height:128px; padding:.5rem 1.3rem 1.3rem;
-  border:none; width:100%;
-  font-family:var(--fb); font-size:.9rem; color:#5a4e44;
-  outline:none; cursor:text;
-  transition:background-color .2s;
-}
-.ms-editable:focus { background-color:#fffef9; }
-.ms-editable:empty:before { content:attr(data-placeholder); color:#ccc; pointer-events:none; }
+.ms-slider-dot.active { background:var(--blue); transform:scale(1.35); }
 
 /* ══════════════════════════════════
    SECTION 3 — HORIZONTAL POLAROIDS
@@ -1181,87 +1141,85 @@ body::after {
 </section>
 
 <!-- ══════════════════════════════
-     SECTION 2 — MILESTONES
+     SECTION 2 — MILESTONES SLIDER
 ══════════════════════════════ -->
 <section class="milestones-section" id="milestones">
-  <div style="position:relative;z-index:1;margin-bottom:3rem;">
-    <h2 class="sec-h">協會介紹</h2>
-  </div>
-
-  <div class="ms-inner">
-    <!-- LEFT STICKY -->
-    <div class="ms-sticky">
-      <div class="ms-frame">
-        <div class="tape" style="width:78px;background:rgba(244,211,94,.58);top:-10px;left:24px;transform:rotate(-2deg);"></div>
-        <div class="tape" style="width:60px;background:rgba(92,142,173,.5);bottom:-10px;right:20px;transform:rotate(3deg);"></div>
-        <!-- Carousel 0 -->
-        <div class="ms-carousel vis" data-c="0">
-          <div class="ms-carousel-track" id="ms-track-0">
-            <div class="ms-photo"><div class="ms-photo-icon">📷</div><div class="ms-photo-label">點擊新增照片</div><input type="file" accept="image/*" onchange="loadMsPhoto(this)"></div>
-            <div class="ms-photo"><div class="ms-photo-icon">📷</div><div class="ms-photo-label">點擊新增照片</div><input type="file" accept="image/*" onchange="loadMsPhoto(this)"></div>
-            <div class="ms-photo"><div class="ms-photo-icon">📷</div><div class="ms-photo-label">點擊新增照片</div><input type="file" accept="image/*" onchange="loadMsPhoto(this)"></div>
-          </div>
-          <div class="ms-dots" id="ms-dots-0">
-            <span class="ms-dot active"></span><span class="ms-dot"></span><span class="ms-dot"></span>
-          </div>
-        </div>
-        <!-- Carousel 1 -->
-        <div class="ms-carousel" data-c="1">
-          <div class="ms-carousel-track" id="ms-track-1">
-            <div class="ms-photo"><div class="ms-photo-icon">📷</div><div class="ms-photo-label">點擊新增照片</div><input type="file" accept="image/*" onchange="loadMsPhoto(this)"></div>
-            <div class="ms-photo"><div class="ms-photo-icon">📷</div><div class="ms-photo-label">點擊新增照片</div><input type="file" accept="image/*" onchange="loadMsPhoto(this)"></div>
-            <div class="ms-photo"><div class="ms-photo-icon">📷</div><div class="ms-photo-label">點擊新增照片</div><input type="file" accept="image/*" onchange="loadMsPhoto(this)"></div>
-          </div>
-          <div class="ms-dots" id="ms-dots-1">
-            <span class="ms-dot active"></span><span class="ms-dot"></span><span class="ms-dot"></span>
-          </div>
-        </div>
-        <!-- Carousel 2 -->
-        <div class="ms-carousel" data-c="2">
-          <div class="ms-carousel-track" id="ms-track-2">
-            <div class="ms-photo"><div class="ms-photo-icon">📷</div><div class="ms-photo-label">點擊新增照片</div><input type="file" accept="image/*" onchange="loadMsPhoto(this)"></div>
-            <div class="ms-photo"><div class="ms-photo-icon">📷</div><div class="ms-photo-label">點擊新增照片</div><input type="file" accept="image/*" onchange="loadMsPhoto(this)"></div>
-            <div class="ms-photo"><div class="ms-photo-icon">📷</div><div class="ms-photo-label">點擊新增照片</div><input type="file" accept="image/*" onchange="loadMsPhoto(this)"></div>
-          </div>
-          <div class="ms-dots" id="ms-dots-2">
-            <span class="ms-dot active"></span><span class="ms-dot"></span><span class="ms-dot"></span>
-          </div>
-        </div>
-      </div>
+  <div class="ms-slider-wrap">
+    <div class="ms-slider-hdr">
+      <h2 class="sec-h">協會介紹</h2>
     </div>
 
-    <!-- RIGHT SCROLL -->
-    <div class="ms-scroll" id="ms-scroll">
-      <div class="ms-item vis" data-ms="0">
-        <div class="ms-card" style="position:relative;">
-          <div class="tape ms-card-tape" style="background:rgba(244,211,94,.65);"></div>
-          <div class="ms-card-hdr">
-            <div class="ms-card-hdr-dot"></div>
-            <div class="ms-year">協會創立理念</div>
+    <div class="ms-slider-outer">
+      <!-- Left arrow -->
+      <button class="ms-arrow" id="ms-prev" aria-label="上一張" disabled>←</button>
+
+      <!-- Viewport -->
+      <div class="ms-slider-viewport">
+        <div class="ms-slider-track" id="ms-slider-track">
+
+          <!-- Slide 1：創立理念 -->
+          <div class="ms-slide">
+            <div class="ms-slide-img">
+              <div class="ms-slide-img-ph">
+                <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+                <span>點擊新增照片</span>
+              </div>
+              <input type="file" accept="image/*" onchange="loadSlidePhoto(this)">
+            </div>
+            <div class="ms-slide-text">
+              <span class="ms-slide-tag">創立理念</span>
+              <h3 class="ms-slide-title">協會創立理念</h3>
+              <p class="ms-slide-desc">由一群對社會工作與科技充滿熱情的先行者共同創立，立志成為臺灣社工界數位轉型的推手，為社工師提供最前沿的科技應用知識與實務支持。</p>
+              <a href="#" class="ms-slide-btn">了解更多 →</a>
+            </div>
           </div>
-          <div class="ms-editable" contenteditable="true" data-placeholder="請輸入協會創立理念…">由一群對社會工作與科技充滿熱情的先行者共同創立，立志成為臺灣社工界數位轉型的推手，為社工師提供最前沿的科技應用知識與實務支持。</div>
+
+          <!-- Slide 2：協會宗旨 -->
+          <div class="ms-slide">
+            <div class="ms-slide-img">
+              <div class="ms-slide-img-ph">
+                <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+                <span>點擊新增照片</span>
+              </div>
+              <input type="file" accept="image/*" onchange="loadSlidePhoto(this)">
+            </div>
+            <div class="ms-slide-text">
+              <span class="ms-slide-tag">協會宗旨</span>
+              <h3 class="ms-slide-title">協會宗旨</h3>
+              <p class="ms-slide-desc">推廣科技與社會工作相關領域之研究與實務應用，促進科技與社會工作之協力，並加強跨專業合作實務經驗與交流。</p>
+              <a href="#" class="ms-slide-btn">了解更多 →</a>
+            </div>
+          </div>
+
+          <!-- Slide 3：出版作品 -->
+          <div class="ms-slide">
+            <div class="ms-slide-img">
+              <div class="ms-slide-img-ph">
+                <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+                <span>點擊新增照片</span>
+              </div>
+              <input type="file" accept="image/*" onchange="loadSlidePhoto(this)">
+            </div>
+            <div class="ms-slide-text">
+              <span class="ms-slide-tag">出版作品</span>
+              <h3 class="ms-slide-title">協會出版作品</h3>
+              <p class="ms-slide-desc">請輸入協會出版作品相關資訊。</p>
+              <a href="#" class="ms-slide-btn">了解更多 →</a>
+            </div>
+          </div>
+
         </div>
       </div>
-      <div class="ms-item" data-ms="1">
-        <div class="ms-card" style="position:relative;">
-          <div class="tape ms-card-tape" style="background:rgba(92,142,173,.45);"></div>
-          <div class="ms-card-hdr">
-            <div class="ms-card-hdr-dot"></div>
-            <div class="ms-year">協會宗旨</div>
-          </div>
-          <div class="ms-editable" contenteditable="true" data-placeholder="請輸入協會宗旨…">推廣科技與社會工作相關領域之研究與實務應用，促進科技與社會工作之協力，並加強跨專業合作實務經驗與交流。</div>
-        </div>
-      </div>
-      <div class="ms-item" data-ms="2">
-        <div class="ms-card" style="position:relative;">
-          <div class="tape ms-card-tape" style="background:rgba(125,157,127,.45);"></div>
-          <div class="ms-card-hdr">
-            <div class="ms-card-hdr-dot"></div>
-            <div class="ms-year">協會出版作品</div>
-          </div>
-          <div class="ms-editable" contenteditable="true" data-placeholder="請輸入協會出版作品…">請輸入協會出版作品相關資訊。</div>
-        </div>
-      </div>
+
+      <!-- Right arrow -->
+      <button class="ms-arrow" id="ms-next" aria-label="下一張">→</button>
+    </div>
+
+    <!-- Dots -->
+    <div class="ms-slider-dots" id="ms-slider-dots">
+      <button class="ms-slider-dot active"></button>
+      <button class="ms-slider-dot"></button>
+      <button class="ms-slider-dot"></button>
     </div>
   </div>
 </section>
@@ -1575,65 +1533,52 @@ gsap.timeline({ delay: 0.2 })
   .from('.hero-svg-illo',     { opacity:0, scale:.85, duration:.8, ease:'back.out(1.4)' }, '-=.7');
 
 /* ══════════════════════════════════════════
-   MILESTONES — watermark parallax
+   MILESTONES SLIDER
 ══════════════════════════════════════════ */
-/* (watermark removed) */
+(function () {
+  const track   = document.getElementById('ms-slider-track');
+  const prev    = document.getElementById('ms-prev');
+  const next    = document.getElementById('ms-next');
+  const dotsWrap = document.getElementById('ms-slider-dots');
+  const dots    = dotsWrap.querySelectorAll('.ms-slider-dot');
+  const slides  = track.querySelectorAll('.ms-slide');
+  const total   = slides.length;
+  let cur = 0;
 
-/* ══════════════════════════════════════════
-   MILESTONES — sticky crossfade
-══════════════════════════════════════════ */
-const msItems      = document.querySelectorAll('.ms-item');
-const msCarousels  = document.querySelectorAll('.ms-carousel');
-let curMs = 0;
+  function goTo(idx) {
+    cur = Math.max(0, Math.min(idx, total - 1));
+    track.style.transform = `translateX(-${cur * 100}%)`;
+    prev.disabled = cur === 0;
+    next.disabled = cur === total - 1;
+    dots.forEach((d, i) => d.classList.toggle('active', i === cur));
+  }
 
-function activateMs(idx) {
-  if (curMs === idx) return;
-  curMs = idx;
-  msItems.forEach((el, i) => gsap.to(el, { opacity: i === idx ? 1 : 0.2, duration: .4 }));
-  msCarousels.forEach((el, i) => {
-    gsap.to(el, { opacity: i === idx ? 1 : 0, duration: .55 });
-    el.style.pointerEvents = i === idx ? 'all' : 'none';
+  prev.addEventListener('click', () => goTo(cur - 1));
+  next.addEventListener('click', () => goTo(cur + 1));
+  dots.forEach((d, i) => d.addEventListener('click', () => goTo(i)));
+
+  /* Touch swipe */
+  let tx = 0;
+  track.addEventListener('touchstart', e => { tx = e.touches[0].clientX; }, { passive: true });
+  track.addEventListener('touchend', e => {
+    const diff = tx - e.changedTouches[0].clientX;
+    if (Math.abs(diff) > 50) goTo(diff > 0 ? cur + 1 : cur - 1);
   });
-}
 
-msItems.forEach((el, i) => {
-  ScrollTrigger.create({
-    trigger: el,
-    start: 'top 60%',
-    end: 'bottom 40%',
-    onEnter:     () => activateMs(i),
-    onEnterBack: () => activateMs(i),
-  });
-});
+  goTo(0);
+})();
 
-/* Carousel dot sync */
-for (let ci = 0; ci < 3; ci++) {
-  const track = document.getElementById('ms-track-' + ci);
-  const dotsEl = document.getElementById('ms-dots-' + ci);
-  if (!track || !dotsEl) continue;
-  const dots = dotsEl.querySelectorAll('.ms-dot');
-  track.addEventListener('scroll', () => {
-    const idx = Math.round(track.scrollLeft / (track.clientWidth || 1));
-    dots.forEach((d, i) => d.classList.toggle('active', i === idx));
-  });
-  dots.forEach((dot, i) => {
-    dot.addEventListener('click', () => track.scrollTo({ left: i * track.clientWidth, behavior: 'smooth' }));
-  });
-}
-
-/* Photo upload — milestones */
-function loadMsPhoto(input) {
+/* Photo upload — slides */
+function loadSlidePhoto(input) {
   const file = input.files[0]; if (!file) return;
   const reader = new FileReader();
   reader.onload = e => {
-    const slot = input.closest('.ms-photo');
-    let img = slot.querySelector('img');
-    if (!img) { img = document.createElement('img'); slot.insertBefore(img, slot.firstChild); }
+    const box = input.closest('.ms-slide-img');
+    let img = box.querySelector('img');
+    if (!img) { img = document.createElement('img'); box.insertBefore(img, box.firstChild); }
     img.src = e.target.result;
-    const icon = slot.querySelector('.ms-photo-icon');
-    const lbl  = slot.querySelector('.ms-photo-label');
-    if (icon) icon.style.display = 'none';
-    if (lbl)  lbl.style.display  = 'none';
+    const ph = box.querySelector('.ms-slide-img-ph');
+    if (ph) ph.style.display = 'none';
   };
   reader.readAsDataURL(file);
 }
