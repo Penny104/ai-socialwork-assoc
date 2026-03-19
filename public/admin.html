@@ -62,8 +62,9 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;bac
 .bk-date-d{font-family:var(--fh);font-size:1.65rem;font-weight:700;line-height:1;}
 .bk-info{flex:1;min-width:0;}
 .bk-inst{font-family:var(--fh);font-size:1rem;font-weight:700;margin-bottom:.25rem;}
-.bk-meta{font-size:.79rem;color:#7a6c60;line-height:2;}
-.bk-meta span{display:inline-block;margin-right:.9rem;}
+.bk-meta{font-size:.9rem;color:#7a6c60;line-height:1.5;}
+.bk-meta span{display:block;padding:.3rem 0;border-bottom:1px solid var(--grid);}
+.bk-meta span:last-child{border-bottom:none;}
 .bk-expect{font-size:.79rem;color:#6a5c50;margin-top:.35rem;line-height:1.7;padding:.4rem .65rem;background:#faf6f0;border-radius:6px;border:1px solid var(--grid);}
 .bk-time{font-size:.68rem;color:#ccc;font-family:var(--fh);margin-top:.4rem;}
 .btn-cancel{flex-shrink:0;padding:.5rem 1rem;background:white;color:var(--orange);border:2px solid var(--orange);border-radius:7px;font-family:var(--fh);font-size:.82rem;font-weight:700;cursor:pointer;transition:.18s;white-space:nowrap;box-shadow:2px 3px 0 var(--orange);}
@@ -294,9 +295,14 @@ function renderBookings(){
       <div class="bk-date-box"><div class="bk-date-m">${MZ[dt.getMonth()]}</div><div class="bk-date-d">${dt.getDate()}</div></div>
       <div class="bk-info">
         <div class="bk-inst">${esc(b.institution)}</div>
-        <div class="bk-meta"><span>⏱ ${esc(b.hours)} 小時</span><span>📍 ${esc(b.location)}</span><span>📞 ${esc(b.phone)}</span><span>✉ ${esc(b.email)}</span></div>
-        ${b.expectations?`<div class="bk-expect">${esc(b.expectations)}</div>`:''}
-        <div class="bk-time">預約時間：${new Date(b.bookedAt).toLocaleString('zh-TW')}</div>
+        <div class="bk-meta">
+          <span>⏱&nbsp; 授課時數：${esc(b.hours)} 小時</span>
+          <span>📍&nbsp; 授課地點：${esc(b.location)}</span>
+          <span>📞&nbsp; 聯絡電話：${esc(b.phone)}</span>
+          <span>✉️&nbsp; 聯絡 Email：${esc(b.email)}</span>
+          ${b.expectations?`<span>💬&nbsp; 期待事項：${esc(b.expectations)}</span>`:''}
+          <span style="color:#bbb;font-size:.78rem;">🕐&nbsp; 預約時間：${new Date(b.bookedAt).toLocaleString('zh-TW')}</span>
+        </div>
       </div>
       <button class="btn-cancel" onclick="cancelBooking('${b.id}')">取消預約</button>
     </div>`;
