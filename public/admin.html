@@ -170,6 +170,20 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;bac
     <!-- ① 預約管理 -->
     <div class="tab-panel active" id="tab-bookings">
       <div class="stats-row" id="stats-row"></div>
+
+      <!-- 不可預約日期管理 -->
+      <div class="editor-box" style="margin-bottom:1.75rem;">
+        <div class="editor-box-title">設定不可預約日期 <span class="e-badge">BLOCKED DATES</span></div>
+        <div style="display:flex;gap:.75rem;align-items:flex-end;flex-wrap:wrap;margin-bottom:1rem;">
+          <div class="ef" style="margin-bottom:0;flex:1;min-width:180px;">
+            <label>選擇日期</label>
+            <input type="date" id="block-date-input" style="width:100%;">
+          </div>
+          <button class="btn-add" style="margin-bottom:0;white-space:nowrap;" onclick="addBlockedDate()">＋ 新增不可預約日期</button>
+        </div>
+        <div id="blocked-dates-list" style="display:flex;flex-wrap:wrap;gap:.55rem;"></div>
+      </div>
+
       <div class="sec-title">預約記錄</div>
       <div class="bk-list" id="bk-list"></div>
     </div>
@@ -278,7 +292,7 @@ document.getElementById('login-form').addEventListener('submit',function(e){
 function showDash(){
   document.getElementById('login-wrap').style.display='none';
   document.getElementById('dashboard').style.display='block';
-  renderBookings(); renderSlides(); renderNews(); renderTeam(); renderMembers(); renderCourses(); renderLecturers(); loadCfg();
+  renderBookings(); renderBlockedDates(); renderSlides(); renderNews(); renderTeam(); renderMembers(); renderCourses(); renderLecturers(); loadCfg();
   // 切回此分頁時立刻刷新
   document.addEventListener('visibilitychange', ()=>{ if(document.visibilityState==='visible') renderBookings(); });
   // 其他分頁寫入 localStorage 時即時更新
@@ -296,7 +310,7 @@ document.querySelectorAll('.a-tab').forEach(t=>t.addEventListener('click',()=>{
   document.querySelectorAll('.tab-panel').forEach(x=>x.classList.remove('active'));
   t.classList.add('active');
   document.getElementById('tab-'+t.dataset.tab).classList.add('active');
-  if(t.dataset.tab==='bookings') renderBookings();
+  if(t.dataset.tab==='bookings'){renderBookings();renderBlockedDates();}
 }));
 
 /* ═══ UTIL ═══ */
@@ -308,6 +322,32 @@ function toast(id){const el=document.getElementById(id);el.classList.add('show')
 function upload(e,cb){const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=ev=>cb(ev.target.result);r.readAsDataURL(f);}
 
 const CLR_OPTS=`<option value="orange">橘色</option><option value="blue">藍色</option><option value="green">綠色</option><option value="yellow">黃色</option>`;
+
+/* ═══ BLOCKED DATES ═══ */
+function renderBlockedDates(){
+  const dates=JSON.parse(localStorage.getItem('blockedDates')||'[]').sort();
+  const el=document.getElementById('blocked-dates-list');
+  if(!dates.length){el.innerHTML='<span style="font-family:var(--fh);font-size:.82rem;color:#bbb;">尚未設定不可預約日期</span>';return;}
+  el.innerHTML=dates.map(d=>`
+    <span style="display:inline-flex;align-items:center;gap:.45rem;background:#fff0ee;border:1.5px solid var(--orange);border-radius:8px;padding:.38rem .8rem;font-family:var(--fh);font-size:.88rem;font-weight:600;color:var(--orange);">
+      🚫 ${d}
+      <button onclick="removeBlockedDate('${d}')" style="background:none;border:none;cursor:pointer;font-size:.85rem;color:var(--orange);line-height:1;padding:0;margin-left:.2rem;" title="移除">✕</button>
+    </span>`).join('');
+}
+function addBlockedDate(){
+  const val=document.getElementById('block-date-input').value;
+  if(!val)return;
+  const dates=JSON.parse(localStorage.getItem('blockedDates')||'[]');
+  if(!dates.includes(val)){dates.push(val);localStorage.setItem('blockedDates',JSON.stringify(dates));}
+  document.getElementById('block-date-input').value='';
+  renderBlockedDates();
+}
+function removeBlockedDate(d){
+  let dates=JSON.parse(localStorage.getItem('blockedDates')||'[]');
+  dates=dates.filter(x=>x!==d);
+  localStorage.setItem('blockedDates',JSON.stringify(dates));
+  renderBlockedDates();
+}
 
 /* ═══ BOOKINGS ═══ */
 function renderBookings(){

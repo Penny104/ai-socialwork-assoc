@@ -523,9 +523,10 @@ body::after {
 (function () {
   const _init = new Date();
   const pad = n => String(n).padStart(2,'0');
-  const blocked = new Set(
-    JSON.parse(localStorage.getItem('bookings') || '[]').map(b => b.date)
-  );
+  const blocked = new Set([
+    ...JSON.parse(localStorage.getItem('bookings') || '[]').map(b => b.date),
+    ...JSON.parse(localStorage.getItem('blockedDates') || '[]')
+  ]);
 
   let year  = _init.getFullYear();
   let month = _init.getMonth();
