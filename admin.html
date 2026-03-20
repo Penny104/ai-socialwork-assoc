@@ -682,6 +682,13 @@ function saveCred(){
 }
 
 /* ═══ INIT — 必須在所有 function 定義完後才執行 ═══ */
+(function prefillLogin(){
+  const c=getCred();
+  const uEl=document.getElementById('u');
+  const pEl=document.getElementById('p');
+  if(uEl) uEl.value=c.u;
+  if(pEl) pEl.value=c.p;
+})();
 if(sessionStorage.getItem('admin_ok')==='1') showDash();
 </script>
 </body>
