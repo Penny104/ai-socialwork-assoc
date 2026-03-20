@@ -277,7 +277,6 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;bac
 <script>
 /* ═══ AUTH ═══ */
 function getCred(){const c=JSON.parse(localStorage.getItem('adminCred')||'null');return c||{u:'Tatswin',p:'tatswin2024'};}
-if(sessionStorage.getItem('admin_ok')==='1') showDash();
 
 document.getElementById('login-form').addEventListener('submit',function(e){
   e.preventDefault();
@@ -681,6 +680,9 @@ function saveCred(){
   document.getElementById('new-p2').value='';
   toast('t-cred');
 }
+
+/* ═══ INIT — 必須在所有 function 定義完後才執行 ═══ */
+if(sessionStorage.getItem('admin_ok')==='1') showDash();
 </script>
 </body>
 </html>
