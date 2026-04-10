@@ -222,7 +222,7 @@ body::after {
 }
 .form-panel-date {
   font-family:var(--fh); font-size:1.05rem; font-weight:700;
-  color:var(--ink); flex:1;
+  color:var(--ink); flex:1; line-height:1.6;
 }
 .form-panel-clear {
   font-size:.78rem; color:var(--ink); opacity:.55;
@@ -308,6 +308,16 @@ body::after {
   margin:0 auto 1rem; box-shadow:3px 4px 0 rgba(125,157,127,.4);
 }
 .form-success p { font-family:var(--fh); font-size:1.05rem; color:var(--ink); line-height:1.8; }
+#date-summary { margin-top:.85rem; min-height:1.6rem; }
+#date-summary .ds-pill {
+  display:inline-flex; align-items:center; gap:.5rem; flex-wrap:wrap;
+  background:#fff8ec; border:1.5px solid var(--orange); border-radius:10px;
+  padding:.45rem 1rem; font-family:var(--fh); font-size:.88rem; color:var(--orange); font-weight:600;
+}
+#date-summary .ds-tag {
+  background:var(--orange); color:white; border-radius:5px;
+  padding:.12rem .55rem; font-size:.78rem; font-weight:700; margin-right:.25rem;
+}
 
 /* ── LECTURERS ── */
 .lecturers-section {
@@ -380,8 +390,9 @@ body::after {
       <h1 class="page-title">課程預約</h1>
       <p class="page-lead">
         歡迎各社福機構單位申請到府講授。<br>
-        請在日曆上點選您希望的授課日期，右側將跳出申請表單供您填寫。
+        請在日曆上點選授課日期（可複選多個日期），右側填寫申請表單一次送出。
       </p>
+      <div id="date-summary"></div>
     </div>
 
     <!-- Calendar + Form -->
@@ -530,14 +541,33 @@ body::after {
 
   let year  = _init.getFullYear();
   let month = _init.getMonth();
-  let selectedDate = null;
+  const selectedDates = new Set();   // 複選日期集合
 
   const gridEl    = document.getElementById('cal-grid');
   const monthLbl  = document.getElementById('cal-month-label');
   const panel     = document.getElementById('form-panel');
   const dateLabel = document.getElementById('form-date-label');
+  const summaryEl = document.getElementById('date-summary');
   const fullMonths = ['一月','二月','三月','四月','五月','六月','七月','八月','九月','十月','十一月','十二月'];
   const wdays = ['日','一','二','三','四','五','六'];
+
+  function fmtShort(ds) {
+    const dt = new Date(ds + 'T00:00:00');
+    return `${dt.getMonth()+1}/${dt.getDate()}（週${wdays[dt.getDay()]}）`;
+  }
+
+  function updateSummary() {
+    if (!summaryEl) return;
+    if (!selectedDates.size) { summaryEl.innerHTML = ''; return; }
+    const sorted = [...selectedDates].sort();
+    summaryEl.innerHTML = `<div class="ds-pill"><span class="ds-tag">已選取 ${sorted.length} 個日期</span>${sorted.map(fmtShort).join('　')}</div>`;
+  }
+
+  function updatePanel() {
+    if (!selectedDates.size) return;
+    const sorted = [...selectedDates].sort();
+    dateLabel.innerHTML = `📅 已選取 <strong>${sorted.length}</strong> 個日期：<br><span style="font-size:.88rem;font-weight:400;">${sorted.map(fmtShort).join('　')}</span>`;
+  }
 
   function render() {
     const firstDay = new Date(year, month, 1).getDay();
@@ -561,13 +591,27 @@ body::after {
       if (ds === todayStr)         el.classList.add('cal-today');
       if (past || blocked.has(ds)) el.classList.add('cal-past');
       else                         el.classList.add('cal-avail');
-      if (ds === selectedDate)   el.classList.add('cal-selected');
+      if (selectedDates.has(ds))   el.classList.add('cal-selected');
 
       el.addEventListener('click', () => {
         if (el.classList.contains('cal-past') || blocked.has(ds)) return;
-        selectedDate = ds;
+        if (selectedDates.has(ds)) {
+          selectedDates.delete(ds);
+        } else {
+          selectedDates.add(ds);
+        }
         render();
-        showPanel(ds);
+        updateSummary();
+        if (selectedDates.size > 0) {
+          updatePanel();
+          document.getElementById('bk-form').style.display = '';
+          document.getElementById('form-success').style.display = 'none';
+          panel.classList.add('show');
+          layout.classList.add('has-date');
+        } else {
+          panel.classList.remove('show');
+          layout.classList.remove('has-date');
+        }
       });
       gridEl.appendChild(el);
     }
@@ -575,20 +619,11 @@ body::after {
 
   const layout = document.querySelector('.booking-layout');
 
-  function showPanel(ds) {
-    const dt = new Date(ds + 'T00:00:00');
-    dateLabel.textContent = `📅 ${dt.getFullYear()} 年 ${dt.getMonth()+1} 月 ${dt.getDate()} 日（週${wdays[dt.getDay()]}）`;
-    document.getElementById('bk-form').style.display = '';
-    document.getElementById('form-success').style.display = 'none';
-    panel.classList.add('show');
-    layout.classList.add('has-date');
-  }
-
   window.clearDate = function () {
-    selectedDate = null;
+    selectedDates.clear();
     panel.classList.remove('show');
     layout.classList.remove('has-date');
-    setTimeout(() => { panel.style.display = 'none'; panel.style.display = ''; }, 50);
+    updateSummary();
     render();
   };
 
@@ -604,21 +639,25 @@ body::after {
   window.handleSubmit = function (e) {
     e.preventDefault();
     const form = document.getElementById('bk-form');
-    const booking = {
-      id: Date.now().toString(),
-      date: selectedDate,
-      institution: form.querySelector('[name="institution"]').value,
-      hours: document.getElementById('hours-value').value,
-      location: form.querySelector('[name="location"]').value,
-      expectations: form.querySelector('[name="expectations"]').value,
-      phone: form.querySelector('[name="phone"]').value,
-      email: form.querySelector('[name="email"]').value,
-      bookedAt: new Date().toISOString()
-    };
     const all = JSON.parse(localStorage.getItem('bookings') || '[]');
-    all.push(booking);
+    const sorted = [...selectedDates].sort();
+    sorted.forEach((ds, idx) => {
+      all.push({
+        id: (Date.now() + idx).toString(),
+        date: ds,
+        institution: form.querySelector('[name="institution"]').value,
+        hours: document.getElementById('hours-value').value,
+        location: form.querySelector('[name="location"]').value,
+        expectations: form.querySelector('[name="expectations"]').value,
+        phone: form.querySelector('[name="phone"]').value,
+        email: form.querySelector('[name="email"]').value,
+        bookedAt: new Date().toISOString()
+      });
+      blocked.add(ds);
+    });
     localStorage.setItem('bookings', JSON.stringify(all));
-    blocked.add(selectedDate);
+    selectedDates.clear();
+    updateSummary();
     form.style.display = 'none';
     document.getElementById('form-success').style.display = 'block';
   };
