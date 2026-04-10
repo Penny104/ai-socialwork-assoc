@@ -390,7 +390,7 @@ body::after {
       <h1 class="page-title">課程預約</h1>
       <p class="page-lead">
         歡迎各社福機構單位申請到府講授。<br>
-        請在日曆上點選授課日期（可複選多個日期），右側填寫申請表單一次送出。
+        請在日曆上點選授課日期（可複選連續多個日期），右側填寫申請表單一次送出。
       </p>
       <div id="date-summary"></div>
     </div>
@@ -595,11 +595,30 @@ body::after {
 
       el.addEventListener('click', () => {
         if (el.classList.contains('cal-past') || blocked.has(ds)) return;
+
         if (selectedDates.has(ds)) {
-          selectedDates.delete(ds);
-        } else {
+          // 點已選取的日期 → 清除全部
+          selectedDates.clear();
+        } else if (selectedDates.size === 0) {
+          // 第一個日期
           selectedDates.add(ds);
+        } else {
+          // 必須相鄰才可加入；否則重新從此日期開始
+          const sorted = [...selectedDates].sort();
+          const minD = new Date(sorted[0] + 'T00:00:00');
+          const maxD = new Date(sorted[sorted.length-1] + 'T00:00:00');
+          const prev = new Date(minD); prev.setDate(prev.getDate()-1);
+          const next = new Date(maxD); next.setDate(maxD.getDate()+1);
+          const fmt = d => `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;
+          if (ds === fmt(prev) || ds === fmt(next)) {
+            selectedDates.add(ds);
+          } else {
+            // 不相鄰 → 重置為只選此日期
+            selectedDates.clear();
+            selectedDates.add(ds);
+          }
         }
+
         render();
         updateSummary();
         if (selectedDates.size > 0) {
