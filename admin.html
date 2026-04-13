@@ -158,6 +158,8 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;bac
       <button class="a-tab" data-tab="team">👥 核心團隊</button>
       <button class="a-tab" data-tab="members">👤 全體成員</button>
       <button class="a-tab" data-tab="courses">📚 課程簡介</button>
+      <button class="a-tab" data-tab="expect">🎯 課程期待</button>
+      <button class="a-tab" data-tab="services">🛎️ 服務項目</button>
       <button class="a-tab" data-tab="lecturers">👩‍🏫 講師管理</button>
       <button class="a-tab" data-tab="settings">⚙️ 設定</button>
     </div>
@@ -237,10 +239,32 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;bac
       </div>
     </div>
 
-    <!-- ⑦ 講師管理 -->
+
+    <!-- ⑦ 課程期待 -->
+    <div class="tab-panel" id="tab-expect">
+      <div class="editor-box">
+        <div class="editor-box-title">課程期待 <span class="e-badge">EXPECT</span></div>
+        <button class="btn-add" onclick="addExpect()">＋ 新增機構類型</button>
+        <div id="expect-ed"></div>
+        <div class="save-row"><span class="save-toast" id="t-expect">✓ 已儲存</span><button class="btn-save" onclick="saveExpect()">儲存變更</button></div>
+      </div>
+    </div>
+
+    <!-- ⑧ 服務項目 -->
+    <div class="tab-panel" id="tab-services">
+      <div class="editor-box">
+        <div class="editor-box-title">服務項目 <span class="e-badge">SERVICES</span></div>
+        <button class="btn-add" onclick="addService()">＋ 新增服務項目</button>
+        <div id="services-ed"></div>
+        <div class="save-row"><span class="save-toast" id="t-services">✓ 已儲存</span><button class="btn-save" onclick="saveServices()">儲存變更</button></div>
+      </div>
+    </div>
+
+    <!-- ⑨ 講師管理 -->
     <div class="tab-panel" id="tab-lecturers">
       <div class="editor-box">
         <div class="editor-box-title">授課講師資訊 <span class="e-badge">LECTURERS</span></div>
+        <button class="btn-add" onclick="addLecturer()">＋ 新增講師</button>
         <div id="lect-ed"></div>
         <div class="save-row"><span class="save-toast" id="t-lect">✓ 已儲存</span><button class="btn-save" onclick="saveLecturers()">儲存變更</button></div>
       </div>
@@ -291,7 +315,7 @@ document.getElementById('login-form').addEventListener('submit',function(e){
 function showDash(){
   document.getElementById('login-wrap').style.display='none';
   document.getElementById('dashboard').style.display='block';
-  renderBookings(); renderBlockedDates(); renderSlides(); renderNews(); renderTeam(); renderMembers(); renderCourses(); renderLecturers(); loadCfg();
+  renderBookings(); renderBlockedDates(); renderSlides(); renderNews(); renderTeam(); renderMembers(); renderCourses(); renderExpect(); renderServices(); renderLecturers(); loadCfg();
   // 切回此分頁時立刻刷新
   document.addEventListener('visibilitychange', ()=>{ if(document.visibilityState==='visible') renderBookings(); });
   // 其他分頁寫入 localStorage 時即時更新
@@ -310,6 +334,8 @@ document.querySelectorAll('.a-tab').forEach(t=>t.addEventListener('click',()=>{
   t.classList.add('active');
   document.getElementById('tab-'+t.dataset.tab).classList.add('active');
   if(t.dataset.tab==='bookings'){renderBookings();renderBlockedDates();}
+  if(t.dataset.tab==='expect'){renderExpect();}
+  if(t.dataset.tab==='services'){renderServices();}
 }));
 
 /* ═══ UTIL ═══ */
@@ -650,24 +676,27 @@ const DEF_LECT=[
   {avatar:'👩‍🏫',tag:'理事長 · 社工師',name:'陳雅慧',role:'國立臺灣大學社工系教授',skills:'AI 社工倫理,數位轉型實務,政策倡議,個案管理科技化',bio:'擁有 20 年社工實務與教學經驗，長期關注科技融入社會服務的理論與實踐，曾多次受邀至立法院及衛福部進行政策諮詢。授課風格深入淺出，擅長以真實案例引導學員思考，學員評分均超過 4.7／5.0。'},
   {avatar:'👨‍💻',tag:'技術總監 · 工程師',name:'林建宏',role:'前大廠 AI 研究員 · 台大資工碩士',skills:'AI 工具實作,ChatGPT 應用,數據分析,自動化流程',bio:'多年 AI 產業研發經歷，專注於將複雜的科技知識轉化為社工師能立即上手的實用技能。授課以「做中學」為核心，每場工作坊皆提供可帶走的工具模板，學員平均滿意度達 4.8／5.0。'},
 ];
-function renderLecturers(){
-  const lects=sc().lecturers||DEF_LECT;
-  document.getElementById('lect-ed').innerHTML=lects.map((l,i)=>`
+let lectData=[];
+function renderLecturers(){lectData=[...(sc().lecturers||DEF_LECT)];buildLecturersUI();}
+function buildLecturersUI(){
+  document.getElementById('lect-ed').innerHTML=lectData.map((l,i)=>`
     <div class="item-card">
+      <button class="btn-del" onclick="lectData.splice(${i},1);buildLecturersUI()">✕</button>
       <div class="item-num">講師 ${i+1}</div>
       <div class="two-col">
-        <div class="ef"><label>頭像 Emoji</label><input id="l-a-${i}" value="${esc(l.avatar)}"></div>
-        <div class="ef"><label>標籤</label><input id="l-g-${i}" value="${esc(l.tag)}"></div>
-        <div class="ef"><label>姓名</label><input id="l-n-${i}" value="${esc(l.name)}"></div>
-        <div class="ef"><label>職位</label><input id="l-r-${i}" value="${esc(l.role)}"></div>
+        <div class="ef"><label>頭像 Emoji</label><input id="l-a-${i}" value="${esc(l.avatar||'👤')}"></div>
+        <div class="ef"><label>標籤</label><input id="l-g-${i}" value="${esc(l.tag||'')}"></div>
+        <div class="ef"><label>姓名</label><input id="l-n-${i}" value="${esc(l.name||'')}"></div>
+        <div class="ef"><label>職位</label><input id="l-r-${i}" value="${esc(l.role||'')}"></div>
       </div>
-      <div class="ef"><label>專長標籤（逗號分隔）</label><input id="l-s-${i}" value="${esc(l.skills)}"></div>
-      <div class="ef"><label>個人簡介</label><textarea id="l-b-${i}" rows="3">${esc(l.bio)}</textarea></div>
+      <div class="ef"><label>專長標籤（逗號分隔）</label><input id="l-s-${i}" value="${esc(l.skills||'')}"></div>
+      <div class="ef"><label>個人簡介</label><textarea id="l-b-${i}" rows="3">${esc(l.bio||'')}</textarea></div>
     </div>`).join('');
 }
+function addLecturer(){lectData.push({avatar:'👤',tag:'講師',name:'新講師',role:'職位',skills:'',bio:''});buildLecturersUI();}
 function saveLecturers(){
   const s=sc();
-  s.lecturers=DEF_LECT.map((_,i)=>({
+  s.lecturers=lectData.map((_,i)=>({
     avatar:document.getElementById(`l-a-${i}`).value,
     tag:document.getElementById(`l-g-${i}`).value,
     name:document.getElementById(`l-n-${i}`).value,
@@ -675,7 +704,81 @@ function saveLecturers(){
     skills:document.getElementById(`l-s-${i}`).value,
     bio:document.getElementById(`l-b-${i}`).value,
   }));
-  saveSC(s);toast('t-lect');
+  saveSC(s);lectData=[...s.lecturers];buildLecturersUI();toast('t-lect');
+}
+
+/* ═══ EXPECT (課程期待) ═══ */
+const DEF_INST=[
+  {name:'兒少機構',icon:'🧒',color:'var(--orange)',tag:'兒少服務',desc:'專為兒童保護、安置、家庭服務機構的社工師設計',items:['AI輔助兒童個案紀錄撰寫','家庭評估報告自動生成','高風險家庭AI資源盤點','親職教育課程AI輔助設計','兒少保護會議記錄整理']},
+  {name:'身心障礙機構',icon:'♿',color:'var(--blue)',tag:'身心障礙服務',desc:'適用於身心障礙福利機構、日間照顧、職業重建等服務',items:['個別化支持計畫(ISP)AI輔助撰寫','輔助科技與AI工具整合應用','障礙評估報告AI生成技巧','職業重建計畫書設計輔助','跨專業團隊會議記錄整理']},
+  {name:'老人服務機構',icon:'👴',color:'var(--green)',tag:'老人福利服務',desc:'適用於長照機構、居家服務、日間照顧中心的服務人員',items:['長照評估報告AI輔助生成','出院準備服務AI應用','老人個案管理記錄撰寫','生命故事書AI輔助書寫','家庭照顧者支持方案設計']},
+  {name:'家庭服務中心',icon:'🏠',color:'var(--yellow)',tag:'家庭福利服務',desc:'適用於家庭服務中心、社區服務、一般個案管理',items:['家庭訪視記錄AI輔助撰寫','危機評估AI輔助分析','服務計畫書快速生成','社區資源AI搜尋與整合','家庭功能評估報告撰寫']},
+  {name:'心理衛生機構',icon:'🧠',color:'var(--orange)',tag:'心理健康服務',desc:'適用於心理衛生中心、精神醫療社工、諮商機構',items:['心理健康資源AI搜尋整合','精神科個案記錄撰寫技巧','危機介入評估AI輔助','復元計畫書AI設計輔助','跨團隊溝通文件生成']},
+  {name:'社區發展機構',icon:'🏘️',color:'var(--blue)',tag:'社區發展服務',desc:'適用於社區發展協會、社福中心、社區照顧關懷據點',items:['社區資源盤點AI輔助','方案計畫書AI快速撰寫','社區需求評估報告生成','成果報告與統計分析輔助','社區活動企劃AI設計']},
+  {name:'醫療社工',icon:'🏥',color:'var(--green)',tag:'醫療社會工作',desc:'適用於醫院社工部門、出院準備服務、安寧緩和',items:['出院準備計畫AI輔助生成','跨專業溝通記錄整理','病人社會資源評估輔助','安寧緩和個案記錄撰寫','醫療糾紛調解記錄整理']},
+  {name:'學校社工',icon:'🎒',color:'var(--yellow)',tag:'學校社會工作',desc:'適用於學校社工師、兒少輔導機構、教育部相關單位',items:['學生輔導記錄AI撰寫技巧','中輟生追蹤管理AI輔助','校園危機介入評估報告','家訪記錄快速生成','跨單位合作文件整合']},
+];
+const EXP_CLR_OPTS=`<option value="var(--orange)">橘色</option><option value="var(--blue)">藍色</option><option value="var(--green)">綠色</option><option value="var(--yellow)">黃色</option>`;
+let expectData=[];
+function renderExpect(){expectData=JSON.parse(JSON.stringify(sc().expect||DEF_INST));buildExpectUI();}
+function buildExpectUI(){
+  document.getElementById('expect-ed').innerHTML=expectData.map((inst,i)=>`
+    <div class="item-card">
+      <button class="btn-del" onclick="expectData.splice(${i},1);buildExpectUI()">✕</button>
+      <div class="item-num">機構類型 ${i+1}</div>
+      <div class="three-col">
+        <div class="ef"><label>圖示 Emoji</label><input id="ex-ic-${i}" value="${esc(inst.icon||'🏢')}"></div>
+        <div class="ef"><label>機構名稱</label><input id="ex-nm-${i}" value="${esc(inst.name||'')}"></div>
+        <div class="ef"><label>分類標籤</label><input id="ex-tg-${i}" value="${esc(inst.tag||'')}"></div>
+      </div>
+      <div class="two-col">
+        <div class="ef"><label>顏色主題</label><select id="ex-cl-${i}">${EXP_CLR_OPTS}</select></div>
+        <div class="ef"><label>說明文字</label><input id="ex-ds-${i}" value="${esc(inst.desc||'')}"></div>
+      </div>
+      <div style="margin-top:.5rem;">
+        <div style="font-family:var(--fh);font-size:.74rem;font-weight:600;margin-bottom:.4rem;">課程項目（每行一項）</div>
+        <div class="ef"><textarea id="ex-it-${i}" rows="5">${esc((inst.items||[]).join('\n'))}</textarea></div>
+      </div>
+    </div>`).join('');
+  expectData.forEach((inst,i)=>{const el=document.getElementById(`ex-cl-${i}`);if(el)el.value=inst.color||'var(--orange)';});
+}
+function addExpect(){expectData.push({name:'新機構',icon:'🏢',color:'var(--orange)',tag:'服務類型',desc:'服務說明',items:['服務項目一','服務項目二']});buildExpectUI();}
+function saveExpect(){
+  const s=sc();
+  s.expect=expectData.map((_,i)=>({
+    name:document.getElementById(`ex-nm-${i}`).value,
+    icon:document.getElementById(`ex-ic-${i}`).value,
+    color:document.getElementById(`ex-cl-${i}`).value,
+    tag:document.getElementById(`ex-tg-${i}`).value,
+    desc:document.getElementById(`ex-ds-${i}`).value,
+    items:document.getElementById(`ex-it-${i}`).value.split('\n').map(x=>x.trim()).filter(Boolean),
+  }));
+  saveSC(s);expectData=JSON.parse(JSON.stringify(s.expect));buildExpectUI();toast('t-expect');
+}
+
+/* ═══ SERVICES (服務項目) ═══ */
+const DEF_SVC=[
+  {name:'工具書',desc:'AI 社工實務應用工具書，系統整理 AI 工具於社會工作各場域的操作指引與具體案例。\n\n涵蓋個案管理、行政記錄、評估報告、服務計畫設計等核心業務，提供社工師易讀易用的實戰參考手冊，可作為機構內部培訓教材或個人自學資源。'},
+];
+let svcData=[];
+function renderServices(){svcData=JSON.parse(JSON.stringify(sc().services||DEF_SVC));buildServicesUI();}
+function buildServicesUI(){
+  document.getElementById('services-ed').innerHTML=svcData.map((sv,i)=>`
+    <div class="item-card">
+      <button class="btn-del" onclick="svcData.splice(${i},1);buildServicesUI()">✕</button>
+      <div class="item-num">服務項目 ${i+1}</div>
+      <div class="ef"><label>服務名稱</label><input id="sv-nm-${i}" value="${esc(sv.name||'')}"></div>
+      <div class="ef"><label>服務說明</label><textarea id="sv-ds-${i}" rows="5">${esc(sv.desc||'')}</textarea></div>
+    </div>`).join('');
+}
+function addService(){svcData.push({name:'新服務項目',desc:'服務說明...'});buildServicesUI();}
+function saveServices(){
+  const s=sc();
+  s.services=svcData.map((_,i)=>({
+    name:document.getElementById(`sv-nm-${i}`).value,
+    desc:document.getElementById(`sv-ds-${i}`).value,
+  }));
+  saveSC(s);svcData=JSON.parse(JSON.stringify(s.services));buildServicesUI();toast('t-services');
 }
 
 /* ═══ CONFIG ═══ */

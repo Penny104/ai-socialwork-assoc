@@ -2295,13 +2295,7 @@ body::after {
 <!-- SERVICE ITEMS -->
 <section class="service-section" id="services">
   <h2 class="sec-h">服務項目</h2>
-  <div class="service-grid" id="service-grid">
-    <div class="service-card">
-      <div class="service-tape"></div>
-      <div class="service-name">工具書</div>
-      <div class="service-desc">AI 社工實務應用工具書，系統整理 AI 工具於社會工作各場域的操作指引與具體案例。<br><br>涵蓋個案管理、行政記錄、評估報告、服務計畫設計等核心業務，提供社工師易讀易用的實戰參考手冊，可作為機構內部培訓教材或個人自學資源。</div>
-    </div>
-  </div>
+  <div class="service-grid" id="service-grid"></div>
 </section>
 
 <!-- Expect popup modal -->
@@ -2320,7 +2314,7 @@ body::after {
 <footer class="footer">
   <div class="footer-logo">社團法人臺灣科技與社會工作協會</div>
   <p class="footer-mission">本會為依法設立、非以營利為目的之社會團體，以推廣科技與社會工作相關領域之研究與實務應用，以促進科技與社會工作之協力，並加強跨專業合作實務經驗與交流為宗旨。</p>
-  <p style="font-size:.82rem;margin:.6rem 0;opacity:.6;">tatswin2022@gmail.com &nbsp;·&nbsp; +886-2-0000-0000 &nbsp;·&nbsp; 臺灣 &nbsp;·&nbsp; 統一編號：92269995</p>
+  <p style="font-size:.82rem;margin:.6rem 0;opacity:.6;"><span id="footer-email">tatswin2022@gmail.com</span> &nbsp;·&nbsp; <span id="footer-phone">+886-2-0000-0000</span> &nbsp;·&nbsp; 臺灣 &nbsp;·&nbsp; 統一編號：92269995</p>
   <p class="footer-copy">© 2024 Taiwan Technology & Social Work Association. All Rights Reserved.</p>
 </footer>
 
@@ -2398,6 +2392,17 @@ body::after {
   ];
   const gridEl=document.getElementById('course-grid');
   if(gridEl)gridEl.innerHTML=(sc.courses||DEF_CRS).map(c=>{const cl=CLR[c.color]||CLR.orange;return `<div class="course-card" style="--accent:${cl.bg};--rot:${c.rot};"><div class="course-card-pin">${PIN(cl.bg)}</div><div class="course-card-body"><div class="course-tag" style="background:${cl.bg};color:${cl.text};">${c.tag}</div><ul class="course-items" style="--accent:${cl.bg};">${c.items.map(it=>it.bold?`<li><strong>${it.bold}</strong>${it.text}</li>`:`<li>${it.text}</li>`).join('')}</ul></div></div>`;}).join('');
+
+  /* SERVICES */
+  const DEF_SVC=[{name:'工具書',desc:'AI 社工實務應用工具書，系統整理 AI 工具於社會工作各場域的操作指引與具體案例。\\n\\n涵蓋個案管理、行政記錄、評估報告、服務計畫設計等核心業務，提供社工師易讀易用的實戰參考手冊，可作為機構內部培訓教材或個人自學資源。'}];
+  const svcEl=document.getElementById('service-grid');
+  if(svcEl)svcEl.innerHTML=(sc.services||DEF_SVC).map(s=>`<div class="service-card"><div class="service-tape"></div><div class="service-name">${s.name}</div><div class="service-desc">${s.desc.replace(/\\n/g,'<br>')}</div></div>`).join('');
+  /* FOOTER */
+  const cfg=sc.config||{};
+  const fEmail=document.getElementById('footer-email');
+  const fPhone=document.getElementById('footer-phone');
+  if(fEmail&&cfg.email)fEmail.textContent=cfg.email;
+  if(fPhone&&cfg.phone)fPhone.textContent=cfg.phone;
 })();
 
 /* ══════════════════════════════════════════
@@ -2631,7 +2636,7 @@ function toggleMembers() {
 
 /* ── Course Expectations ── */
 (function(){
-  const INST=[
+  const DEF_INST=[
     {name:'兒少機構',icon:'🧒',color:'var(--orange)',
      tag:'兒少服務', desc:'專為兒童保護、安置、家庭服務機構的社工師設計',
      items:['AI輔助兒童個案紀錄撰寫','家庭評估報告自動生成','高風險家庭AI資源盤點','親職教育課程AI輔助設計','兒少保護會議記錄整理']},
@@ -2657,6 +2662,7 @@ function toggleMembers() {
      tag:'學校社會工作', desc:'適用於學校社工師、兒少輔導機構、教育部相關單位',
      items:['學生輔導記錄AI撰寫技巧','中輟生追蹤管理AI輔助','校園危機介入評估報告','家訪記錄快速生成','跨單位合作文件整合']},
   ];
+  const INST=JSON.parse(localStorage.getItem('siteContent')||'{}').expect||DEF_INST;
 
   const wrap = document.getElementById('expect-circles');
   if(!wrap) return;
