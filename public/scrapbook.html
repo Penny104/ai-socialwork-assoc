@@ -1904,7 +1904,7 @@ body::after {
     <li><a href="#hero">首頁</a></li>
     <li><a href="#milestones">協會介紹</a></li>
     <li><a href="#news">最新動態與消息</a></li>
-    <li><a href="#team">核心團隊</a></li>
+    <li><a href="#team">團隊成員</a></li>
     <li><a href="#support">課程簡介</a></li>
     <li><a href="#expect">課程期待</a></li>
     <li><a href="#services">服務項目</a></li>
@@ -2174,14 +2174,14 @@ body::after {
      SECTION 4 — TEAM
 ══════════════════════════════ -->
 <section class="team-section" id="team">
-  <h2 class="sec-h" style="position:relative;z-index:1;">核心團隊</h2>
+  <h2 class="sec-h" style="position:relative;z-index:1;">團隊成員</h2>
 
   <div class="team-list" id="team-list"></div>
 
   <!-- 18 member blob circles -->
   <div class="member-grid-wrap" id="member-wrap">
     <div class="member-grid-hdr" onclick="toggleMembers()">
-      <p class="member-grid-title">— 全體成員</p>
+      <p class="member-grid-title">— 全體成員（按照姓氏筆畫順序）</p>
       <button class="member-grid-toggle">
         查看更多 <span class="toggle-arrow">▼</span>
       </button>
@@ -2290,7 +2290,7 @@ body::after {
     <div class="mem-name">${m.name}</div>
     <div class="mem-assoc-role">${m.title||m.role||'成員'}</div>
     ${m.org?`<div class="mem-detail"><span class="mem-detail-icon">🏢</span><span>${m.org}</span></div>`:''}
-    ${m.contact?`<div class="mem-detail"><span class="mem-detail-icon">✉️</span><span>${m.contact}</span></div>`:''}
+    ${m.service?`<div class="mem-detail"><span class="mem-detail-icon">💼</span><span>${m.service}</span></div>`:''}
   </div>`
   const topEl=document.getElementById('member-top');const colEl=document.getElementById('member-collapse');
   if(topEl)topEl.innerHTML=mems.slice(0,4).map((m,i)=>mkB(m,i)).join('');
