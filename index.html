@@ -735,13 +735,13 @@ body::after {
 @media(max-width:600px) { .member-grid { grid-template-columns:repeat(2,1fr); } }
 
 /* ══ COURSE EXPECT SECTION ══ */
-.expect-section { padding:6rem 5rem 9rem 6rem; position:relative; }
+.expect-section { padding:6rem 5rem 5rem 6rem; position:relative; }
 .expect-circles-wrap {
   display:grid;
   grid-template-columns:repeat(4,160px);
   grid-auto-rows:160px;
   gap:2rem 2.25rem;
-  justify-content:start;
+  justify-content:center;
   margin-top:2.5rem;
 }
 @media(max-width:900px){ .expect-circles-wrap{ grid-template-columns:repeat(3,150px); } }
@@ -785,12 +785,12 @@ body::after {
 .expect-modal-items li::before { content:'✦'; color:var(--orange); font-size:.7rem; margin-top:.3rem; flex-shrink:0; }
 
 /* ══ SERVICE ITEMS SECTION ══ */
-.service-section { padding:6rem 5rem 9rem 6rem; position:relative; }
+.service-section { padding:2.5rem 5rem 7rem 6rem; position:relative; }
 .service-grid { display:flex; flex-wrap:wrap; gap:2rem; margin-top:2.5rem; }
 .service-card {
-  position:relative; width:220px;
+  position:relative; width:360px;
   background:white; border:2.5px solid var(--ink); border-radius:14px;
-  padding:1.75rem 1.6rem 1.5rem;
+  padding:2.25rem 2rem 2rem;
   box-shadow:5px 6px 0 var(--ink);
   transition:transform .22s, box-shadow .22s;
   overflow:hidden;
@@ -1389,13 +1389,13 @@ body::after {
 @media(max-width:600px) { .member-grid { grid-template-columns:repeat(2,1fr); } }
 
 /* ══ COURSE EXPECT SECTION ══ */
-.expect-section { padding:6rem 5rem 9rem 6rem; position:relative; }
+.expect-section { padding:6rem 5rem 5rem 6rem; position:relative; }
 .expect-circles-wrap {
   display:grid;
   grid-template-columns:repeat(4,160px);
   grid-auto-rows:160px;
   gap:2rem 2.25rem;
-  justify-content:start;
+  justify-content:center;
   margin-top:2.5rem;
 }
 @media(max-width:900px){ .expect-circles-wrap{ grid-template-columns:repeat(3,150px); } }
@@ -2298,10 +2298,8 @@ body::after {
   <div class="service-grid" id="service-grid">
     <div class="service-card">
       <div class="service-tape"></div>
-      <div class="service-icon">📖</div>
       <div class="service-name">工具書</div>
-      <div class="service-desc">AI 社工實務應用工具書，系統整理AI工具於社會工作各場域的操作指引與案例。</div>
-      <div class="service-badge">即將推出</div>
+      <div class="service-desc">AI 社工實務應用工具書，系統整理 AI 工具於社會工作各場域的操作指引與具體案例。<br><br>涵蓋個案管理、行政記錄、評估報告、服務計畫設計等核心業務，提供社工師易讀易用的實戰參考手冊，可作為機構內部培訓教材或個人自學資源。</div>
     </div>
   </div>
 </section>
