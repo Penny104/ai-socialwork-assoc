@@ -735,8 +735,17 @@ body::after {
 @media(max-width:600px) { .member-grid { grid-template-columns:repeat(2,1fr); } }
 
 /* ══ COURSE EXPECT SECTION ══ */
-.expect-section { padding:5rem 0 4rem; }
-.expect-circles-wrap { display:flex; flex-wrap:wrap; gap:1.75rem; justify-content:center; margin-top:2.5rem; }
+.expect-section { padding:6rem 5rem 9rem 6rem; position:relative; }
+.expect-circles-wrap {
+  display:grid;
+  grid-template-columns:repeat(4,160px);
+  grid-auto-rows:160px;
+  gap:2rem 2.25rem;
+  justify-content:start;
+  margin-top:2.5rem;
+}
+@media(max-width:900px){ .expect-circles-wrap{ grid-template-columns:repeat(3,150px); } }
+@media(max-width:600px){ .expect-circles-wrap{ grid-template-columns:repeat(2,140px); } }
 .expect-circle {
   width:150px; height:150px;
   display:flex; align-items:center; justify-content:center; flex-direction:column;
@@ -774,6 +783,40 @@ body::after {
 .expect-modal-items { list-style:none; display:flex; flex-direction:column; gap:.6rem; }
 .expect-modal-items li { font-size:.9rem; line-height:1.75; color:#5a4e44; display:flex; gap:.5rem; align-items:flex-start; }
 .expect-modal-items li::before { content:'✦'; color:var(--orange); font-size:.7rem; margin-top:.3rem; flex-shrink:0; }
+
+/* ══ SERVICE ITEMS SECTION ══ */
+.service-section { padding:6rem 5rem 9rem 6rem; position:relative; }
+.service-grid { display:flex; flex-wrap:wrap; gap:2rem; margin-top:2.5rem; }
+.service-card {
+  position:relative; width:220px;
+  background:white; border:2.5px solid var(--ink); border-radius:14px;
+  padding:1.75rem 1.6rem 1.5rem;
+  box-shadow:5px 6px 0 var(--ink);
+  transition:transform .22s, box-shadow .22s;
+  overflow:hidden;
+}
+.service-card:nth-child(odd)  { transform:rotate(-1deg); }
+.service-card:nth-child(even) { transform:rotate(.8deg); }
+.service-card:hover { transform:rotate(0) translateY(-5px); box-shadow:7px 10px 0 var(--ink); }
+.service-tape {
+  position:absolute; top:-4px; left:50%; transform:translateX(-50%);
+  width:52px; height:16px; border-radius:2px; opacity:.75;
+  background:var(--yellow);
+}
+.service-icon { font-size:2.2rem; margin-bottom:.65rem; }
+.service-name {
+  font-family:var(--fh); font-size:1.25rem; font-weight:700;
+  color:var(--ink); margin-bottom:.35rem;
+}
+.service-desc { font-size:.84rem; color:#7a6c60; line-height:1.75; }
+.service-badge {
+  display:inline-block; margin-top:.85rem;
+  font-family:var(--fh); font-size:.72rem; font-weight:700;
+  padding:.18rem .7rem; border-radius:4px;
+  background:var(--yellow); color:var(--ink);
+  border:1.5px solid var(--ink); letter-spacing:.05em;
+}
+
 .expect-modal-close { position:absolute; top:1rem; right:1.1rem; width:30px; height:30px; border:2px solid var(--grid); border-radius:8px; background:white; font-size:1rem; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:.18s; }
 .expect-modal-close:hover { background:var(--orange); border-color:var(--orange); color:white; }
 
@@ -1346,8 +1389,17 @@ body::after {
 @media(max-width:600px) { .member-grid { grid-template-columns:repeat(2,1fr); } }
 
 /* ══ COURSE EXPECT SECTION ══ */
-.expect-section { padding:5rem 0 4rem; }
-.expect-circles-wrap { display:flex; flex-wrap:wrap; gap:1.75rem; justify-content:center; margin-top:2.5rem; }
+.expect-section { padding:6rem 5rem 9rem 6rem; position:relative; }
+.expect-circles-wrap {
+  display:grid;
+  grid-template-columns:repeat(4,160px);
+  grid-auto-rows:160px;
+  gap:2rem 2.25rem;
+  justify-content:start;
+  margin-top:2.5rem;
+}
+@media(max-width:900px){ .expect-circles-wrap{ grid-template-columns:repeat(3,150px); } }
+@media(max-width:600px){ .expect-circles-wrap{ grid-template-columns:repeat(2,140px); } }
 .expect-circle {
   width:150px; height:150px;
   display:flex; align-items:center; justify-content:center; flex-direction:column;
@@ -1854,6 +1906,8 @@ body::after {
     <li><a href="#news">最新動態與消息</a></li>
     <li><a href="#team">核心團隊</a></li>
     <li><a href="#support">課程簡介</a></li>
+    <li><a href="#expect">課程期待</a></li>
+    <li><a href="#services">服務項目</a></li>
     <li><a href="booking.html" class="nav-booking-link">課程預約</a></li>
   </ul>
 </nav>
@@ -2233,14 +2287,22 @@ body::after {
 </section>
 
 <!-- COURSE EXPECTATIONS -->
-<section class="expect-section sec-padded" id="expect">
-  <div class="inner-wrap">
-    <div class="sec-eye">COURSE FIT</div>
-    <h2 class="sec-h">課程期待</h2>
-    <p class="sec-sub" style="max-width:48ch;color:#7a6c60;font-size:.95rem;line-height:1.9;">
-      依您服務的機構類型點選對應圓圈，<br>了解最適合貴單位的 AI 應用課程重點。
-    </p>
-    <div class="expect-circles-wrap" id="expect-circles"></div>
+<section class="expect-section" id="expect">
+  <h2 class="sec-h">課程期待</h2>
+  <div class="expect-circles-wrap" id="expect-circles"></div>
+</section>
+
+<!-- SERVICE ITEMS -->
+<section class="service-section" id="services">
+  <h2 class="sec-h">服務項目</h2>
+  <div class="service-grid" id="service-grid">
+    <div class="service-card">
+      <div class="service-tape"></div>
+      <div class="service-icon">📖</div>
+      <div class="service-name">工具書</div>
+      <div class="service-desc">AI 社工實務應用工具書，系統整理AI工具於社會工作各場域的操作指引與案例。</div>
+      <div class="service-badge">即將推出</div>
+    </div>
   </div>
 </section>
 
