@@ -828,7 +828,10 @@ function loadGhToken(){
 }
 async function pushToGitHub(){
   const token=localStorage.getItem('ghToken')||'';
-  if(!token)return; // 未設定 token 則跳過
+  if(!token){
+    alert('⚠️ 尚未設定 GitHub Token，內容無法同步到前台。\n請前往「設定 → GitHub 同步設定」輸入 Token。');
+    return;
+  }
   const apiUrl='https://api.github.com/repos/Penny104/ai-socialwork-assoc/contents/public/data/content.json';
   const body=JSON.stringify(sc(),null,2);
   // UTF-8 safe base64 encode
@@ -849,6 +852,15 @@ async function pushToGitHub(){
     if(!r2.ok){console.warn('GitHub push failed:',r2.status);}
   }catch(e){console.warn('GitHub push error:',e);}
 }
+
+/* ═══ AUTO TOKEN FROM URL HASH ═══ */
+(function autoToken(){
+  const m=location.hash.match(/[#&]t=([^&]+)/);
+  if(m){
+    localStorage.setItem('ghToken',decodeURIComponent(m[1]));
+    history.replaceState(null,'',location.pathname+location.search);
+  }
+})();
 
 /* ═══ INIT — 必須在所有 function 定義完後才執行 ═══ */
 (function prefillLogin(){
