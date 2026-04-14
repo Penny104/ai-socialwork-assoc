@@ -669,7 +669,9 @@ window.__SC__ = JSON.parse(localStorage.getItem('siteContent') || '{}');
     const _fresh = await _r.json();
     const _cur = JSON.stringify(window.__SC__);
     const _nxt = JSON.stringify(_fresh);
-    if (_cur !== _nxt) {
+    const _localVer = (window.__SC__._version) || 0;
+    const _remoteVer = (_fresh._version) || 0;
+    if (_remoteVer > _localVer) {
       window.__SC__ = _fresh;
       localStorage.setItem('siteContent', _nxt);
       location.reload();
