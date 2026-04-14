@@ -391,7 +391,7 @@
   ],
   "lecturers": [
     {
-      "photo": "https://penny104.github.io/ai-socialwork-assoc/uploads/1776157199491-0yc2mq.png",
+      "photo": "",
       "avatar": "👤",
       "tag": "理事長 ",
       "name": "戴榮賦",
@@ -537,5 +537,5 @@
     "email": "tatswin2022@gmail.com",
     "phone": "+886-2-0000-0000"
   },
-  "_version": 1776157205037
+  "_version": 1776157265892
 }
