@@ -657,12 +657,32 @@ body::after {
 })();
 
 /* ── Lecturers dynamic ── */
+/* ── Shared content sync ── */
+window.__SC__ = JSON.parse(localStorage.getItem('siteContent') || '{}');
+(async function syncContent() {
+  try {
+    const _r = await fetch(
+      'https://raw.githubusercontent.com/Penny104/ai-socialwork-assoc/main/public/data/content.json?_=' + Date.now(),
+      { cache: 'no-store' }
+    );
+    if (!_r.ok) return;
+    const _fresh = await _r.json();
+    const _cur = JSON.stringify(window.__SC__);
+    const _nxt = JSON.stringify(_fresh);
+    if (_cur !== _nxt) {
+      window.__SC__ = _fresh;
+      localStorage.setItem('siteContent', _nxt);
+      location.reload();
+    }
+  } catch(e) {}
+})();
+
 (function(){
   const DEF_LECT=[
     {avatar:'👩‍🏫',tag:'理事長 · 社工師',name:'陳雅慧',role:'國立臺灣大學社工系教授',skills:'AI 社工倫理,數位轉型實務,政策倡議,個案管理科技化',bio:'擁有 20 年社工實務與教學經驗，長期關注科技融入社會服務的理論與實踐，曾多次受邀至立法院及衛福部進行政策諮詢。授課風格深入淺出，擅長以真實案例引導學員思考，學員評分均超過 4.7／5.0。'},
     {avatar:'👨‍💻',tag:'技術總監 · 工程師',name:'林建宏',role:'前大廠 AI 研究員 · 台大資工碩士',skills:'AI 工具實作,ChatGPT 應用,數據分析,自動化流程',bio:'多年 AI 產業研發經歷，專注於將複雜的科技知識轉化為社工師能立即上手的實用技能。授課以「做中學」為核心，每場工作坊皆提供可帶走的工具模板，學員平均滿意度達 4.8／5.0。'},
   ];
-  const lects=JSON.parse(localStorage.getItem('siteContent')||'{}').lecturers||DEF_LECT;
+  const lects=(window.__SC__||{}).lecturers||DEF_LECT;
   const grid=document.getElementById('lect-grid');
   if(!grid)return;
   grid.innerHTML=lects.map((l,i)=>{
@@ -680,7 +700,7 @@ body::after {
     </div>`;
   }).join('');
   /* footer */
-  const cfg=JSON.parse(localStorage.getItem('siteContent')||'{}').config||{};
+  const cfg=(window.__SC__||{}).config||{};
   const fe=document.getElementById('bk-footer-email');
   if(fe&&cfg.email)fe.textContent=cfg.email;
 })();

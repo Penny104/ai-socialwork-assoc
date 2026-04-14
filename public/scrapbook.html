@@ -2264,10 +2264,32 @@ body::after {
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script>
 /* ══════════════════════════════════════════
+   SHARED CONTENT — load from GitHub, fallback localStorage
+══════════════════════════════════════════ */
+window.__SC__ = JSON.parse(localStorage.getItem('siteContent') || '{}');
+(async function syncContent() {
+  try {
+    const _r = await fetch(
+      'https://raw.githubusercontent.com/Penny104/ai-socialwork-assoc/main/public/data/content.json?_=' + Date.now(),
+      { cache: 'no-store' }
+    );
+    if (!_r.ok) return;
+    const _fresh = await _r.json();
+    const _cur = JSON.stringify(window.__SC__);
+    const _nxt = JSON.stringify(_fresh);
+    if (_cur !== _nxt) {
+      window.__SC__ = _fresh;
+      localStorage.setItem('siteContent', _nxt);
+      location.reload();
+    }
+  } catch(e) {}
+})();
+
+/* ══════════════════════════════════════════
    DYNAMIC SECTION RENDERING (localStorage)
 ══════════════════════════════════════════ */
 (function renderDynamic() {
-  const sc = JSON.parse(localStorage.getItem('siteContent') || '{}');
+  const sc = window.__SC__;
   const CLR = {
     orange:{ bg:'var(--orange)', text:'white',      deptBg:'rgba(242,109,91,.1)', deptBorder:'var(--orange)', deptText:'var(--orange)', tape:'rgba(242,109,91,.55)' },
     blue:  { bg:'var(--blue)',   text:'white',      deptBg:'rgba(92,142,173,.1)', deptBorder:'var(--blue)',   deptText:'var(--blue)',   tape:'rgba(92,142,173,.55)'  },
@@ -2410,8 +2432,7 @@ gsap.timeline({ delay: 0.2 })
       photo:'https://picsum.photos/seed/swk3/700/500'
     }
   ];
-  const _saved = JSON.parse(localStorage.getItem('siteContent') || '{}');
-  const SLIDES = _saved.milestoneSlides || _DEFAULT_SLIDES;
+  const SLIDES = (window.__SC__ || {}).milestoneSlides || _DEFAULT_SLIDES;
   const TOTAL = SLIDES.length;
   let cur = 0, busy = false;
 
@@ -2600,7 +2621,7 @@ function toggleMembers() {
      tag:'學校社會工作', desc:'適用於學校社工師、兒少輔導機構、教育部相關單位',
      items:['學生輔導記錄AI撰寫技巧','中輟生追蹤管理AI輔助','校園危機介入評估報告','家訪記錄快速生成','跨單位合作文件整合']},
   ];
-  const INST=JSON.parse(localStorage.getItem('siteContent')||'{}').expect||DEF_INST;
+  const INST=(window.__SC__||{}).expect||DEF_INST;
 
   const wrap = document.getElementById('expect-circles');
   if(!wrap) return;

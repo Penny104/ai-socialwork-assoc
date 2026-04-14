@@ -281,6 +281,12 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;bac
         <div class="save-row"><span class="save-toast" id="t-cfg">✓ 已儲存</span><button class="btn-save" onclick="saveCfg()">儲存變更</button></div>
       </div>
       <div class="editor-box">
+        <div class="editor-box-title">GitHub 同步設定 <span class="e-badge">SYNC</span></div>
+        <p style="font-family:var(--fb);font-size:.84rem;color:#7a6c60;margin-bottom:1rem;line-height:1.6;">設定後，每次儲存內容都會自動推送到 GitHub，讓所有人看到最新版本。<br>請至 GitHub → Settings → Developer settings → Personal access tokens 產生 Token（需要 <code>repo</code> 權限）。</p>
+        <div class="ef"><label>GitHub Personal Access Token</label><input type="password" id="gh-token" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx" autocomplete="off"></div>
+        <div class="save-row"><span class="save-toast" id="t-ghtoken">✓ Token 已儲存</span><button class="btn-save" onclick="saveGhToken()">儲存 Token</button></div>
+      </div>
+      <div class="editor-box">
         <div class="editor-box-title">更改後台帳號密碼 <span class="e-badge">ACCOUNT</span></div>
         <div class="two-col">
           <div class="ef"><label>新帳號</label><input type="text" id="new-u" placeholder="輸入新帳號" autocomplete="off"></div>
@@ -315,7 +321,7 @@ document.getElementById('login-form').addEventListener('submit',function(e){
 function showDash(){
   document.getElementById('login-wrap').style.display='none';
   document.getElementById('dashboard').style.display='block';
-  renderBookings(); renderBlockedDates(); renderSlides(); renderNews(); renderTeam(); renderMembers(); renderCourses(); renderExpect(); renderServices(); renderLecturers(); loadCfg();
+  renderBookings(); renderBlockedDates(); renderSlides(); renderNews(); renderTeam(); renderMembers(); renderCourses(); renderExpect(); renderServices(); renderLecturers(); loadCfg(); loadGhToken();
   // 切回此分頁時立刻刷新
   document.addEventListener('visibilitychange', ()=>{ if(document.visibilityState==='visible') renderBookings(); });
   // 其他分頁寫入 localStorage 時即時更新
@@ -450,7 +456,7 @@ function renderSlides(){
     </div>`).join('');
 }
 function saveSlides(){
-  const s=sc(); s.milestoneSlides=DEF_SLIDES.map((_,i)=>({title:document.getElementById(`s-t-${i}`).value,body:document.getElementById(`s-b-${i}`).value,photo:document.getElementById(`s-p-${i}`).value})); saveSC(s); toast('t-slides');
+  const s=sc(); s.milestoneSlides=DEF_SLIDES.map((_,i)=>({title:document.getElementById(`s-t-${i}`).value,body:document.getElementById(`s-b-${i}`).value,photo:document.getElementById(`s-p-${i}`).value})); saveSC(s); pushToGitHub(); toast('t-slides');
 }
 
 /* ═══ NEWS ═══ */
@@ -500,7 +506,7 @@ function saveNews(){
     color:document.getElementById(`n-col-${i}`).value,
     photo:document.getElementById(`n-p-${i}`).value,
   }));
-  saveSC(s);newsData=[...s.news];buildNewsUI();toast('t-news');
+  saveSC(s);newsData=[...s.news];buildNewsUI();pushToGitHub();toast('t-news');
 }
 
 /* ═══ CORE TEAM ═══ */
@@ -546,7 +552,7 @@ function saveTeam(){
     bio:document.getElementById(`tm-b-${i}`).value,
     photo:document.getElementById(`tm-p-${i}`).value,
   }));
-  saveSC(s);teamData=[...s.coreTeam];buildTeamUI();toast('t-team');
+  saveSC(s);teamData=[...s.coreTeam];buildTeamUI();pushToGitHub();toast('t-team');
 }
 
 /* ═══ ALL MEMBERS ═══ */
@@ -590,7 +596,7 @@ function saveMembers(){
     contact:document.getElementById(`mb-c-${i}`).value,
     photo:document.getElementById(`mb-p-${i}`).value,
   }));
-  saveSC(s);memData=[...s.members];buildMembersUI();toast('t-members');
+  saveSC(s);memData=[...s.members];buildMembersUI();pushToGitHub();toast('t-members');
 }
 
 /* ═══ COURSES ═══ */
@@ -668,7 +674,7 @@ function saveCourses(){
       text:document.getElementById(`cr-it-${i}-${j}`).value,
     })),
   }));
-  saveSC(s);crsData=JSON.parse(JSON.stringify(s.courses));buildCoursesUI();toast('t-courses');
+  saveSC(s);crsData=JSON.parse(JSON.stringify(s.courses));buildCoursesUI();pushToGitHub();toast('t-courses');
 }
 
 /* ═══ LECTURERS ═══ */
@@ -704,7 +710,7 @@ function saveLecturers(){
     skills:document.getElementById(`l-s-${i}`).value,
     bio:document.getElementById(`l-b-${i}`).value,
   }));
-  saveSC(s);lectData=[...s.lecturers];buildLecturersUI();toast('t-lect');
+  saveSC(s);lectData=[...s.lecturers];buildLecturersUI();pushToGitHub();toast('t-lect');
 }
 
 /* ═══ EXPECT (課程期待) ═══ */
@@ -753,7 +759,7 @@ function saveExpect(){
     desc:document.getElementById(`ex-ds-${i}`).value,
     items:document.getElementById(`ex-it-${i}`).value.split('\n').map(x=>x.trim()).filter(Boolean),
   }));
-  saveSC(s);expectData=JSON.parse(JSON.stringify(s.expect));buildExpectUI();toast('t-expect');
+  saveSC(s);expectData=JSON.parse(JSON.stringify(s.expect));buildExpectUI();pushToGitHub();toast('t-expect');
 }
 
 /* ═══ SERVICES (服務項目) ═══ */
@@ -778,7 +784,7 @@ function saveServices(){
     name:document.getElementById(`sv-nm-${i}`).value,
     desc:document.getElementById(`sv-ds-${i}`).value,
   }));
-  saveSC(s);svcData=JSON.parse(JSON.stringify(s.services));buildServicesUI();toast('t-services');
+  saveSC(s);svcData=JSON.parse(JSON.stringify(s.services));buildServicesUI();pushToGitHub();toast('t-services');
 }
 
 /* ═══ CONFIG ═══ */
@@ -788,7 +794,7 @@ function loadCfg(){
   document.getElementById('cfg-phone').value=cfg.phone||'+886-2-0000-0000';
   document.getElementById('new-u').value=getCred().u;
 }
-function saveCfg(){const s=sc();s.config={email:document.getElementById('cfg-email').value,phone:document.getElementById('cfg-phone').value};saveSC(s);toast('t-cfg');}
+function saveCfg(){const s=sc();s.config={email:document.getElementById('cfg-email').value,phone:document.getElementById('cfg-phone').value};saveSC(s);pushToGitHub();toast('t-cfg');}
 function saveCred(){
   const errEl=document.getElementById('cred-err');
   errEl.textContent='';
@@ -807,6 +813,41 @@ function saveCred(){
   document.getElementById('new-p').value='';
   document.getElementById('new-p2').value='';
   toast('t-cred');
+}
+
+/* ═══ GITHUB SYNC ═══ */
+function saveGhToken(){
+  const t=document.getElementById('gh-token').value.trim();
+  if(t){localStorage.setItem('ghToken',t);}
+  toast('t-ghtoken');
+}
+function loadGhToken(){
+  const t=localStorage.getItem('ghToken')||'';
+  const el=document.getElementById('gh-token');
+  if(el&&t)el.value=t;
+}
+async function pushToGitHub(){
+  const token=localStorage.getItem('ghToken')||'';
+  if(!token)return; // 未設定 token 則跳過
+  const apiUrl='https://api.github.com/repos/Penny104/ai-socialwork-assoc/contents/public/data/content.json';
+  const body=JSON.stringify(sc(),null,2);
+  // UTF-8 safe base64 encode
+  const encoded=btoa(unescape(encodeURIComponent(body)));
+  let sha='';
+  try{
+    const r=await fetch(apiUrl,{headers:{Authorization:`token ${token}`,'Accept':'application/vnd.github+json'}});
+    if(r.ok){const d=await r.json();sha=d.sha||'';}
+  }catch(e){}
+  const payload={message:'Update site content via admin panel',content:encoded};
+  if(sha)payload.sha=sha;
+  try{
+    const r2=await fetch(apiUrl,{
+      method:'PUT',
+      headers:{Authorization:`token ${token}`,'Content-Type':'application/json','Accept':'application/vnd.github+json'},
+      body:JSON.stringify(payload)
+    });
+    if(!r2.ok){console.warn('GitHub push failed:',r2.status);}
+  }catch(e){console.warn('GitHub push error:',e);}
 }
 
 /* ═══ INIT — 必須在所有 function 定義完後才執行 ═══ */
