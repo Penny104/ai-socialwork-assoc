@@ -1,0 +1,25 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(/Applications/MAMP/bin/php/php8.3.9/bin/php artisan:*)",
+      "Bash(php --version)",
+      "Bash(php artisan:*)",
+      "Bash(/Applications/MAMP/bin/mysql/bin/mysql -uroot -proot -e \"CREATE DATABASE IF NOT EXISTS ai_socialwork_assoc CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci; SHOW DATABASES;\")",
+      "Bash(mkdir -p /Applications/MAMP/htdocs/ai-socialwork-assoc/app/Http/Controllers/Auth)",
+      "Bash(mkdir -p /Applications/MAMP/htdocs/ai-socialwork-assoc/app/Http/Controllers/User)",
+      "Bash(mkdir -p /Applications/MAMP/htdocs/ai-socialwork-assoc/app/Http/Controllers/Admin)",
+      "Bash(mkdir -p /Applications/MAMP/htdocs/ai-socialwork-assoc/resources/views/auth)",
+      "Bash(mkdir -p /Applications/MAMP/htdocs/ai-socialwork-assoc/resources/views/user)",
+      "Bash(mkdir -p /Applications/MAMP/htdocs/ai-socialwork-assoc/resources/views/admin/news)",
+      "Bash(mkdir -p /Applications/MAMP/htdocs/ai-socialwork-assoc/resources/views/admin/courses)",
+      "Bash(mkdir -p /Applications/MAMP/htdocs/ai-socialwork-assoc/resources/views/admin/reservations)",
+      "Bash(mkdir -p /Applications/MAMP/htdocs/ai-socialwork-assoc/resources/views/layouts)",
+      "Bash(/opt/homebrew/bin/php artisan:*)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:8000/booking)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:8000)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:8000/news)",
+      "Bash(open http://localhost:8000)",
+      "Bash(open http://localhost:8000/scrapbook.html)"
+    ]
+  }
+}

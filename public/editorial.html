@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>關於協會 — 社團法人臺灣科技與社會工作協會</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  --beige:#F5F0E8;
+  --ink:#1a1a1a;
+  --orange:#E86A2A;
+  --blue:#3B82F6;
+  --grid:rgba(140,110,70,.11);
+}
+
+html,body{height:100%;overflow:hidden}
+
+body{
+  font-family:'Noto Sans TC',sans-serif;
+  background-color:var(--beige);
+  background-image:
+    linear-gradient(var(--grid) 1px,transparent 1px),
+    linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:42px 42px;
+  background-attachment:fixed;
+  color:var(--ink);
+}
+
+/* ── Fixed decorative vertical text ── */
+.vtext{
+  position:fixed;left:18px;top:50%;
+  transform:translateY(-50%) rotate(-90deg);
+  transform-origin:center;
+  font-size:9px;letter-spacing:4px;text-transform:uppercase;
+  color:#aaa;white-space:nowrap;user-select:none;
+}
+
+/* ── Fixed bottom-right pagination ── */
+.pagination{
+  position:fixed;bottom:40px;right:56px;
+  display:flex;align-items:center;gap:16px;z-index:100;
+}
+.pg-dots{display:flex;gap:7px;align-items:center}
+.pg-dot{
+  width:6px;height:6px;border-radius:50%;
+  background:#ccc;cursor:pointer;
+  transition:background .3s,transform .3s,width .3s;
+}
+.pg-dot.active{background:var(--orange);transform:scale(1.5)}
+.pg-counter{
+  font-size:12px;font-weight:700;letter-spacing:3px;
+  color:var(--ink);min-width:56px;text-align:center;
+}
+.pg-btn{
+  width:46px;height:46px;border-radius:50%;border:none;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  transition:transform .18s,opacity .18s;
+}
+.pg-btn:hover:not(:disabled){transform:scale(1.09)}
+.pg-btn:disabled{opacity:.28;cursor:default}
+.pg-btn.prev{background:var(--ink)}
+.pg-btn.next{background:var(--orange)}
+
+/* ── Scene wrapper ── */
+.scene{
+  display:flex;align-items:center;justify-content:center;
+  min-height:100vh;padding:52px 72px 52px 68px;
+  overflow:hidden;
+}
+
+/* ── Two-column layout ── */
+.main-layout{
+  display:flex;align-items:center;
+  gap:56px;width:100%;max-width:1140px;
+}
+.left-col{flex:0 0 58%;position:relative;overflow:visible}
+.right-col{flex:1;padding-left:16px;position:relative}
+
+/* ── Blob SVG ── */
+.blob-svg{width:100%;height:auto;display:block;overflow:visible}
+
+/* ── Right-col text styles ── */
+.s-tag{
+  display:inline-block;font-size:10px;font-weight:700;
+  letter-spacing:3px;text-transform:uppercase;
+  color:var(--orange);border:1.5px solid var(--orange);
+  padding:4px 13px;border-radius:20px;margin-bottom:18px;
+}
+.s-title{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(26px,3.4vw,50px);font-weight:700;
+  line-height:1.2;color:var(--ink);margin-bottom:8px;
+}
+.s-sub{
+  font-size:11px;font-weight:500;letter-spacing:2.5px;
+  color:#aaa;text-transform:uppercase;margin-bottom:22px;
+}
+.s-rule{width:44px;height:3px;background:var(--orange);margin-bottom:20px}
+.s-body{
+  font-size:14.5px;font-weight:400;line-height:2;
+  color:#4a4a4a;margin-bottom:32px;
+}
+.s-cta{
+  display:inline-flex;align-items:center;gap:10px;
+  font-size:12px;font-weight:700;letter-spacing:2.5px;
+  text-transform:uppercase;color:var(--ink);text-decoration:none;
+  border-bottom:2px solid var(--ink);padding-bottom:3px;
+  transition:color .2s,border-color .2s;
+}
+.s-cta:hover{color:var(--orange);border-color:var(--orange)}
+.s-cta:hover .cta-arrow{transform:translateX(5px)}
+.cta-arrow{transition:transform .2s}
+
+/* Bg giant number */
+.bg-num{
+  position:absolute;top:-24px;right:-8px;
+  font-size:clamp(80px,11vw,150px);font-weight:900;
+  color:rgba(0,0,0,.045);line-height:1;
+  user-select:none;pointer-events:none;
+}
+
+/* ── Mobile ── */
+@media(max-width:720px){
+  html,body{overflow:auto}
+  .scene{flex-direction:column;padding:32px 20px 130px;overflow:visible}
+  .main-layout{flex-direction:column;gap:28px}
+  .left-col,.right-col{flex:none;width:100%}
+  .right-col{padding-left:0}
+  .vtext{display:none}
+  .pagination{right:50%;transform:translateX(50%)}
+}
+</style>
+</head>
+<body>
+
+<!-- vertical fixed text -->
+<div class="vtext">臺灣科技與社會工作協會 ✦ TAIWAN TECHNOLOGY &amp; SOCIAL WORK ASSOCIATION</div>
+
+<!-- scene -->
+<div class="scene">
+  <div class="main-layout">
+
+    <!-- ══ LEFT COL ══ -->
+    <div class="left-col" id="leftCol">
+      <svg id="blobSvg" class="blob-svg" viewBox="0 0 600 380" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <!-- Union of two overlapping circles clipping mask -->
+          <clipPath id="blobClip">
+            <path d="M 190 10
+                     A 180 180 0 0 1 300 47.5
+                     A 180 180 0 1 1 300 332.5
+                     A 180 180 0 1 0 190 10 Z"/>
+          </clipPath>
+          <!-- Subtle vignette gradient -->
+          <radialGradient id="vignette" cx="50%" cy="50%" r="70%">
+            <stop offset="60%" stop-color="transparent"/>
+            <stop offset="100%" stop-color="rgba(0,0,0,0.28)"/>
+          </radialGradient>
+        </defs>
+
+        <!-- ── Clipped group: photo + overlay + characters ── -->
+        <g clip-path="url(#blobClip)">
+
+          <!-- Background photo (swap src via JS) -->
+          <image id="slidePhoto"
+            href="https://picsum.photos/seed/swk1/700/500"
+            x="0" y="0" width="600" height="380"
+            preserveAspectRatio="xMidYMid slice"/>
+
+          <!-- Colour wash overlay for cohesion -->
+          <rect x="0" y="0" width="600" height="380" fill="rgba(232,106,42,0.08)"/>
+
+          <!-- Vignette -->
+          <rect x="0" y="0" width="600" height="380" fill="url(#vignette)"/>
+
+          <!-- ── Cartoon Character 1: Social Worker with Briefcase ── -->
+          <g transform="translate(32, 218) scale(1.05)">
+            <!-- legs -->
+            <rect x="17" y="96" width="16" height="36" rx="7" fill="#1a1a1a" stroke="white" stroke-width="2.5"/>
+            <rect x="43" y="96" width="16" height="36" rx="7" fill="#1a1a1a" stroke="white" stroke-width="2.5"/>
+            <!-- shoes -->
+            <ellipse cx="25" cy="132" rx="12" ry="5" fill="#1a1a1a"/>
+            <ellipse cx="51" cy="132" rx="12" ry="5" fill="#1a1a1a"/>
+            <!-- body -->
+            <rect x="12" y="48" width="52" height="52" rx="9" fill="#E86A2A" stroke="white" stroke-width="3"/>
+            <!-- collar -->
+            <path d="M28 48 L38 62 L48 48" fill="white" opacity=".5"/>
+            <!-- left arm -->
+            <line x1="12" y1="62" x2="-6" y2="84" stroke="#FBBF24" stroke-width="9" stroke-linecap="round"/>
+            <!-- right arm (holding briefcase) -->
+            <line x1="64" y1="62" x2="78" y2="80" stroke="#FBBF24" stroke-width="9" stroke-linecap="round"/>
+            <!-- briefcase -->
+            <rect x="64" y="74" width="32" height="24" rx="4" fill="#1a1a1a" stroke="white" stroke-width="2.2"/>
+            <rect x="72" y="70" width="16" height="7" rx="3" fill="#1a1a1a" stroke="white" stroke-width="2"/>
+            <line x1="80" y1="74" x2="80" y2="98" stroke="white" stroke-width="1.5"/>
+            <line x1="64" y1="86" x2="96" y2="86" stroke="white" stroke-width="1.5"/>
+            <!-- head -->
+            <circle cx="38" cy="26" r="22" fill="#FBBF24" stroke="white" stroke-width="3"/>
+            <!-- hair -->
+            <path d="M17 22 Q38 4 59 22" fill="#1a1a1a"/>
+            <!-- eyes -->
+            <circle cx="30" cy="24" r="3.5" fill="#1a1a1a"/>
+            <circle cx="46" cy="24" r="3.5" fill="#1a1a1a"/>
+            <circle cx="31.5" cy="22.5" r="1.3" fill="white"/>
+            <circle cx="47.5" cy="22.5" r="1.3" fill="white"/>
+            <!-- smile -->
+            <path d="M28 32 Q38 42 48 32" fill="none" stroke="#1a1a1a" stroke-width="2.5" stroke-linecap="round"/>
+            <!-- cheeks -->
+            <circle cx="24" cy="30" r="6" fill="#FF9999" opacity=".38"/>
+            <circle cx="52" cy="30" r="6" fill="#FF9999" opacity=".38"/>
+          </g>
+
+          <!-- ── Cartoon Character 2: AI Robot ── -->
+          <g transform="translate(254, 18) scale(0.88)">
+            <!-- antenna -->
+            <line x1="45" y1="0" x2="45" y2="18" stroke="white" stroke-width="3.5" stroke-linecap="round"/>
+            <circle cx="45" cy="0" r="6" fill="#E86A2A" stroke="white" stroke-width="2"/>
+            <!-- head -->
+            <rect x="8" y="18" width="74" height="62" rx="14" fill="#3B82F6" stroke="white" stroke-width="3"/>
+            <!-- face screen -->
+            <rect x="16" y="26" width="58" height="46" rx="9" fill="#0f172a"/>
+            <!-- eyes LED -->
+            <rect x="22" y="34" width="19" height="13" rx="4" fill="#00E5A0"/>
+            <rect x="49" y="34" width="19" height="13" rx="4" fill="#00E5A0"/>
+            <!-- pupils -->
+            <rect x="28" y="37" width="7" height="7" rx="2" fill="#007A55"/>
+            <rect x="55" y="37" width="7" height="7" rx="2" fill="#007A55"/>
+            <!-- mouth bar -->
+            <rect x="22" y="54" width="46" height="9" rx="4" fill="#FFD166"/>
+            <!-- ear bolts -->
+            <circle cx="6" cy="49" r="7" fill="#2563EB" stroke="white" stroke-width="2"/>
+            <circle cx="84" cy="49" r="7" fill="#2563EB" stroke="white" stroke-width="2"/>
+            <circle cx="6" cy="49" r="3" fill="#1a1a1a"/>
+            <circle cx="84" cy="49" r="3" fill="#1a1a1a"/>
+            <!-- neck + body stub -->
+            <rect x="32" y="80" width="26" height="14" rx="5" fill="#3B82F6" stroke="white" stroke-width="2"/>
+            <!-- floating sparkles around -->
+            <text x="-8" y="16" font-size="13" fill="white" opacity=".7">★</text>
+            <text x="82" y="14" font-size="10" fill="#FFD166" opacity=".9">✦</text>
+            <text x="78" y="84" font-size="9" fill="white" opacity=".6">♥</text>
+          </g>
+
+          <!-- ── Cartoon Character 3: Cheerful Helper (raised arms) ── -->
+          <g transform="translate(418, 220) scale(0.96)">
+            <!-- legs -->
+            <rect x="16" y="92" width="15" height="34" rx="7" fill="#1a1a1a" stroke="white" stroke-width="2.5"/>
+            <rect x="41" y="92" width="15" height="34" rx="7" fill="#1a1a1a" stroke="white" stroke-width="2.5"/>
+            <!-- body -->
+            <rect x="10" y="44" width="52" height="52" rx="9" fill="#7C3AED" stroke="white" stroke-width="3"/>
+            <!-- heart on shirt -->
+            <text x="30" y="74" font-size="17" fill="white" font-family="sans-serif">♥</text>
+            <!-- left arm raised up-left -->
+            <line x1="10" y1="58" x2="-10" y2="28" stroke="#FBBF24" stroke-width="9" stroke-linecap="round"/>
+            <circle cx="-10" cy="26" r="9" fill="#FBBF24" stroke="white" stroke-width="2.5"/>
+            <!-- right arm raised up-right -->
+            <line x1="62" y1="58" x2="82" y2="28" stroke="#FBBF24" stroke-width="9" stroke-linecap="round"/>
+            <circle cx="82" cy="26" r="9" fill="#FBBF24" stroke="white" stroke-width="2.5"/>
+            <!-- head -->
+            <circle cx="36" cy="22" r="21" fill="#FBBF24" stroke="white" stroke-width="3"/>
+            <!-- eyes (happy closed) -->
+            <path d="M26 20 Q29 16 32 20" fill="none" stroke="#1a1a1a" stroke-width="2.5" stroke-linecap="round"/>
+            <path d="M40 20 Q43 16 46 20" fill="none" stroke="#1a1a1a" stroke-width="2.5" stroke-linecap="round"/>
+            <!-- big smile -->
+            <path d="M24 28 Q36 40 48 28" fill="none" stroke="#1a1a1a" stroke-width="2.5" stroke-linecap="round"/>
+            <!-- cheeks -->
+            <circle cx="22" cy="27" r="6" fill="#FF9999" opacity=".4"/>
+            <circle cx="50" cy="27" r="6" fill="#FF9999" opacity=".4"/>
+          </g>
+
+          <!-- Floating decorative elements -->
+          <circle cx="155" cy="48" r="8" fill="white" opacity=".18"/>
+          <circle cx="490" cy="62" r="5" fill="white" opacity=".22"/>
+          <circle cx="520" cy="310" r="7" fill="#FFD166" opacity=".3"/>
+          <rect x="82" y="78" width="14" height="14" rx="3" fill="white" opacity=".12" transform="rotate(20,89,85)"/>
+          <rect x="460" y="180" width="12" height="12" rx="3" fill="#E86A2A" opacity=".2" transform="rotate(-15,466,186)"/>
+          <text x="475" y="140" font-size="18" fill="white" opacity=".18" font-family="sans-serif">✦</text>
+          <text x="110" y="310" font-size="14" fill="white" opacity=".22" font-family="sans-serif">★</text>
+        </g>
+
+        <!-- ── Shape border (outside clip-path, drawn on top) ── -->
+        <path d="M 190 10
+                 A 180 180 0 0 1 300 47.5
+                 A 180 180 0 1 1 300 332.5
+                 A 180 180 0 1 0 190 10 Z"
+              fill="none" stroke="#1a1a1a" stroke-width="7"/>
+
+        <!-- Small decorative circles at pinch point -->
+        <circle cx="300" cy="47.5" r="5" fill="var(--orange,#E86A2A)" stroke="white" stroke-width="2"/>
+        <circle cx="300" cy="332.5" r="5" fill="var(--orange,#E86A2A)" stroke="white" stroke-width="2"/>
+      </svg>
+    </div>
+
+    <!-- ══ RIGHT COL ══ -->
+    <div class="right-col" id="rightCol">
+      <div class="bg-num" id="bgNum">01</div>
+      <span class="s-tag" id="sTag">協會簡介</span>
+      <h1 class="s-title" id="sTitle">關於我們的協會</h1>
+      <p class="s-sub" id="sSub">(ABOUT OUR ASSOCIATION)</p>
+      <div class="s-rule"></div>
+      <p class="s-body" id="sBody">
+        社團法人臺灣科技與社會工作協會成立於2017年，致力於結合科技與社會工作的跨域整合，推動台灣社會福利數位轉型，培育下一代具備數位素養的社會工作者。
+      </p>
+      <a href="booking.html" class="s-cta">
+        了解更多
+        <svg class="cta-arrow" width="19" height="14" viewBox="0 0 19 14" fill="none">
+          <path d="M0 7H17M11 1L17 7L11 13" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- ══ Pagination ══ -->
+<div class="pagination">
+  <div class="pg-dots" id="pgDots"></div>
+  <span class="pg-counter" id="pgCounter">01 / 05</span>
+  <button class="pg-btn prev" id="btnPrev" aria-label="上一頁" disabled>
+    <svg width="17" height="13" viewBox="0 0 17 13" fill="none">
+      <path d="M17 6.5H1M7 1L1 6.5L7 12" stroke="white" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+  <button class="pg-btn next" id="btnNext" aria-label="下一頁">
+    <svg width="17" height="13" viewBox="0 0 17 13" fill="none">
+      <path d="M0 6.5H16M10 1L16 6.5L10 12" stroke="white" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+
+<script>
+/* ── Slide data ── */
+const SLIDES = [
+  {
+    tag:'協會簡介', num:'01',
+    title:'關於我們的協會',
+    sub:'(ABOUT OUR ASSOCIATION)',
+    body:'社團法人臺灣科技與社會工作協會成立於2017年，致力於結合科技與社會工作的跨域整合，推動台灣社會福利數位轉型，培育下一代具備數位素養的社會工作者。',
+    photo:'https://picsum.photos/seed/swk1/700/500'
+  },
+  {
+    tag:'使命願景', num:'02',
+    title:'協會宗旨',
+    sub:'(OUR MISSION)',
+    body:'以科技賦能社工專業，建立跨域合作平台，培訓具備數位素養的社會工作者，共同推動台灣社會福利服務的創新與持續發展，實現科技公益的永續目標。',
+    photo:'https://picsum.photos/seed/swk2/700/500'
+  },
+  {
+    tag:'服務內容', num:'03',
+    title:'課程與服務項目',
+    sub:'(OUR SERVICES)',
+    body:'提供AI科技應用培訓課程、到府講授服務、數位工具導入諮詢，以及社工機構數位轉型顧問服務，協助社福機構提升服務效能與競爭力。',
+    photo:'https://picsum.photos/seed/swk3/700/500'
+  },
+  {
+    tag:'專業陣容', num:'04',
+    title:'師資團隊',
+    sub:'(OUR TEAM)',
+    body:'匯聚社會工作、資訊科技、教育心理等跨領域專家，團隊成員均具備豐富實務與教學經驗，為學員提供最具深度的專業培訓與諮詢服務。',
+    photo:'https://picsum.photos/seed/swk4/700/500'
+  },
+  {
+    tag:'加入我們', num:'05',
+    title:'聯絡我們',
+    sub:'(CONTACT US)',
+    body:'歡迎各社福機構、學術單位及企業夥伴與我們合作交流。透過課程預約系統，即可申請到府講授服務，共同推動台灣社會工作數位化轉型。',
+    photo:'https://picsum.photos/seed/swk5/700/500'
+  }
+];
+
+const TOTAL = SLIDES.length;
+let cur = 0, busy = false;
+
+/* ── DOM refs ── */
+const leftCol   = document.getElementById('leftCol');
+const rightCol  = document.getElementById('rightCol');
+const slidePhoto= document.getElementById('slidePhoto');
+const sTag      = document.getElementById('sTag');
+const sTitle    = document.getElementById('sTitle');
+const sSub      = document.getElementById('sSub');
+const sBody     = document.getElementById('sBody');
+const bgNum     = document.getElementById('bgNum');
+const btnPrev   = document.getElementById('btnPrev');
+const btnNext   = document.getElementById('btnNext');
+const pgCounter = document.getElementById('pgCounter');
+const pgDots    = document.getElementById('pgDots');
+
+/* ── Build dots ── */
+for(let i=0;i<TOTAL;i++){
+  const d=document.createElement('div');
+  d.className='pg-dot'+(i===0?' active':'');
+  d.addEventListener('click',()=>goTo(i));
+  pgDots.appendChild(d);
+}
+
+function updateUI(){
+  pgCounter.textContent=`${String(cur+1).padStart(2,'0')} / ${String(TOTAL).padStart(2,'0')}`;
+  btnPrev.disabled=cur===0;
+  btnNext.disabled=cur===TOTAL-1;
+  pgDots.querySelectorAll('.pg-dot').forEach((d,i)=>d.classList.toggle('active',i===cur));
+}
+
+function setContent(idx){
+  const s=SLIDES[idx];
+  slidePhoto.setAttribute('href',s.photo);
+  sTag.textContent=s.tag;
+  sTitle.textContent=s.title;
+  sSub.textContent=s.sub;
+  sBody.textContent=s.body;
+  bgNum.textContent=s.num;
+}
+
+function goTo(idx){
+  if(idx===cur||busy||idx<0||idx>=TOTAL)return;
+  busy=true;
+  const dir=idx>cur?1:-1;
+  cur=idx;
+  updateUI();
+
+  const tl=gsap.timeline({onComplete:()=>{busy=false}});
+
+  /* exit */
+  tl.to(leftCol,{xPercent:dir*-55,opacity:0,duration:.48,ease:'power3.inOut'},0);
+  tl.to(rightCol,{y:dir*-28,opacity:0,duration:.38,ease:'power3.inOut'},0);
+
+  /* swap content at mid-point */
+  tl.call(()=>{
+    setContent(idx);
+    gsap.set(leftCol,{xPercent:dir*55});
+  });
+
+  /* enter */
+  tl.to(leftCol,{xPercent:0,opacity:1,duration:.58,ease:'power3.out'});
+  tl.to(rightCol,{y:0,opacity:1,duration:.52,ease:'power3.out'},'<.08');
+}
+
+/* ── Buttons ── */
+btnPrev.addEventListener('click',()=>goTo(cur-1));
+btnNext.addEventListener('click',()=>goTo(cur+1));
+
+/* ── Keyboard ── */
+document.addEventListener('keydown',e=>{
+  if(e.key==='ArrowRight'||e.key==='ArrowDown') goTo(cur+1);
+  if(e.key==='ArrowLeft'||e.key==='ArrowUp')    goTo(cur-1);
+});
+
+/* ── Touch swipe ── */
+let tx=0;
+document.addEventListener('touchstart',e=>{tx=e.touches[0].clientX;},{passive:true});
+document.addEventListener('touchend',e=>{
+  const d=tx-e.changedTouches[0].clientX;
+  if(Math.abs(d)>52) goTo(d>0?cur+1:cur-1);
+});
+
+/* ── Init ── */
+setContent(0);
+updateUI();
+
+/* ── Entrance animation ── */
+gsap.set([leftCol,rightCol],{opacity:0});
+gsap.to(leftCol,{xPercent:0,opacity:1,duration:1,ease:'power3.out',delay:.15,
+  from:{xPercent:-25}});
+gsap.fromTo(leftCol,{xPercent:-25},{xPercent:0,opacity:1,duration:1,ease:'power3.out',delay:.15});
+gsap.fromTo(rightCol,{y:36,opacity:0},{y:0,opacity:1,duration:.85,ease:'power3.out',delay:.45});
+gsap.fromTo('.vtext',{opacity:0},{opacity:1,duration:1.2,delay:.9});
+gsap.fromTo('.pagination',{y:18,opacity:0},{y:0,opacity:1,duration:.8,delay:.65});
+</script>
+</body>
+</html>
