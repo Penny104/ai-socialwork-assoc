@@ -391,7 +391,8 @@
   ],
   "lecturers": [
     {
-      "avatar": "👩‍🏫",
+      "photo": "https://penny104.github.io/ai-socialwork-assoc/uploads/1776157199491-0yc2mq.png",
+      "avatar": "👤",
       "tag": "理事長 ",
       "name": "戴榮賦",
       "role": "國立暨南國際大學資訊管理學系 ·教授",
@@ -399,6 +400,7 @@
       "bio": ""
     },
     {
+      "photo": "",
       "avatar": "👨‍💻",
       "tag": "執行秘書",
       "name": "孫珮綺",
@@ -535,5 +537,5 @@
     "email": "tatswin2022@gmail.com",
     "phone": "+886-2-0000-0000"
   },
-  "_version": 1776138282840
+  "_version": 1776157205037
 }
