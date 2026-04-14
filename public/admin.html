@@ -714,8 +714,20 @@ function buildLecturersUI(){
     <div class="item-card">
       <button class="btn-del" onclick="lectData.splice(${i},1);buildLecturersUI()">✕</button>
       <div class="item-num">講師 ${i+1}</div>
+      <div class="ef"><label>講師頭貼</label>
+        <div class="photo-row">
+          <div class="ef" style="margin-bottom:0;flex:1;">
+            <input id="l-p-${i}" value="${esc(l.photo||'')}" placeholder="圖片 URL 或點右側上傳"
+              oninput="document.getElementById('l-img-${i}').src=this.value;document.getElementById('l-img-${i}').style.opacity=this.value?1:.2;">
+          </div>
+          <img class="photo-prev" id="l-img-${i}" src="${l.photo||''}" alt=""
+            style="width:68px;height:68px;border-radius:50%;object-fit:cover;${l.photo?'':'opacity:.2;'}">
+          <label class="btn-upload">上傳<input type="file" accept="image/*" style="display:none"
+            onchange="upload(event,v=>{document.getElementById('l-p-${i}').value=v;document.getElementById('l-img-${i}').src=v;document.getElementById('l-img-${i}').style.opacity=1;})"></label>
+        </div>
+      </div>
       <div class="two-col">
-        <div class="ef"><label>頭像 Emoji</label><input id="l-a-${i}" value="${esc(l.avatar||'👤')}"></div>
+        <div class="ef"><label>頭像 Emoji（無頭貼時顯示）</label><input id="l-a-${i}" value="${esc(l.avatar||'👤')}"></div>
         <div class="ef"><label>標籤</label><input id="l-g-${i}" value="${esc(l.tag||'')}"></div>
         <div class="ef"><label>姓名</label><input id="l-n-${i}" value="${esc(l.name||'')}"></div>
         <div class="ef"><label>職位</label><input id="l-r-${i}" value="${esc(l.role||'')}"></div>
@@ -724,10 +736,11 @@ function buildLecturersUI(){
       <div class="ef"><label>個人簡介</label><textarea id="l-b-${i}" rows="3">${esc(l.bio||'')}</textarea></div>
     </div>`).join('');
 }
-function addLecturer(){lectData.push({avatar:'👤',tag:'講師',name:'新講師',role:'職位',skills:'',bio:''});buildLecturersUI();}
+function addLecturer(){lectData.push({avatar:'👤',tag:'講師',name:'新講師',role:'職位',skills:'',bio:'',photo:''});buildLecturersUI();}
 function saveLecturers(){
   const s=sc();
   s.lecturers=lectData.map((_,i)=>({
+    photo:document.getElementById(`l-p-${i}`).value,
     avatar:document.getElementById(`l-a-${i}`).value,
     tag:document.getElementById(`l-g-${i}`).value,
     name:document.getElementById(`l-n-${i}`).value,
