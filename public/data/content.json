@@ -19,50 +19,50 @@
   "news": [
     {
       "emoji": "🤖",
-      "caption": "AI 社工工具箱\n正式發佈",
-      "date": "2024.11",
+      "caption": "AI 賦能工作術",
+      "date": "2025.07.27",
       "color": "orange",
       "photo": ""
     },
     {
       "emoji": "📚",
-      "caption": "科技 × 社工\n年度研討會",
-      "date": "2024.10",
+      "caption": "理監事會及會員大會",
+      "date": "2025.08.09",
       "color": "blue",
       "photo": ""
     },
     {
       "emoji": "🌏",
-      "caption": "亞太社工大會\n臺灣代表團",
-      "date": "2024.09",
+      "caption": "彰化社工師公會AI賦能訓練課程",
+      "date": "2025.08.30",
       "color": "yellow",
       "photo": ""
     },
     {
       "emoji": "🎓",
-      "caption": "數位社工認證\n課程開班",
-      "date": "2024.08",
+      "caption": "新北市社會局督導AI課程",
+      "date": "2025.10.19",
       "color": "green",
       "photo": ""
     },
     {
       "emoji": "💡",
-      "caption": "AI 倫理白皮書\n正式發表",
-      "date": "2024.07",
+      "caption": "南投縣社工師公會AI課程",
+      "date": "2026.01.10",
       "color": "orange",
       "photo": ""
     },
     {
       "emoji": "🤝",
-      "caption": "三方合作備忘錄\n正式簽署",
+      "caption": "三方合作備忘錄正式簽署",
       "date": "2024.06",
       "color": "blue",
       "photo": ""
     },
     {
       "emoji": "📱",
-      "caption": "社工行動 App\nBeta 版上線",
-      "date": "2024.05",
+      "caption": "春日禾AI課程",
+      "date": "2026.01.14",
       "color": "yellow",
       "photo": ""
     }
@@ -538,5 +538,5 @@
     "email": "tatswin2022@gmail.com",
     "phone": "+886-2-0000-0000"
   },
-  "_version": 1776136818652
+  "_version": 1776136931755
 }
