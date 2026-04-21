@@ -350,11 +350,45 @@ function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').
 function sc(){return JSON.parse(localStorage.getItem('siteContent')||'{}');}
 function saveSC(obj){obj._version=Date.now();localStorage.setItem('siteContent',JSON.stringify(obj));}
 function toast(id){const el=document.getElementById(id);el.classList.add('show');setTimeout(()=>el.classList.remove('show'),2500);}
-function upload(e,cb){
-  const f=e.target.files[0];if(!f)return;
-  const r=new FileReader();
-  r.onload=ev=>cb(ev.target.result);
-  r.readAsDataURL(f);
+// Compress image: max 1000px, JPEG 85%
+function compressImg(file){
+  return new Promise(res=>{
+    const img=new Image(), url=URL.createObjectURL(file);
+    img.onload=()=>{
+      URL.revokeObjectURL(url);
+      const MAX=1000, ratio=Math.min(1,MAX/img.naturalWidth,MAX/img.naturalHeight);
+      const c=document.createElement('canvas');
+      c.width=Math.round(img.naturalWidth*ratio); c.height=Math.round(img.naturalHeight*ratio);
+      c.getContext('2d').drawImage(img,0,0,c.width,c.height);
+      c.toBlob(b=>res(b),'image/jpeg',0.85);
+    };
+    img.onerror=()=>{URL.revokeObjectURL(url);res(file);};
+    img.src=url;
+  });
+}
+// Upload file: compress → try GitHub (cross-browser URL) → fallback base64
+async function upload(e,cb){
+  const f=e.target.files[0]; if(!f)return;
+  const statusEl=e.target.closest('.photo-row')&&e.target.closest('.photo-row').querySelector('.upload-status');
+  if(statusEl){statusEl.textContent='上傳中…';statusEl.style.display='inline';}
+  const blob=await compressImg(f);
+  const token=getGhToken();
+  if(token){
+    try{
+      const fname=`${Date.now()}-${Math.random().toString(36).slice(2,8)}.jpg`;
+      const apiUrl=`https://api.github.com/repos/Penny104/ai-socialwork-assoc/contents/public/uploads/${fname}`;
+      const b64=await new Promise((res,rej)=>{const r=new FileReader();r.onload=ev=>res(ev.target.result.split(',')[1]);r.onerror=rej;r.readAsDataURL(blob);});
+      const resp=await fetch(apiUrl,{method:'PUT',headers:{Authorization:`token ${token}`,'Content-Type':'application/json','Accept':'application/vnd.github+json'},body:JSON.stringify({message:`Upload: ${fname}`,content:b64})});
+      if(resp.ok){
+        if(statusEl){statusEl.textContent='✅ 上傳成功';setTimeout(()=>{statusEl.style.display='none';},3000);}
+        cb(`https://penny104.github.io/ai-socialwork-assoc/uploads/${fname}`);
+        return;
+      }
+    }catch(err){}
+  }
+  // Fallback: local base64
+  if(statusEl){statusEl.textContent='⚠️ 僅此裝置可見';setTimeout(()=>{statusEl.style.display='none';},4000);}
+  const r=new FileReader(); r.onload=ev=>cb(ev.target.result); r.readAsDataURL(blob);
 }
 
 const CLR_OPTS=`<option value="orange">橘色</option><option value="blue">藍色</option><option value="green">綠色</option><option value="yellow">黃色</option>`;
@@ -455,7 +489,7 @@ function renderSlides(){
         <div class="photo-row">
           <div class="ef" style="margin-bottom:0;flex:1;"><input id="s-p-${i}" value="${esc(s.photo)}" placeholder="圖片 URL 或上傳" oninput="document.getElementById('s-img-${i}').src=this.value"></div>
           <img class="photo-prev" id="s-img-${i}" src="${s.photo}" alt="" onerror="this.style.opacity='.3'">
-          <label class="btn-upload">上傳<input type="file" accept="image/*" style="display:none" onchange="upload(event,v=>{document.getElementById('s-p-${i}').value=v;document.getElementById('s-img-${i}').src=v;})"></label>
+          <label class="btn-upload">上傳<input type="file" accept="image/*" style="display:none" onchange="upload(event,v=>{document.getElementById('s-p-${i}').value=v;document.getElementById('s-img-${i}').src=v;})"></label><span class="upload-status" style="display:none;font-size:12px;color:#888;margin-left:6px;"></span>
         </div>
       </div>
     </div>`).join('');
@@ -494,7 +528,7 @@ function buildNewsUI(){
         <div class="photo-row">
           <div class="ef" style="margin-bottom:0;flex:1;"><input id="n-p-${i}" value="${esc(n.photo||'')}" placeholder="圖片 URL 或上傳" oninput="document.getElementById('n-img-${i}').src=this.value"></div>
           <img class="photo-prev" id="n-img-${i}" src="${n.photo||''}" alt="" style="${n.photo?'':'opacity:.2;'}">
-          <label class="btn-upload">上傳<input type="file" accept="image/*" style="display:none" onchange="upload(event,v=>{document.getElementById('n-p-${i}').value=v;document.getElementById('n-img-${i}').src=v;document.getElementById('n-img-${i}').style.opacity=1;})"></label>
+          <label class="btn-upload">上傳<input type="file" accept="image/*" style="display:none" onchange="upload(event,v=>{document.getElementById('n-p-${i}').value=v;document.getElementById('n-img-${i}').src=v;document.getElementById('n-img-${i}').style.opacity=1;})"></label><span class="upload-status" style="display:none;font-size:12px;color:#888;margin-left:6px;"></span>
         </div>
       </div>
     </div>`).join('');
@@ -539,7 +573,7 @@ function buildTeamUI(){
         <div class="photo-row">
           <div class="ef" style="margin-bottom:0;flex:1;"><input id="tm-p-${i}" value="${esc(m.photo||'')}" placeholder="圖片 URL 或上傳" oninput="document.getElementById('tm-img-${i}').src=this.value"></div>
           <img class="photo-prev" id="tm-img-${i}" src="${m.photo||''}" alt="" style="${m.photo?'':'opacity:.2;'}">
-          <label class="btn-upload">上傳<input type="file" accept="image/*" style="display:none" onchange="upload(event,v=>{document.getElementById('tm-p-${i}').value=v;document.getElementById('tm-img-${i}').src=v;})"></label>
+          <label class="btn-upload">上傳<input type="file" accept="image/*" style="display:none" onchange="upload(event,v=>{document.getElementById('tm-p-${i}').value=v;document.getElementById('tm-img-${i}').src=v;})"></label><span class="upload-status" style="display:none;font-size:12px;color:#888;margin-left:6px;"></span>
         </div>
       </div>
     </div>`).join('');
@@ -583,7 +617,7 @@ function buildMembersUI(){
         <div class="photo-row">
           <div class="ef" style="margin-bottom:0;flex:1;"><input id="mb-p-${i}" value="${esc(m.photo||'')}" placeholder="圖片 URL 或上傳"></div>
           <img class="photo-prev" id="mb-img-${i}" src="${m.photo||''}" alt="" style="${m.photo?'':'opacity:.2;'}">
-          <label class="btn-upload">上傳<input type="file" accept="image/*" style="display:none" onchange="upload(event,v=>{document.getElementById('mb-p-${i}').value=v;document.getElementById('mb-img-${i}').src=v;})"></label>
+          <label class="btn-upload">上傳<input type="file" accept="image/*" style="display:none" onchange="upload(event,v=>{document.getElementById('mb-p-${i}').value=v;document.getElementById('mb-img-${i}').src=v;})"></label><span class="upload-status" style="display:none;font-size:12px;color:#888;margin-left:6px;"></span>
         </div>
       </div>
     </div>`).join('');
@@ -704,6 +738,7 @@ function buildLecturersUI(){
             style="width:68px;height:68px;border-radius:50%;object-fit:cover;${l.photo?'':'opacity:.2;'}">
           <label class="btn-upload">上傳<input type="file" accept="image/*" style="display:none"
             onchange="upload(event,v=>{document.getElementById('l-p-${i}').value=v;document.getElementById('l-img-${i}').src=v;document.getElementById('l-img-${i}').style.opacity=1;})"></label>
+          <span class="upload-status" style="display:none;font-size:12px;color:#888;margin-left:6px;"></span>
         </div>
       </div>
       <div class="two-col">
