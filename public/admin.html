@@ -350,57 +350,11 @@ function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').
 function sc(){return JSON.parse(localStorage.getItem('siteContent')||'{}');}
 function saveSC(obj){obj._version=Date.now();localStorage.setItem('siteContent',JSON.stringify(obj));}
 function toast(id){const el=document.getElementById(id);el.classList.add('show');setTimeout(()=>el.classList.remove('show'),2500);}
-// Compress image to max 900px wide/tall, JPEG quality 0.82, always output .jpg
-function compressImage(file){
-  return new Promise((res)=>{
-    const img=new Image();
-    const url=URL.createObjectURL(file);
-    img.onload=()=>{
-      URL.revokeObjectURL(url);
-      const MAX=900;
-      let w=img.naturalWidth,h=img.naturalHeight;
-      if(w>MAX||h>MAX){const r=Math.min(MAX/w,MAX/h);w=Math.round(w*r);h=Math.round(h*r);}
-      const c=document.createElement('canvas');c.width=w;c.height=h;
-      c.getContext('2d').drawImage(img,0,0,w,h);
-      c.toBlob(b=>res(b),'image/jpeg',0.82);
-    };
-    img.onerror=()=>{URL.revokeObjectURL(url);res(file);};
-    img.src=url;
-  });
-}
-async function uploadToGitHub(file){
-  const token=getGhToken();
-  if(!token)return null;
-  // Always compress to JPEG before upload
-  const blob=await compressImage(file);
-  const fname=`${Date.now()}-${Math.random().toString(36).slice(2,8)}.jpg`;
-  const apiUrl=`https://api.github.com/repos/Penny104/ai-socialwork-assoc/contents/public/uploads/${fname}`;
-  const b64=await new Promise((res,rej)=>{
-    const r=new FileReader();
-    r.onload=e=>res(e.target.result.split(',')[1]);
-    r.onerror=rej;
-    r.readAsDataURL(blob);
-  });
-  const resp=await fetch(apiUrl,{method:'PUT',headers:{Authorization:`token ${token}`,'Content-Type':'application/json','Accept':'application/vnd.github+json'},body:JSON.stringify({message:`Upload: ${fname}`,content:b64})});
-  if(resp.ok)return `https://penny104.github.io/ai-socialwork-assoc/uploads/${fname}`;
-  const errBody=await resp.json().catch(()=>({}));
-  console.error('GitHub upload failed',resp.status,errBody);
-  return null;
-}
-async function upload(e,cb){
+function upload(e,cb){
   const f=e.target.files[0];if(!f)return;
-  const btn=e.target.closest('label');
-  const origTxt=btn?btn.childNodes[0]&&btn.childNodes[0].textContent:'';
-  if(btn)btn.childNodes[0].textContent='上傳中…';
-  const url=await uploadToGitHub(f);
-  if(btn)btn.childNodes[0].textContent=origTxt||'上傳';
-  if(url){cb(url);}
-  else{
-    // fallback: compressed base64 (only visible on this browser)
-    const blob=await compressImage(f);
-    const r=new FileReader();r.onload=ev=>cb(ev.target.result);r.readAsDataURL(blob);
-    alert('⚠️ 上傳到 GitHub 失敗，照片只在此瀏覽器可見。');
-  }
+  const r=new FileReader();
+  r.onload=ev=>cb(ev.target.result);
+  r.readAsDataURL(f);
 }
 
 const CLR_OPTS=`<option value="orange">橘色</option><option value="blue">藍色</option><option value="green">綠色</option><option value="yellow">黃色</option>`;
