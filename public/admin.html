@@ -362,7 +362,7 @@ function upload(e,cb){
     c.getContext('2d').drawImage(img,0,0,c.width,c.height);
     cb(c.toDataURL('image/jpeg',0.65));
   };
-  img.onerror=()=>{URL.revokeObjectURL(url); const r=new FileReader();r.onload=ev=>cb(ev.target.result);r.readAsDataURL(f);};
+  img.onerror=()=>{URL.revokeObjectURL(url);const r=new FileReader();r.onload=ev=>cb(ev.target.result);r.readAsDataURL(f);};
   img.src=url;
 }
 
