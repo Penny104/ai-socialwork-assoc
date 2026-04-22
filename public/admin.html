@@ -352,9 +352,18 @@ function saveSC(obj){obj._version=Date.now();localStorage.setItem('siteContent',
 function toast(id){const el=document.getElementById(id);el.classList.add('show');setTimeout(()=>el.classList.remove('show'),2500);}
 function upload(e,cb){
   const f=e.target.files[0]; if(!f)return;
-  const r=new FileReader();
-  r.onload=ev=>cb(ev.target.result);
-  r.readAsDataURL(f);
+  const img=new Image(), url=URL.createObjectURL(f);
+  img.onload=()=>{
+    URL.revokeObjectURL(url);
+    const MAX=600, ratio=Math.min(1,MAX/img.naturalWidth,MAX/img.naturalHeight);
+    const c=document.createElement('canvas');
+    c.width=Math.round(img.naturalWidth*ratio);
+    c.height=Math.round(img.naturalHeight*ratio);
+    c.getContext('2d').drawImage(img,0,0,c.width,c.height);
+    cb(c.toDataURL('image/jpeg',0.65));
+  };
+  img.onerror=()=>{URL.revokeObjectURL(url); const r=new FileReader();r.onload=ev=>cb(ev.target.result);r.readAsDataURL(f);};
+  img.src=url;
 }
 
 const CLR_OPTS=`<option value="orange">橘色</option><option value="blue">藍色</option><option value="green">綠色</option><option value="yellow">黃色</option>`;
@@ -852,16 +861,11 @@ function loadGhToken(){
   const el=document.getElementById('gh-token');
   if(el&&t)el.value=t;
 }
-function stripBase64(obj){
-  if(Array.isArray(obj))return obj.map(stripBase64);
-  if(obj&&typeof obj==='object'){const r={};for(const k in obj)r[k]=(typeof obj[k]==='string'&&obj[k].startsWith('data:'))?'':stripBase64(obj[k]);return r;}
-  return obj;
-}
 async function pushToGitHub(){
   const token=getGhToken();
   if(!token)return;
   const apiUrl='https://api.github.com/repos/Penny104/ai-socialwork-assoc/contents/public/data/content.json';
-  const body=JSON.stringify(stripBase64(sc()),null,2);
+  const body=JSON.stringify(sc(),null,2);
   // UTF-8 safe base64 encode
   const encoded=btoa(unescape(encodeURIComponent(body)));
   let sha='';
