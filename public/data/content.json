@@ -278,20 +278,7 @@
       "photo": ""
     }
   ],
-  "courses": [
-    {
-      "tag": "新課程",
-      "color": "orange",
-      "rot": "0deg",
-      "title": "課程標題",
-      "items": [
-        {
-          "bold": "項目名稱",
-          "text": "說明文字..."
-        }
-      ]
-    }
-  ],
+  "courses": [],
   "lecturers": [
     {
       "photo": "https://penny104.github.io/ai-socialwork-assoc/uploads/1776157595317-n17996.jpg",
@@ -327,5 +314,5 @@
     "email": "tatswin2022@gmail.com",
     "phone": "+886-2-0000-0000"
   },
-  "_version": 1776937990397
+  "_version": 1776938197862
 }
