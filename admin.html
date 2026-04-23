@@ -157,7 +157,7 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;bac
       <button class="a-tab" data-tab="news">📰 最新動態</button>
       <button class="a-tab" data-tab="team">👥 團隊成員</button>
       <button class="a-tab" data-tab="members">👤 全體成員</button>
-      <button class="a-tab" data-tab="expect">📚 課程簡介與大綱</button>
+      <button class="a-tab" data-tab="expect">📚 課程模組大綱</button>
       <button class="a-tab" data-tab="services">🛎️ 服務項目</button>
       <button class="a-tab" data-tab="lecturers">👩‍🏫 講師管理</button>
       <button class="a-tab" data-tab="settings">⚙️ 設定</button>
@@ -228,10 +228,10 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;bac
       </div>
     </div>
 
-    <!-- ⑥ 課程簡介與大綱 -->
+    <!-- ⑥ 課程模組大綱 -->
     <div class="tab-panel" id="tab-expect">
       <div class="editor-box">
-        <div class="editor-box-title">課程簡介與大綱 <span class="e-badge">COURSES</span></div>
+        <div class="editor-box-title">課程模組大綱 <span class="e-badge">COURSES</span></div>
         <button class="btn-add" onclick="addExpect()">＋ 新增課程圈</button>
         <div id="expect-ed"></div>
         <div class="save-row"><span class="save-toast" id="t-expect">✓ 已儲存</span><button class="btn-save" onclick="saveExpect()">儲存變更</button></div>
@@ -662,31 +662,43 @@ function buildExpectUI(){
       <button class="btn-del" onclick="expectData.splice(${i},1);buildExpectUI()">✕</button>
       <div class="item-num">課程圈 ${i+1}</div>
       <div class="three-col">
-        <div class="ef"><label>圖示 Emoji</label><input id="ex-ic-${i}" value="${esc(inst.icon||'🏢')}"></div>
-        <div class="ef"><label>機構名稱</label><input id="ex-nm-${i}" value="${esc(inst.name||'')}"></div>
+        <div class="ef"><label>圖示 Emoji</label><input id="ex-ic-${i}" value="${esc(inst.icon||'')}"></div>
+        <div class="ef"><label>機構服務單位名稱</label><input id="ex-nm-${i}" value="${esc(inst.name||'')}"></div>
         <div class="ef"><label>分類標籤</label><input id="ex-tg-${i}" value="${esc(inst.tag||'')}"></div>
       </div>
-      <div class="two-col">
-        <div class="ef"><label>顏色主題</label><select id="ex-cl-${i}">${EXP_CLR_OPTS}</select></div>
-        <div class="ef"><label>說明文字</label><input id="ex-ds-${i}" value="${esc(inst.desc||'')}"></div>
-      </div>
-      <div style="margin-top:.5rem;">
-        <div style="font-family:var(--fh);font-size:.74rem;font-weight:600;margin-bottom:.4rem;">課程項目（每行一項）</div>
-        <div class="ef"><textarea id="ex-it-${i}" rows="5">${esc((inst.items||[]).join('\n'))}</textarea></div>
+      <div class="ef"><label>顏色主題</label><select id="ex-cl-${i}">${EXP_CLR_OPTS}</select></div>
+      <div style="margin-top:.75rem;">
+        <div style="font-family:var(--fh);font-size:.74rem;font-weight:600;margin-bottom:.4rem;">課程大綱項目</div>
+        <div class="course-items-ed" id="ex-items-${i}"></div>
+        <button class="btn-add-item" onclick="expectData[${i}].items.push({bold:'',text:''});buildExpectUI()">＋ 新增項目</button>
       </div>
     </div>`).join('');
-  expectData.forEach((inst,i)=>{const el=document.getElementById(`ex-cl-${i}`);if(el)el.value=inst.color||'var(--orange)';});
+  expectData.forEach((inst,i)=>{
+    const el=document.getElementById(`ex-cl-${i}`);if(el)el.value=inst.color||'var(--orange)';
+    const itemsEl=document.getElementById(`ex-items-${i}`);
+    if(itemsEl){
+      const items=inst.items||[];
+      itemsEl.innerHTML=items.map((it,j)=>`
+        <div class="ci-row">
+          <input id="ex-ib-${i}-${j}" value="${esc(typeof it==='object'?it.bold||'':it)}" placeholder="粗體標題">
+          <textarea id="ex-it-${i}-${j}" rows="2">${esc(typeof it==='object'?it.text||'':'')}</textarea>
+          <button class="btn-del" onclick="expectData[${i}].items.splice(${j},1);buildExpectUI()">✕</button>
+        </div>`).join('');
+    }
+  });
 }
-function addExpect(){expectData.push({name:'',icon:'',color:'var(--orange)',tag:'',desc:'',items:[]});buildExpectUI();}
+function addExpect(){expectData.push({name:'',icon:'',color:'var(--orange)',tag:'',items:[]});buildExpectUI();}
 function saveExpect(){
   const s=sc();
-  s.expect=expectData.map((_,i)=>({
+  s.expect=expectData.map((inst,i)=>({
     name:document.getElementById(`ex-nm-${i}`).value,
     icon:document.getElementById(`ex-ic-${i}`).value,
     color:document.getElementById(`ex-cl-${i}`).value,
     tag:document.getElementById(`ex-tg-${i}`).value,
-    desc:document.getElementById(`ex-ds-${i}`).value,
-    items:document.getElementById(`ex-it-${i}`).value.split('\n').map(x=>x.trim()).filter(Boolean),
+    items:(inst.items||[]).map((_,j)=>({
+      bold:document.getElementById(`ex-ib-${i}-${j}`).value,
+      text:document.getElementById(`ex-it-${i}-${j}`).value,
+    })),
   }));
   saveSC(s);expectData=JSON.parse(JSON.stringify(s.expect));buildExpectUI();pushToGitHub();toast('t-expect');
 }

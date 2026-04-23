@@ -777,12 +777,12 @@ body::after {
   position:relative;
 }
 .expect-modal-bg.open .expect-modal { transform:scale(1) translateY(0); }
-.expect-modal-tag { display:inline-block; font-family:var(--fh); font-size:.78rem; font-weight:700; letter-spacing:.08em; padding:.18rem .75rem; border-radius:4px; border:1.5px solid var(--ink); margin-bottom:.85rem; }
-.expect-modal-title { font-family:var(--fh); font-size:1.35rem; font-weight:700; margin-bottom:.4rem; }
-.expect-modal-desc { font-size:.88rem; color:#7a6c60; margin-bottom:1.1rem; line-height:1.7; }
-.expect-modal-items { list-style:none; display:flex; flex-direction:column; gap:.6rem; }
-.expect-modal-items li { font-size:.9rem; line-height:1.75; color:#5a4e44; display:flex; gap:.5rem; align-items:flex-start; }
-.expect-modal-items li::before { content:'✦'; color:var(--orange); font-size:.7rem; margin-top:.3rem; flex-shrink:0; }
+.expect-modal-tag { display:inline-block; font-family:var(--fh); font-size:.82rem; font-weight:700; letter-spacing:.06em; padding:.3rem 1rem; border-radius:0; border:2px solid var(--ink); margin-bottom:1.1rem; }
+.expect-modal-title { font-family:var(--fh); font-size:1.2rem; font-weight:700; margin-bottom:1rem; color:var(--ink); }
+.expect-modal-desc { display:none; }
+.expect-modal-items { list-style:none; display:flex; flex-direction:column; gap:.75rem; max-height:60vh; overflow-y:auto; padding-right:.25rem; }
+.expect-modal-items li { font-size:.9rem; line-height:1.85; color:#5a4e44; }
+.expect-modal-items li strong { font-family:var(--fh); font-size:.95rem; color:var(--ink); display:block; }
 
 /* ══ SERVICE ITEMS SECTION ══ */
 .service-section { padding:2.5rem 5rem 7rem 6rem; position:relative; }
@@ -1431,12 +1431,12 @@ body::after {
   position:relative;
 }
 .expect-modal-bg.open .expect-modal { transform:scale(1) translateY(0); }
-.expect-modal-tag { display:inline-block; font-family:var(--fh); font-size:.78rem; font-weight:700; letter-spacing:.08em; padding:.18rem .75rem; border-radius:4px; border:1.5px solid var(--ink); margin-bottom:.85rem; }
-.expect-modal-title { font-family:var(--fh); font-size:1.35rem; font-weight:700; margin-bottom:.4rem; }
-.expect-modal-desc { font-size:.88rem; color:#7a6c60; margin-bottom:1.1rem; line-height:1.7; }
-.expect-modal-items { list-style:none; display:flex; flex-direction:column; gap:.6rem; }
-.expect-modal-items li { font-size:.9rem; line-height:1.75; color:#5a4e44; display:flex; gap:.5rem; align-items:flex-start; }
-.expect-modal-items li::before { content:'✦'; color:var(--orange); font-size:.7rem; margin-top:.3rem; flex-shrink:0; }
+.expect-modal-tag { display:inline-block; font-family:var(--fh); font-size:.82rem; font-weight:700; letter-spacing:.06em; padding:.3rem 1rem; border-radius:0; border:2px solid var(--ink); margin-bottom:1.1rem; }
+.expect-modal-title { font-family:var(--fh); font-size:1.2rem; font-weight:700; margin-bottom:1rem; color:var(--ink); }
+.expect-modal-desc { display:none; }
+.expect-modal-items { list-style:none; display:flex; flex-direction:column; gap:.75rem; max-height:60vh; overflow-y:auto; padding-right:.25rem; }
+.expect-modal-items li { font-size:.9rem; line-height:1.85; color:#5a4e44; }
+.expect-modal-items li strong { font-family:var(--fh); font-size:.95rem; color:var(--ink); display:block; }
 .expect-modal-close { position:absolute; top:1rem; right:1.1rem; width:30px; height:30px; border:2px solid var(--grid); border-radius:8px; background:white; font-size:1rem; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:.18s; }
 .expect-modal-close:hover { background:var(--orange); border-color:var(--orange); color:white; }
 
@@ -1905,7 +1905,7 @@ body::after {
     <li><a href="#milestones">協會介紹</a></li>
     <li><a href="#news">最新動態與消息</a></li>
     <li><a href="#team">核心團隊</a></li>
-    <li><a href="#expect">課程簡介與大綱</a></li>
+    <li><a href="#expect">課程模組大綱</a></li>
     <li><a href="#services">服務項目</a></li>
     <li><a href="booking.html" class="nav-booking-link">課程預約</a></li>
   </ul>
@@ -2280,7 +2280,7 @@ body::after {
      SECTION 5 — COURSE CIRCLES
 ══════════════════════════════ -->
 <section class="expect-section" id="expect">
-  <h2 class="sec-h">課程簡介與大綱</h2>
+  <h2 class="sec-h">課程模組大綱</h2>
   <div class="expect-circles-wrap" id="expect-circles"></div>
 </section>
 
@@ -2601,13 +2601,17 @@ function toggleMembers() {
   window._INST = INST;
   window.openExpect = function(i){
     const inst = INST[i];
-    document.getElementById('em-tag').textContent = inst.tag;
-    document.getElementById('em-tag').style.background = inst.color==='var(--yellow)'?'var(--yellow)':'white';
-    document.getElementById('em-tag').style.color = inst.color==='var(--yellow)'?'var(--ink)':inst.color.replace('var(','').replace(')','');
-    document.getElementById('em-tag').style.borderColor = inst.color;
-    document.getElementById('em-title').textContent = inst.name;
-    document.getElementById('em-desc').textContent = inst.desc;
-    document.getElementById('em-items').innerHTML = inst.items.map(it=>`<li>${it}</li>`).join('');
+    const tagEl = document.getElementById('em-tag');
+    tagEl.textContent = inst.tag||'';
+    tagEl.style.background = inst.color==='var(--yellow)'?'var(--yellow)':'white';
+    tagEl.style.color = inst.color==='var(--yellow)'?'var(--ink)':inst.color;
+    tagEl.style.borderColor = inst.color;
+    document.getElementById('em-title').textContent = inst.name||'';
+    document.getElementById('em-items').innerHTML = (inst.items||[]).map(it=>
+      (it&&typeof it==='object')
+        ? `<li>${it.bold?`<strong>${it.bold}</strong>`:''}${it.text||''}</li>`
+        : `<li>${it}</li>`
+    ).join('');
     document.getElementById('expect-modal-bg').classList.add('open');
     document.body.style.overflow='hidden';
   };
