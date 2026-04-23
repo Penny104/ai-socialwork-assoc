@@ -809,6 +809,9 @@ body::after {
   color:var(--ink); margin-bottom:.35rem;
 }
 .service-desc { font-size:.84rem; color:#7a6c60; line-height:1.75; }
+.service-list { list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:.35rem; }
+.service-list li { font-size:.84rem; color:#7a6c60; line-height:1.75; display:flex; gap:.5rem; align-items:flex-start; }
+.service-list li::before { content:"—"; font-family:var(--fh); color:var(--orange); flex-shrink:0; }
 .service-badge {
   display:inline-block; margin-top:.85rem;
   font-family:var(--fh); font-size:.72rem; font-weight:700;
@@ -2295,13 +2298,7 @@ body::after {
 <!-- SERVICE ITEMS -->
 <section class="service-section" id="services">
   <h2 class="sec-h">服務項目</h2>
-  <div class="service-grid" id="service-grid">
-    <div class="service-card">
-      <div class="service-tape"></div>
-      <div class="service-name">工具書</div>
-      <div class="service-desc">AI 社工實務應用工具書，系統整理 AI 工具於社會工作各場域的操作指引與具體案例。<br><br>涵蓋個案管理、行政記錄、評估報告、服務計畫設計等核心業務，提供社工師易讀易用的實戰參考手冊，可作為機構內部培訓教材或個人自學資源。</div>
-    </div>
-  </div>
+  <div class="service-grid" id="service-grid"></div>
 </section>
 
 <!-- Expect popup modal -->
@@ -2398,6 +2395,16 @@ body::after {
   ];
   const gridEl=document.getElementById('course-grid');
   if(gridEl)gridEl.innerHTML=(sc.courses||DEF_CRS).map(c=>{const cl=CLR[c.color]||CLR.orange;return `<div class="course-card" style="--accent:${cl.bg};--rot:${c.rot};"><div class="course-card-pin">${PIN(cl.bg)}</div><div class="course-card-body"><div class="course-tag" style="background:${cl.bg};color:${cl.text};">${c.tag}</div><ul class="course-items" style="--accent:${cl.bg};">${c.items.map(it=>it.bold?`<li><strong>${it.bold}</strong>${it.text}</li>`:`<li>${it.text}</li>`).join('')}</ul></div></div>`;}).join('');
+  /* SERVICES */
+  const DEF_SVC=[{name:'工具書',desc:'AI 社工實務應用工具書，系統整理 AI 工具於社會工作各場域的操作指引與具體案例。\n\n涵蓋個案管理、行政記錄、評估報告、服務計畫設計等核心業務，提供社工師易讀易用的實戰參考手冊，可作為機構內部培訓教材或個人自學資源。'}];
+  const svcEl=document.getElementById('service-grid');
+  if(svcEl)svcEl.innerHTML=(sc.services||DEF_SVC).map(s=>{const lines=(s.desc||'').split(/\n/).map(l=>l.trim()).filter(Boolean);const body=lines.length?`<ul class="service-list">${lines.map(l=>`<li>${l}</li>`).join('')}</ul>`:`<div class="service-desc"></div>`;return `<div class="service-card"><div class="service-tape"></div><div class="service-name">${s.name}</div>${body}</div>`;}).join('');
+  /* FOOTER */
+  const cfg=sc.config||{};
+  const fEmail=document.getElementById('footer-email');
+  const fPhone=document.getElementById('footer-phone');
+  if(fEmail&&cfg.email)fEmail.textContent=cfg.email;
+  if(fPhone&&cfg.phone)fPhone.textContent=cfg.phone;
 })();
 
 /* ══════════════════════════════════════════

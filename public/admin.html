@@ -802,7 +802,7 @@ function buildServicesUI(){
       <button class="btn-del" onclick="svcData.splice(${i},1);buildServicesUI()">✕</button>
       <div class="item-num">服務項目 ${i+1}</div>
       <div class="ef"><label>服務名稱</label><input id="sv-nm-${i}" value="${esc(sv.name||'')}"></div>
-      <div class="ef"><label>服務說明</label><textarea id="sv-ds-${i}" rows="5">${esc(sv.desc||'')}</textarea></div>
+      <div class="ef"><label>服務說明（每行一個列點）</label><textarea id="sv-ds-${i}" rows="6">${esc(sv.desc||'')}</textarea></div>
     </div>`).join('');
 }
 function addService(){svcData.push({name:'新服務項目',desc:'服務說明...'});buildServicesUI();}
