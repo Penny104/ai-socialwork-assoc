@@ -759,25 +759,31 @@ body::after {
 .expect-card[data-color="blue"]   { border-color:#4a86c0; background:#f0f6ff; }
 .expect-card[data-color="green"]  { border-color:#4aab7a; background:#f0faf4; }
 .expect-card[data-color="yellow"] { border-color:#c8950a; background:#fffbf0; }
-.expect-card-icon { font-size:2.5rem; line-height:1; }
-.expect-card-name { font-family:var(--fh); font-size:1.1rem; font-weight:700; color:var(--ink); line-height:1.3; }
-/* inline popup */
-.expect-inline-popup {
-  position:absolute; z-index:50;
-  top:38%; left:8%;
-  width:370px; max-width:85%;
-  background:white; border:1.5px solid #2a2018; border-radius:14px;
-  box-shadow:6px 8px 24px rgba(0,0,0,.18);
-  padding:1.4rem 1.6rem;
-  display:none;
+.expect-card-icon { width:52px; height:52px; display:flex; align-items:center; justify-content:center; }
+.expect-card-icon svg { width:100%; height:100%; display:block; }
+.expect-card[data-color="red"]    .expect-card-icon { color:#e05252; }
+.expect-card[data-color="blue"]   .expect-card-icon { color:#4a86c0; }
+.expect-card[data-color="green"]  .expect-card-icon { color:#4aab7a; }
+.expect-card[data-color="yellow"] .expect-card-icon { color:#c8950a; }
+.expect-card-name { font-family:var(--fh); font-size:1.05rem; font-weight:700; color:var(--ink); line-height:1.3; }
+/* modal overlay */
+.expect-modal-bg { position:fixed; inset:0; z-index:600; background:rgba(40,35,30,.5); backdrop-filter:blur(3px); display:flex; align-items:center; justify-content:center; opacity:0; pointer-events:none; transition:opacity .25s; }
+.expect-modal-bg.open { opacity:1; pointer-events:all; }
+.expect-modal {
+  background:white; border:1.5px solid #2a2018; border-radius:18px;
+  padding:2.5rem 3rem; max-width:700px; width:90%; max-height:88vh; overflow-y:auto;
+  box-shadow:8px 10px 40px rgba(0,0,0,.18);
+  position:relative;
+  transform:scale(.95) translateY(10px); transition:transform .28s;
 }
-.expect-inline-popup.show { display:block; }
-.expect-modal-tag { display:inline-block; font-family:var(--fh); font-size:.76rem; font-weight:700; letter-spacing:.06em; padding:.2rem .8rem; border-radius:6px; margin-bottom:.8rem; }
-.expect-modal-title { font-family:var(--fh); font-size:1.2rem; font-weight:700; margin-bottom:.35rem; color:var(--ink); }
-.expect-modal-desc { font-size:.85rem; color:#7a6c60; margin-bottom:.9rem; line-height:1.7; }
-.expect-modal-items { list-style:none; display:flex; flex-direction:column; gap:.5rem; }
-.expect-modal-items li { font-size:.86rem; line-height:1.7; color:#5a4e44; display:flex; gap:.5rem; align-items:flex-start; }
-.em-item-icon { flex-shrink:0; font-size:1rem; margin-top:.1rem; }
+.expect-modal-bg.open .expect-modal { transform:scale(1) translateY(0); }
+.expect-modal-tag { display:inline-block; font-family:var(--fh); font-size:.78rem; font-weight:700; letter-spacing:.06em; padding:.22rem .9rem; border-radius:6px; margin-bottom:.9rem; }
+.expect-modal-title { font-family:var(--fh); font-size:1.45rem; font-weight:700; margin-bottom:.45rem; color:var(--ink); }
+.expect-modal-desc { font-size:.9rem; color:#7a6c60; margin-bottom:1.2rem; line-height:1.75; }
+.expect-modal-items { list-style:none; display:flex; flex-direction:column; gap:.65rem; }
+.expect-modal-items li { font-size:.9rem; line-height:1.75; color:#5a4e44; display:flex; gap:.65rem; align-items:flex-start; }
+.em-item-icon { flex-shrink:0; margin-top:.15rem; display:flex; }
+.em-item-icon svg { width:18px; height:18px; display:block; }
 
 /* ══ SERVICE ITEMS SECTION ══ */
 .service-section { padding:2.5rem 5rem 7rem 6rem; position:relative; }
@@ -815,7 +821,7 @@ body::after {
   border:1.5px solid var(--ink); letter-spacing:.05em;
 }
 
-.expect-modal-close { position:absolute; top:.9rem; right:1rem; width:28px; height:28px; border:1.5px solid #ccc; border-radius:7px; background:white; font-size:.88rem; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:.18s; }
+.expect-modal-close { position:absolute; top:1.1rem; right:1.2rem; width:32px; height:32px; border:1.5px solid #ddd; border-radius:8px; background:white; font-size:1rem; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:.18s; }
 .expect-modal-close:hover { background:var(--orange); border-color:var(--orange); color:white; }
 
 /* ══ COURSE CARDS GRID ══ */
@@ -1411,26 +1417,32 @@ body::after {
 .expect-card[data-color="blue"]   { border-color:#4a86c0; background:#f0f6ff; }
 .expect-card[data-color="green"]  { border-color:#4aab7a; background:#f0faf4; }
 .expect-card[data-color="yellow"] { border-color:#c8950a; background:#fffbf0; }
-.expect-card-icon { font-size:2.5rem; line-height:1; }
-.expect-card-name { font-family:var(--fh); font-size:1.1rem; font-weight:700; color:var(--ink); line-height:1.3; }
-/* inline popup */
-.expect-inline-popup {
-  position:absolute; z-index:50;
-  top:38%; left:8%;
-  width:370px; max-width:85%;
-  background:white; border:1.5px solid #2a2018; border-radius:14px;
-  box-shadow:6px 8px 24px rgba(0,0,0,.18);
-  padding:1.4rem 1.6rem;
-  display:none;
+.expect-card-icon { width:52px; height:52px; display:flex; align-items:center; justify-content:center; }
+.expect-card-icon svg { width:100%; height:100%; display:block; }
+.expect-card[data-color="red"]    .expect-card-icon { color:#e05252; }
+.expect-card[data-color="blue"]   .expect-card-icon { color:#4a86c0; }
+.expect-card[data-color="green"]  .expect-card-icon { color:#4aab7a; }
+.expect-card[data-color="yellow"] .expect-card-icon { color:#c8950a; }
+.expect-card-name { font-family:var(--fh); font-size:1.05rem; font-weight:700; color:var(--ink); line-height:1.3; }
+/* modal overlay */
+.expect-modal-bg { position:fixed; inset:0; z-index:600; background:rgba(40,35,30,.5); backdrop-filter:blur(3px); display:flex; align-items:center; justify-content:center; opacity:0; pointer-events:none; transition:opacity .25s; }
+.expect-modal-bg.open { opacity:1; pointer-events:all; }
+.expect-modal {
+  background:white; border:1.5px solid #2a2018; border-radius:18px;
+  padding:2.5rem 3rem; max-width:700px; width:90%; max-height:88vh; overflow-y:auto;
+  box-shadow:8px 10px 40px rgba(0,0,0,.18);
+  position:relative;
+  transform:scale(.95) translateY(10px); transition:transform .28s;
 }
-.expect-inline-popup.show { display:block; }
-.expect-modal-tag { display:inline-block; font-family:var(--fh); font-size:.76rem; font-weight:700; letter-spacing:.06em; padding:.2rem .8rem; border-radius:6px; margin-bottom:.8rem; }
-.expect-modal-title { font-family:var(--fh); font-size:1.2rem; font-weight:700; margin-bottom:.35rem; color:var(--ink); }
-.expect-modal-desc { font-size:.85rem; color:#7a6c60; margin-bottom:.9rem; line-height:1.7; }
-.expect-modal-items { list-style:none; display:flex; flex-direction:column; gap:.5rem; }
-.expect-modal-items li { font-size:.86rem; line-height:1.7; color:#5a4e44; display:flex; gap:.5rem; align-items:flex-start; }
-.em-item-icon { flex-shrink:0; font-size:1rem; margin-top:.1rem; }
-.expect-modal-close { position:absolute; top:.9rem; right:1rem; width:28px; height:28px; border:1.5px solid #ccc; border-radius:7px; background:white; font-size:.88rem; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:.18s; }
+.expect-modal-bg.open .expect-modal { transform:scale(1) translateY(0); }
+.expect-modal-tag { display:inline-block; font-family:var(--fh); font-size:.78rem; font-weight:700; letter-spacing:.06em; padding:.22rem .9rem; border-radius:6px; margin-bottom:.9rem; }
+.expect-modal-title { font-family:var(--fh); font-size:1.45rem; font-weight:700; margin-bottom:.45rem; color:var(--ink); }
+.expect-modal-desc { font-size:.9rem; color:#7a6c60; margin-bottom:1.2rem; line-height:1.75; }
+.expect-modal-items { list-style:none; display:flex; flex-direction:column; gap:.65rem; }
+.expect-modal-items li { font-size:.9rem; line-height:1.75; color:#5a4e44; display:flex; gap:.65rem; align-items:flex-start; }
+.em-item-icon { flex-shrink:0; margin-top:.15rem; display:flex; }
+.em-item-icon svg { width:18px; height:18px; display:block; }
+.expect-modal-close { position:absolute; top:1.1rem; right:1.2rem; width:32px; height:32px; border:1.5px solid #ddd; border-radius:8px; background:white; font-size:1rem; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:.18s; }
 .expect-modal-close:hover { background:var(--orange); border-color:var(--orange); color:white; }
 
 /* ══ COURSE CARDS GRID ══ */
@@ -2579,76 +2591,85 @@ function toggleMembers() {
 
 /* ── Course Expectations ── */
 (function(){
+  const CSVG = {
+    family:   `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>`,
+    access:   `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="4" r="2"/><path d="M9 9h5l1.5 5.5h2.5"/><circle cx="9" cy="20" r="3"/><circle cx="17.5" cy="20" r="3"/><path d="M9 13H6a1 1 0 0 1-1-1V9"/></svg>`,
+    elderly:  `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="2.5"/><path d="M9.5 10h5"/><path d="M10 8.5v8"/><path d="M8.5 16.5l-2 5.5"/><path d="M13.5 16.5l1 4h3.5v1.5"/></svg>`,
+    house:    `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5L12 3l9 7.5"/><path d="M19 8.5v12.5H5V8.5"/><path d="M9 21V13h6v8"/></svg>`,
+    brain:    `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96-.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24A2.5 2.5 0 0 1 9.5 2z"/><path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96-.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24A2.5 2.5 0 0 0 14.5 2z"/></svg>`,
+    building: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 22h18"/><rect x="4" y="9" width="16" height="13"/><path d="M4 9l4-6h8l4 6"/><rect x="8" y="14" width="3" height="3"/><rect x="13" y="14" width="3" height="3"/><path d="M10 22v-5h4v5"/></svg>`,
+    hospital: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M12 8v8"/><path d="M8 12h8"/><path d="M9 4V2h6v2"/></svg>`,
+    school:   `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 22h20"/><path d="M4 11v11"/><path d="M20 11v11"/><path d="M12 2L2 9h20L12 2z"/><rect x="8.5" y="15" width="3" height="4"/><rect x="12.5" y="15" width="3" height="4"/></svg>`,
+  };
+  const MSVG = {
+    code:   `<svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><polyline points="5 7 1 9 5 11"/><polyline points="13 7 17 9 13 11"/><line x1="10" y1="4" x2="8" y2="14"/></svg>`,
+    chat:   `<svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H6L2 15V3z"/></svg>`,
+    folder: `<svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M2 5a1 1 0 0 1 1-1h4l2 2h6a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V5z"/></svg>`,
+    search: `<svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="7.5" cy="7.5" r="4.5"/><line x1="12" y1="12" x2="17" y2="17"/></svg>`,
+    arrow:  `<svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><line x1="9" y1="15" x2="9" y2="3"/><polyline points="4 8 9 3 14 8"/></svg>`,
+  };
   const COMMON_ITEMS = [
-    {icon:'💻', text:'認識AI基本概念：了解人工智慧的運作原理，以及AI與傳統軟體的差異。'},
-    {icon:'💬', text:'常見工具介紹：對話式AI（如 ChatGPT）、文件生成工具的功能與操作概覽。'},
-    {icon:'📋', text:'個案紀錄與資料整理：運用AI協助撰寫個案紀錄、整理服務資料，提升記錄品質與效率。'},
-    {icon:'🔍', text:'資訊搜尋與摘要：利用AI快速搜尋資源、彙整重點，強化日常工作的資訊處理能力。'},
-    {icon:'⬆️', text:'提升工作效率：掌握AI工具的實務技巧，優化日常行政流程，讓社工師專注於服務對象。'},
+    {iconSvg:MSVG.code,   text:'認識AI基本概念：了解人工智慧的運作原理，以及AI與傳統軟體的差異。'},
+    {iconSvg:MSVG.chat,   text:'常見工具介紹：對話式AI（如 ChatGPT）、文件生成工具的功能與操作概覽。'},
+    {iconSvg:MSVG.folder, text:'個案紀錄與資料整理：運用AI協助撰寫個案紀錄、整理服務資料，提升記錄品質與效率。'},
+    {iconSvg:MSVG.search, text:'資訊搜尋與摘要：利用AI快速搜尋資源、彙整重點，強化日常工作的資訊處理能力。'},
+    {iconSvg:MSVG.arrow,  text:'提升工作效率：掌握AI工具的實務技巧，優化日常行政流程，讓社工師專注於服務對象。'},
   ];
   const CMAP = {'var(--orange)':'red','var(--blue)':'blue','var(--green)':'green','var(--yellow)':'yellow'};
   const CHEX = {red:'#e05252',blue:'#4a86c0',green:'#4aab7a',yellow:'#c8950a'};
   const DEF_INST=[
-    {name:'兒少機構',   icon:'👨‍👩‍👧', colorKey:'red',    tag:'兒少服務',    desc:'專為兒童保護、安置、家庭服務機構的社工師設計', items:COMMON_ITEMS},
-    {name:'身心障礙機構',icon:'♿',                  colorKey:'blue',   tag:'身心障礙服務', desc:'適用於身心障礙福利機構、日間照顧、職業重建等服務', items:COMMON_ITEMS},
-    {name:'老人服務機構',icon:'👴',                  colorKey:'green',  tag:'老人福利服務', desc:'適用於長照機構、居家服務、日間照顧中心的服務人員', items:COMMON_ITEMS},
-    {name:'家庭服務中心',icon:'🏠',                  colorKey:'yellow', tag:'家庭福利服務', desc:'適用於家庭服務中心、社區服務、一般個案管理', items:COMMON_ITEMS},
-    {name:'心理衛生機構',icon:'🧠',                  colorKey:'red',    tag:'心理健康服務', desc:'適用於心理衛生中心、精神醫療社工、諮商機構', items:COMMON_ITEMS},
-    {name:'社區發展機構',icon:'🏛️',                 colorKey:'blue',   tag:'社區發展服務', desc:'適用於社區發展協會、社福中心、社區照顧關懷據點', items:COMMON_ITEMS},
-    {name:'醫院',       icon:'🏥',                  colorKey:'green',  tag:'醫療社會工作', desc:'適用於醫院社工部門、出院準備服務、安寧緩和', items:COMMON_ITEMS},
-    {name:'學校',       icon:'🏫',                  colorKey:'yellow', tag:'學校社會工作', desc:'適用於學校社工師、兒少輔導機構、教育部相關單位', items:COMMON_ITEMS},
+    {name:'兒少機構',   iconSvg:CSVG.family,   colorKey:'red',    tag:'兒少服務',    desc:'專為兒童保護、安置、家庭服務機構的社工師設計', items:COMMON_ITEMS},
+    {name:'身心障礙機構',iconSvg:CSVG.access,   colorKey:'blue',   tag:'身心障礙服務', desc:'適用於身心障礙福利機構、日間照顧、職業重建等服務', items:COMMON_ITEMS},
+    {name:'老人服務機構',iconSvg:CSVG.elderly,  colorKey:'green',  tag:'老人福利服務', desc:'適用於長照機構、居家服務、日間照顧中心的服務人員', items:COMMON_ITEMS},
+    {name:'家庭服務中心',iconSvg:CSVG.house,    colorKey:'yellow', tag:'家庭福利服務', desc:'適用於家庭服務中心、社區服務、一般個案管理', items:COMMON_ITEMS},
+    {name:'心理衛生機構',iconSvg:CSVG.brain,    colorKey:'red',    tag:'心理健康服務', desc:'適用於心理衛生中心、精神醫療社工、諮商機構', items:COMMON_ITEMS},
+    {name:'社區發展機構',iconSvg:CSVG.building, colorKey:'blue',   tag:'社區發展服務', desc:'適用於社區發展協會、社福中心、社區照顧關懷據點', items:COMMON_ITEMS},
+    {name:'醫院',       iconSvg:CSVG.hospital, colorKey:'green',  tag:'醫療社會工作', desc:'適用於醫院社工部門、出院準備服務、安寧緩和', items:COMMON_ITEMS},
+    {name:'學校',       iconSvg:CSVG.school,   colorKey:'yellow', tag:'學校社會工作', desc:'適用於學校社工師、兒少輔導機構、教育部相關單位', items:COMMON_ITEMS},
   ];
-
   const rawInst = (window.__SC__||{}).expect || DEF_INST;
   const INST = rawInst.map((inst,i)=>{
     const def = DEF_INST[i]||DEF_INST[0];
     const ck = CMAP[inst.color]||inst.colorKey||inst.color||def.colorKey||'red';
-    return {
-      name: inst.name||def.name,
-      icon: inst.icon||def.icon,
-      colorKey: ck,
-      colorHex: CHEX[ck]||'#e05252',
-      tag: inst.tag||def.tag,
-      desc: inst.desc||def.desc,
-      items: (Array.isArray(inst.items)&&inst.items.length)
-        ? inst.items.map(it=>typeof it==='string'?{icon:'✦',text:it}:it)
-        : COMMON_ITEMS
-    };
+    return { name:inst.name||def.name, iconSvg:def.iconSvg, colorKey:ck, colorHex:CHEX[ck]||'#e05252', tag:inst.tag||def.tag, desc:inst.desc||def.desc, items:COMMON_ITEMS };
   });
-
   const wrap = document.getElementById('expect-circles');
   if(!wrap) return;
   wrap.innerHTML = INST.map((inst,i)=>`
     <div class="expect-card" data-color="${inst.colorKey}" onclick="openExpect(${i})">
-      <div class="expect-card-icon">${inst.icon}</div>
+      <div class="expect-card-icon">${inst.iconSvg}</div>
       <div class="expect-card-name">${inst.name}</div>
-    </div>`).join('') +
-  `<div class="expect-inline-popup" id="expect-inline-popup">
-    <button class="expect-modal-close" onclick="closeExpect()">✕</button>
-    <div class="expect-modal-tag" id="em-tag"></div>
-    <div class="expect-modal-title" id="em-title"></div>
-    <div class="expect-modal-desc" id="em-desc"></div>
-    <ul class="expect-modal-items" id="em-items"></ul>
-  </div>`;
-
+    </div>`).join('');
+  document.body.insertAdjacentHTML('beforeend',
+    `<div class="expect-modal-bg" id="expect-modal-bg" onclick="if(event.target===this)closeExpect()">
+      <div class="expect-modal">
+        <button class="expect-modal-close" onclick="closeExpect()">✕</button>
+        <div class="expect-modal-tag" id="em-tag"></div>
+        <div class="expect-modal-title" id="em-title"></div>
+        <div class="expect-modal-desc" id="em-desc"></div>
+        <ul class="expect-modal-items" id="em-items"></ul>
+      </div>
+    </div>`);
   window._INST = INST;
   window.openExpect = function(i){
     const inst = INST[i];
-    const popup = document.getElementById('expect-inline-popup');
     const tag = document.getElementById('em-tag');
     tag.textContent = inst.tag;
-    tag.style.cssText = `background:${inst.colorHex};color:${inst.colorKey==='yellow'?'#2a1800':'white'};border:none;`;
+    tag.style.cssText = `background:${inst.colorHex};color:${inst.colorKey==='yellow'?'#2a1800':'white'};`;
     document.getElementById('em-title').textContent = inst.name + ' AI 應用課程重點';
     document.getElementById('em-desc').textContent = inst.desc;
-    document.getElementById('em-items').innerHTML = inst.items.map(it=>`<li><span class="em-item-icon">${it.icon}</span><span>${it.text}</span></li>`).join('');
-    popup.classList.add('show');
+    document.getElementById('em-items').innerHTML = inst.items.map(it=>`
+      <li><span class="em-item-icon" style="color:${inst.colorHex}">${it.iconSvg}</span><span>${it.text}</span></li>`).join('');
+    document.getElementById('expect-modal-bg').classList.add('open');
+    document.body.style.overflow='hidden';
   };
   window.closeExpect = function(){
-    const p = document.getElementById('expect-inline-popup');
-    if(p) p.classList.remove('show');
+    const bg=document.getElementById('expect-modal-bg');
+    if(bg)bg.classList.remove('open');
+    document.body.style.overflow='';
   };
-  document.addEventListener('keydown', e=>{ if(e.key==='Escape') closeExpect(); });
-  openExpect(0);
+  document.addEventListener('keydown',e=>{ if(e.key==='Escape')closeExpect(); });
+  openExpect(5);
 })();
 </script>
 
