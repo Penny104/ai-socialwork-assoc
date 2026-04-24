@@ -736,51 +736,48 @@ body::after {
 
 /* ══ COURSE EXPECT SECTION ══ */
 .expect-section { padding:2.5rem 5rem 3rem 6rem; position:relative; }
-.expect-circles-wrap {
+.expect-cards-wrap {
   display:grid;
   grid-template-columns:repeat(4,1fr);
-  gap:2rem;
+  gap:1.5rem;
   margin-top:2.5rem;
-}
-@media(max-width:900px){ .expect-circles-wrap{ grid-template-columns:repeat(3,1fr); } }
-@media(max-width:600px){ .expect-circles-wrap{ grid-template-columns:repeat(2,1fr); } }
-.expect-circle {
-  width:100%; aspect-ratio:1;
-  display:flex; align-items:center; justify-content:center; flex-direction:column;
-  border:2.5px solid var(--ink);
-  background:white; cursor:pointer;
-  transition:transform .22s, box-shadow .22s, background .18s;
-  text-align:center; padding:1.25rem; gap:.5rem;
-  box-shadow:4px 5px 0 var(--ink);
-}
-.expect-circle:hover { transform:scale(1.06) rotate(-1deg); box-shadow:6px 8px 0 var(--ink); }
-.expect-circle:nth-child(1){ border-radius:62% 38% 55% 45%/55% 62% 38% 45%; background:#fff8f0; }
-.expect-circle:nth-child(2){ border-radius:45% 55% 38% 62%/62% 38% 60% 40%; background:#f0f5ff; }
-.expect-circle:nth-child(3){ border-radius:55% 45% 62% 38%/40% 60% 45% 55%; background:#f0faf4; }
-.expect-circle:nth-child(4){ border-radius:38% 62% 45% 55%/55% 45% 60% 40%; background:#fffdf0; }
-.expect-circle:nth-child(5){ border-radius:60% 40% 50% 50%/45% 55% 42% 58%; background:#fff8f0; }
-.expect-circle:nth-child(6){ border-radius:42% 58% 60% 40%/58% 42% 55% 45%; background:#f0f5ff; }
-.expect-circle:nth-child(7){ border-radius:55% 45% 40% 60%/60% 40% 58% 42%; background:#f0faf4; }
-.expect-circle:nth-child(8){ border-radius:48% 52% 55% 45%/42% 58% 48% 52%; background:#fffdf0; }
-.expect-circle-icon { font-size:2.4rem; line-height:1; }
-.expect-circle-name { font-family:var(--fh); font-size:2.1rem; font-weight:700; color:var(--ink); line-height:1.3; }
-/* expect modal */
-.expect-modal-bg { position:fixed; inset:0; z-index:600; background:rgba(62,54,46,.45); backdrop-filter:blur(4px); display:flex; align-items:center; justify-content:center; opacity:0; pointer-events:none; transition:opacity .22s; }
-.expect-modal-bg.open { opacity:1; pointer-events:all; }
-.expect-modal {
-  background:white; border:2.5px solid var(--ink); border-radius:18px;
-  padding:2.25rem 2.5rem; max-width:520px; width:92%;
-  box-shadow:7px 9px 0 var(--ink);
-  transform:scale(.94) translateY(12px); transition:transform .25s;
   position:relative;
 }
-.expect-modal-bg.open .expect-modal { transform:scale(1) translateY(0); }
-.expect-modal-tag { display:inline-block; font-family:var(--fh); font-size:.78rem; font-weight:700; letter-spacing:.08em; padding:.18rem .75rem; border-radius:4px; border:1.5px solid var(--ink); margin-bottom:.85rem; }
-.expect-modal-title { font-family:var(--fh); font-size:1.35rem; font-weight:700; margin-bottom:.4rem; }
-.expect-modal-desc { font-size:.88rem; color:#7a6c60; margin-bottom:1.1rem; line-height:1.7; }
-.expect-modal-items { list-style:none; display:flex; flex-direction:column; gap:.6rem; }
-.expect-modal-items li { font-size:.9rem; line-height:1.75; color:#5a4e44; display:flex; gap:.5rem; align-items:flex-start; }
-.expect-modal-items li::before { content:'✦'; color:var(--orange); font-size:.7rem; margin-top:.3rem; flex-shrink:0; }
+@media(max-width:900px){ .expect-cards-wrap{ grid-template-columns:repeat(2,1fr); } }
+@media(max-width:600px){ .expect-cards-wrap{ grid-template-columns:repeat(2,1fr); } }
+.expect-card {
+  border-radius:14px; border:2.5px solid;
+  cursor:pointer; padding:1.5rem 1rem;
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  gap:.75rem;
+  box-shadow:3px 5px 14px rgba(0,0,0,.07);
+  transition:transform .2s, box-shadow .2s;
+  aspect-ratio:1.1; text-align:center;
+}
+.expect-card:hover { transform:translateY(-4px); box-shadow:4px 8px 20px rgba(0,0,0,.12); }
+.expect-card[data-color="red"]    { border-color:#e05252; background:#fff5f5; }
+.expect-card[data-color="blue"]   { border-color:#4a86c0; background:#f0f6ff; }
+.expect-card[data-color="green"]  { border-color:#4aab7a; background:#f0faf4; }
+.expect-card[data-color="yellow"] { border-color:#c8950a; background:#fffbf0; }
+.expect-card-icon { font-size:2.5rem; line-height:1; }
+.expect-card-name { font-family:var(--fh); font-size:1.1rem; font-weight:700; color:var(--ink); line-height:1.3; }
+/* inline popup */
+.expect-inline-popup {
+  position:absolute; z-index:50;
+  top:38%; left:8%;
+  width:370px; max-width:85%;
+  background:white; border:1.5px solid #2a2018; border-radius:14px;
+  box-shadow:6px 8px 24px rgba(0,0,0,.18);
+  padding:1.4rem 1.6rem;
+  display:none;
+}
+.expect-inline-popup.show { display:block; }
+.expect-modal-tag { display:inline-block; font-family:var(--fh); font-size:.76rem; font-weight:700; letter-spacing:.06em; padding:.2rem .8rem; border-radius:6px; margin-bottom:.8rem; }
+.expect-modal-title { font-family:var(--fh); font-size:1.2rem; font-weight:700; margin-bottom:.35rem; color:var(--ink); }
+.expect-modal-desc { font-size:.85rem; color:#7a6c60; margin-bottom:.9rem; line-height:1.7; }
+.expect-modal-items { list-style:none; display:flex; flex-direction:column; gap:.5rem; }
+.expect-modal-items li { font-size:.86rem; line-height:1.7; color:#5a4e44; display:flex; gap:.5rem; align-items:flex-start; }
+.em-item-icon { flex-shrink:0; font-size:1rem; margin-top:.1rem; }
 
 /* ══ SERVICE ITEMS SECTION ══ */
 .service-section { padding:2.5rem 5rem 7rem 6rem; position:relative; }
@@ -818,7 +815,7 @@ body::after {
   border:1.5px solid var(--ink); letter-spacing:.05em;
 }
 
-.expect-modal-close { position:absolute; top:1rem; right:1.1rem; width:30px; height:30px; border:2px solid var(--grid); border-radius:8px; background:white; font-size:1rem; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:.18s; }
+.expect-modal-close { position:absolute; top:.9rem; right:1rem; width:28px; height:28px; border:1.5px solid #ccc; border-radius:7px; background:white; font-size:.88rem; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:.18s; }
 .expect-modal-close:hover { background:var(--orange); border-color:var(--orange); color:white; }
 
 /* ══ COURSE CARDS GRID ══ */
@@ -1391,52 +1388,49 @@ body::after {
 
 /* ══ COURSE EXPECT SECTION ══ */
 .expect-section { padding:2.5rem 5rem 3rem 6rem; position:relative; }
-.expect-circles-wrap {
+.expect-cards-wrap {
   display:grid;
   grid-template-columns:repeat(4,1fr);
-  gap:2rem;
+  gap:1.5rem;
   margin-top:2.5rem;
-}
-@media(max-width:900px){ .expect-circles-wrap{ grid-template-columns:repeat(3,1fr); } }
-@media(max-width:600px){ .expect-circles-wrap{ grid-template-columns:repeat(2,1fr); } }
-.expect-circle {
-  width:100%; aspect-ratio:1;
-  display:flex; align-items:center; justify-content:center; flex-direction:column;
-  border:2.5px solid var(--ink);
-  background:white; cursor:pointer;
-  transition:transform .22s, box-shadow .22s, background .18s;
-  text-align:center; padding:1.25rem; gap:.5rem;
-  box-shadow:4px 5px 0 var(--ink);
-}
-.expect-circle:hover { transform:scale(1.06) rotate(-1deg); box-shadow:6px 8px 0 var(--ink); }
-.expect-circle:nth-child(1){ border-radius:62% 38% 55% 45%/55% 62% 38% 45%; background:#fff8f0; }
-.expect-circle:nth-child(2){ border-radius:45% 55% 38% 62%/62% 38% 60% 40%; background:#f0f5ff; }
-.expect-circle:nth-child(3){ border-radius:55% 45% 62% 38%/40% 60% 45% 55%; background:#f0faf4; }
-.expect-circle:nth-child(4){ border-radius:38% 62% 45% 55%/55% 45% 60% 40%; background:#fffdf0; }
-.expect-circle:nth-child(5){ border-radius:60% 40% 50% 50%/45% 55% 42% 58%; background:#fff8f0; }
-.expect-circle:nth-child(6){ border-radius:42% 58% 60% 40%/58% 42% 55% 45%; background:#f0f5ff; }
-.expect-circle:nth-child(7){ border-radius:55% 45% 40% 60%/60% 40% 58% 42%; background:#f0faf4; }
-.expect-circle:nth-child(8){ border-radius:48% 52% 55% 45%/42% 58% 48% 52%; background:#fffdf0; }
-.expect-circle-icon { font-size:2.4rem; line-height:1; }
-.expect-circle-name { font-family:var(--fh); font-size:2.1rem; font-weight:700; color:var(--ink); line-height:1.3; }
-/* expect modal */
-.expect-modal-bg { position:fixed; inset:0; z-index:600; background:rgba(62,54,46,.45); backdrop-filter:blur(4px); display:flex; align-items:center; justify-content:center; opacity:0; pointer-events:none; transition:opacity .22s; }
-.expect-modal-bg.open { opacity:1; pointer-events:all; }
-.expect-modal {
-  background:white; border:2.5px solid var(--ink); border-radius:18px;
-  padding:2.25rem 2.5rem; max-width:520px; width:92%;
-  box-shadow:7px 9px 0 var(--ink);
-  transform:scale(.94) translateY(12px); transition:transform .25s;
   position:relative;
 }
-.expect-modal-bg.open .expect-modal { transform:scale(1) translateY(0); }
-.expect-modal-tag { display:inline-block; font-family:var(--fh); font-size:.78rem; font-weight:700; letter-spacing:.08em; padding:.18rem .75rem; border-radius:4px; border:1.5px solid var(--ink); margin-bottom:.85rem; }
-.expect-modal-title { font-family:var(--fh); font-size:1.35rem; font-weight:700; margin-bottom:.4rem; }
-.expect-modal-desc { font-size:.88rem; color:#7a6c60; margin-bottom:1.1rem; line-height:1.7; }
-.expect-modal-items { list-style:none; display:flex; flex-direction:column; gap:.6rem; }
-.expect-modal-items li { font-size:.9rem; line-height:1.75; color:#5a4e44; display:flex; gap:.5rem; align-items:flex-start; }
-.expect-modal-items li::before { content:'✦'; color:var(--orange); font-size:.7rem; margin-top:.3rem; flex-shrink:0; }
-.expect-modal-close { position:absolute; top:1rem; right:1.1rem; width:30px; height:30px; border:2px solid var(--grid); border-radius:8px; background:white; font-size:1rem; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:.18s; }
+@media(max-width:900px){ .expect-cards-wrap{ grid-template-columns:repeat(2,1fr); } }
+@media(max-width:600px){ .expect-cards-wrap{ grid-template-columns:repeat(2,1fr); } }
+.expect-card {
+  border-radius:14px; border:2.5px solid;
+  cursor:pointer; padding:1.5rem 1rem;
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  gap:.75rem;
+  box-shadow:3px 5px 14px rgba(0,0,0,.07);
+  transition:transform .2s, box-shadow .2s;
+  aspect-ratio:1.1; text-align:center;
+}
+.expect-card:hover { transform:translateY(-4px); box-shadow:4px 8px 20px rgba(0,0,0,.12); }
+.expect-card[data-color="red"]    { border-color:#e05252; background:#fff5f5; }
+.expect-card[data-color="blue"]   { border-color:#4a86c0; background:#f0f6ff; }
+.expect-card[data-color="green"]  { border-color:#4aab7a; background:#f0faf4; }
+.expect-card[data-color="yellow"] { border-color:#c8950a; background:#fffbf0; }
+.expect-card-icon { font-size:2.5rem; line-height:1; }
+.expect-card-name { font-family:var(--fh); font-size:1.1rem; font-weight:700; color:var(--ink); line-height:1.3; }
+/* inline popup */
+.expect-inline-popup {
+  position:absolute; z-index:50;
+  top:38%; left:8%;
+  width:370px; max-width:85%;
+  background:white; border:1.5px solid #2a2018; border-radius:14px;
+  box-shadow:6px 8px 24px rgba(0,0,0,.18);
+  padding:1.4rem 1.6rem;
+  display:none;
+}
+.expect-inline-popup.show { display:block; }
+.expect-modal-tag { display:inline-block; font-family:var(--fh); font-size:.76rem; font-weight:700; letter-spacing:.06em; padding:.2rem .8rem; border-radius:6px; margin-bottom:.8rem; }
+.expect-modal-title { font-family:var(--fh); font-size:1.2rem; font-weight:700; margin-bottom:.35rem; color:var(--ink); }
+.expect-modal-desc { font-size:.85rem; color:#7a6c60; margin-bottom:.9rem; line-height:1.7; }
+.expect-modal-items { list-style:none; display:flex; flex-direction:column; gap:.5rem; }
+.expect-modal-items li { font-size:.86rem; line-height:1.7; color:#5a4e44; display:flex; gap:.5rem; align-items:flex-start; }
+.em-item-icon { flex-shrink:0; font-size:1rem; margin-top:.1rem; }
+.expect-modal-close { position:absolute; top:.9rem; right:1rem; width:28px; height:28px; border:1.5px solid #ccc; border-radius:7px; background:white; font-size:.88rem; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:.18s; }
 .expect-modal-close:hover { background:var(--orange); border-color:var(--orange); color:white; }
 
 /* ══ COURSE CARDS GRID ══ */
@@ -2288,7 +2282,7 @@ body::after {
 <!-- COURSE EXPECTATIONS -->
 <section class="expect-section" id="expect">
   <h2 class="sec-h">課程期待</h2>
-  <div class="expect-circles-wrap" id="expect-circles"></div>
+  <div class="expect-cards-wrap" id="expect-circles"></div>
 </section>
 
 <!-- SERVICE ITEMS -->
@@ -2296,17 +2290,6 @@ body::after {
   <h2 class="sec-h">服務項目</h2>
   <div class="service-grid" id="service-grid"></div>
 </section>
-
-<!-- Expect popup modal -->
-<div class="expect-modal-bg" id="expect-modal-bg" onclick="if(event.target===this)closeExpect()">
-  <div class="expect-modal">
-    <button class="expect-modal-close" onclick="closeExpect()">✕</button>
-    <div class="expect-modal-tag" id="em-tag"></div>
-    <div class="expect-modal-title" id="em-title"></div>
-    <div class="expect-modal-desc" id="em-desc"></div>
-    <ul class="expect-modal-items" id="em-items"></ul>
-  </div>
-</div>
 
 
 <!-- FOOTER -->
@@ -2634,59 +2617,76 @@ function toggleMembers() {
 
 /* ── Course Expectations ── */
 (function(){
-  const INST=[
-    {name:'兒少機構',icon:'🧒',color:'var(--orange)',
-     tag:'兒少服務', desc:'專為兒童保護、安置、家庭服務機構的社工師設計',
-     items:['AI輔助兒童個案紀錄撰寫','家庭評估報告自動生成','高風險家庭AI資源盤點','親職教育課程AI輔助設計','兒少保護會議記錄整理']},
-    {name:'身心障礙機構',icon:'♿',color:'var(--blue)',
-     tag:'身心障礙服務', desc:'適用於身心障礙福利機構、日間照顧、職業重建等服務',
-     items:['個別化支持計畫(ISP)AI輔助撰寫','輔助科技與AI工具整合應用','障礙評估報告AI生成技巧','職業重建計畫書設計輔助','跨專業團隊會議記錄整理']},
-    {name:'老人服務機構',icon:'👴',color:'var(--green)',
-     tag:'老人福利服務', desc:'適用於長照機構、居家服務、日間照顧中心的服務人員',
-     items:['長照評估報告AI輔助生成','出院準備服務AI應用','老人個案管理記錄撰寫','生命故事書AI輔助書寫','家庭照顧者支持方案設計']},
-    {name:'家庭服務中心',icon:'🏠',color:'var(--yellow)',
-     tag:'家庭福利服務', desc:'適用於家庭服務中心、社區服務、一般個案管理',
-     items:['家庭訪視記錄AI輔助撰寫','危機評估AI輔助分析','服務計畫書快速生成','社區資源AI搜尋與整合','家庭功能評估報告撰寫']},
-    {name:'心理衛生機構',icon:'🧠',color:'var(--orange)',
-     tag:'心理健康服務', desc:'適用於心理衛生中心、精神醫療社工、諮商機構',
-     items:['心理健康資源AI搜尋整合','精神科個案記錄撰寫技巧','危機介入評估AI輔助','復元計畫書AI設計輔助','跨團隊溝通文件生成']},
-    {name:'社區發展機構',icon:'🏘️',color:'var(--blue)',
-     tag:'社區發展服務', desc:'適用於社區發展協會、社福中心、社區照顧關懷據點',
-     items:['社區資源盤點AI輔助','方案計畫書AI快速撰寫','社區需求評估報告生成','成果報告與統計分析輔助','社區活動企劃AI設計']},
-    {name:'醫療社工',icon:'🏥',color:'var(--green)',
-     tag:'醫療社會工作', desc:'適用於醫院社工部門、出院準備服務、安寧緩和',
-     items:['出院準備計畫AI輔助生成','跨專業溝通記錄整理','病人社會資源評估輔助','安寧緩和個案記錄撰寫','醫療糾紛調解記錄整理']},
-    {name:'學校社工',icon:'🎒',color:'var(--yellow)',
-     tag:'學校社會工作', desc:'適用於學校社工師、兒少輔導機構、教育部相關單位',
-     items:['學生輔導記錄AI撰寫技巧','中輟生追蹤管理AI輔助','校園危機介入評估報告','家訪記錄快速生成','跨單位合作文件整合']},
+  const COMMON_ITEMS = [
+    {icon:'💻', text:'認識AI基本概念：了解人工智慧的運作原理，以及AI與傳統軟體的差異。'},
+    {icon:'💬', text:'常見工具介紹：對話式AI（如 ChatGPT）、文件生成工具的功能與操作概覽。'},
+    {icon:'📋', text:'個案紀錄與資料整理：運用AI協助撰寫個案紀錄、整理服務資料，提升記錄品質與效率。'},
+    {icon:'🔍', text:'資訊搜尋與摘要：利用AI快速搜尋資源、彙整重點，強化日常工作的資訊處理能力。'},
+    {icon:'⬆️', text:'提升工作效率：掌握AI工具的實務技巧，優化日常行政流程，讓社工師專注於服務對象。'},
   ];
+  const CMAP = {'var(--orange)':'red','var(--blue)':'blue','var(--green)':'green','var(--yellow)':'yellow'};
+  const CHEX = {red:'#e05252',blue:'#4a86c0',green:'#4aab7a',yellow:'#c8950a'};
+  const DEF_INST=[
+    {name:'兒少機構',   icon:'👨‍👩‍👧', colorKey:'red',    tag:'兒少服務',    desc:'專為兒童保護、安置、家庭服務機構的社工師設計', items:COMMON_ITEMS},
+    {name:'身心障礙機構',icon:'♿',                  colorKey:'blue',   tag:'身心障礙服務', desc:'適用於身心障礙福利機構、日間照顧、職業重建等服務', items:COMMON_ITEMS},
+    {name:'老人服務機構',icon:'👴',                  colorKey:'green',  tag:'老人福利服務', desc:'適用於長照機構、居家服務、日間照顧中心的服務人員', items:COMMON_ITEMS},
+    {name:'家庭服務中心',icon:'🏠',                  colorKey:'yellow', tag:'家庭福利服務', desc:'適用於家庭服務中心、社區服務、一般個案管理', items:COMMON_ITEMS},
+    {name:'心理衛生機構',icon:'🧠',                  colorKey:'red',    tag:'心理健康服務', desc:'適用於心理衛生中心、精神醫療社工、諮商機構', items:COMMON_ITEMS},
+    {name:'社區發展機構',icon:'🏛️',                 colorKey:'blue',   tag:'社區發展服務', desc:'適用於社區發展協會、社福中心、社區照顧關懷據點', items:COMMON_ITEMS},
+    {name:'醫院',       icon:'🏥',                  colorKey:'green',  tag:'醫療社會工作', desc:'適用於醫院社工部門、出院準備服務、安寧緩和', items:COMMON_ITEMS},
+    {name:'學校',       icon:'🏫',                  colorKey:'yellow', tag:'學校社會工作', desc:'適用於學校社工師、兒少輔導機構、教育部相關單位', items:COMMON_ITEMS},
+  ];
+
+  const rawInst = (window.__SC__||{}).expect || DEF_INST;
+  const INST = rawInst.map((inst,i)=>{
+    const def = DEF_INST[i]||DEF_INST[0];
+    const ck = CMAP[inst.color]||inst.colorKey||inst.color||def.colorKey||'red';
+    return {
+      name: inst.name||def.name,
+      icon: inst.icon||def.icon,
+      colorKey: ck,
+      colorHex: CHEX[ck]||'#e05252',
+      tag: inst.tag||def.tag,
+      desc: inst.desc||def.desc,
+      items: (Array.isArray(inst.items)&&inst.items.length)
+        ? inst.items.map(it=>typeof it==='string'?{icon:'✦',text:it}:it)
+        : COMMON_ITEMS
+    };
+  });
 
   const wrap = document.getElementById('expect-circles');
   if(!wrap) return;
   wrap.innerHTML = INST.map((inst,i)=>`
-    <div class="expect-circle" onclick="openExpect(${i})" style="border-color:${inst.color};">
-      <div class="expect-circle-icon">${inst.icon}</div>
-      <div class="expect-circle-name">${inst.name}</div>
-    </div>`).join('');
+    <div class="expect-card" data-color="${inst.colorKey}" onclick="openExpect(${i})">
+      <div class="expect-card-icon">${inst.icon}</div>
+      <div class="expect-card-name">${inst.name}</div>
+    </div>`).join('') +
+  `<div class="expect-inline-popup" id="expect-inline-popup">
+    <button class="expect-modal-close" onclick="closeExpect()">✕</button>
+    <div class="expect-modal-tag" id="em-tag"></div>
+    <div class="expect-modal-title" id="em-title"></div>
+    <div class="expect-modal-desc" id="em-desc"></div>
+    <ul class="expect-modal-items" id="em-items"></ul>
+  </div>`;
 
   window._INST = INST;
   window.openExpect = function(i){
     const inst = INST[i];
-    document.getElementById('em-tag').textContent = inst.tag;
-    document.getElementById('em-tag').style.background = inst.color==='var(--yellow)'?'var(--yellow)':'white';
-    document.getElementById('em-tag').style.color = inst.color==='var(--yellow)'?'var(--ink)':inst.color.replace('var(','').replace(')','');
-    document.getElementById('em-tag').style.borderColor = inst.color;
+    const popup = document.getElementById('expect-inline-popup');
+    const tag = document.getElementById('em-tag');
+    tag.textContent = inst.tag;
+    tag.style.cssText = `background:${inst.colorHex};color:${inst.colorKey==='yellow'?'#2a1800':'white'};border:none;`;
     document.getElementById('em-title').textContent = inst.name + ' AI 應用課程重點';
     document.getElementById('em-desc').textContent = inst.desc;
-    document.getElementById('em-items').innerHTML = inst.items.map(it=>`<li>${it}</li>`).join('');
-    document.getElementById('expect-modal-bg').classList.add('open');
-    document.body.style.overflow='hidden';
+    document.getElementById('em-items').innerHTML = inst.items.map(it=>`<li><span class="em-item-icon">${it.icon}</span><span>${it.text}</span></li>`).join('');
+    popup.classList.add('show');
   };
   window.closeExpect = function(){
-    document.getElementById('expect-modal-bg').classList.remove('open');
-    document.body.style.overflow='';
+    const p = document.getElementById('expect-inline-popup');
+    if(p) p.classList.remove('show');
   };
   document.addEventListener('keydown', e=>{ if(e.key==='Escape') closeExpect(); });
+  openExpect(0);
 })();
 </script>
 
