@@ -746,26 +746,23 @@ body::after {
 @media(max-width:900px){ .expect-cards-wrap{ grid-template-columns:repeat(2,1fr); } }
 @media(max-width:600px){ .expect-cards-wrap{ grid-template-columns:repeat(2,1fr); } }
 .expect-card {
-  border-radius:14px; border:2.5px solid;
-  cursor:pointer; padding:1.5rem 1rem;
+  border-radius:22px; border:2.5px solid;
+  cursor:pointer; padding:1.75rem 1.25rem 1.5rem;
   display:flex; flex-direction:column; align-items:center; justify-content:center;
-  gap:.75rem;
-  box-shadow:3px 5px 14px rgba(0,0,0,.07);
-  transition:transform .2s, box-shadow .2s;
+  gap:1rem;
+  box-shadow:6px 6px 0 rgba(0,0,0,.20);
+  transition:transform .18s, box-shadow .18s;
   aspect-ratio:1.1; text-align:center;
+  background:white;
 }
-.expect-card:hover { transform:translateY(-4px); box-shadow:4px 8px 20px rgba(0,0,0,.12); }
-.expect-card[data-color="red"]    { border-color:#e05252; background:#fff5f5; }
-.expect-card[data-color="blue"]   { border-color:#4a86c0; background:#f0f6ff; }
-.expect-card[data-color="green"]  { border-color:#4aab7a; background:#f0faf4; }
-.expect-card[data-color="yellow"] { border-color:#c8950a; background:#fffbf0; }
-.expect-card-icon { width:52px; height:52px; display:flex; align-items:center; justify-content:center; }
+.expect-card:hover { transform:translate(-2px,-2px); box-shadow:8px 8px 0 rgba(0,0,0,.20); }
+.expect-card[data-color="red"]    { border-color:#E05252; background:#FDECEA; }
+.expect-card[data-color="blue"]   { border-color:#5B8CE8; background:#E8F0FE; }
+.expect-card[data-color="green"]  { border-color:#4AAB7A; background:#E8F5E9; }
+.expect-card[data-color="yellow"] { border-color:#C8950A; background:#FFF8E1; }
+.expect-card-icon { width:84px; height:84px; display:flex; align-items:center; justify-content:center; }
 .expect-card-icon svg { width:100%; height:100%; display:block; }
-.expect-card[data-color="red"]    .expect-card-icon { color:#e05252; }
-.expect-card[data-color="blue"]   .expect-card-icon { color:#4a86c0; }
-.expect-card[data-color="green"]  .expect-card-icon { color:#4aab7a; }
-.expect-card[data-color="yellow"] .expect-card-icon { color:#c8950a; }
-.expect-card-name { font-family:var(--fh); font-size:1.05rem; font-weight:700; color:var(--ink); line-height:1.3; }
+.expect-card-name { font-family:var(--fh); font-size:1.35rem; font-weight:700; color:var(--ink); line-height:1.25; }
 /* modal overlay */
 .expect-modal-bg { position:fixed; inset:0; z-index:600; background:rgba(40,35,30,.5); backdrop-filter:blur(3px); display:flex; align-items:center; justify-content:center; opacity:0; pointer-events:none; transition:opacity .25s; }
 .expect-modal-bg.open { opacity:1; pointer-events:all; }
@@ -1404,26 +1401,23 @@ body::after {
 @media(max-width:900px){ .expect-cards-wrap{ grid-template-columns:repeat(2,1fr); } }
 @media(max-width:600px){ .expect-cards-wrap{ grid-template-columns:repeat(2,1fr); } }
 .expect-card {
-  border-radius:14px; border:2.5px solid;
-  cursor:pointer; padding:1.5rem 1rem;
+  border-radius:22px; border:2.5px solid;
+  cursor:pointer; padding:1.75rem 1.25rem 1.5rem;
   display:flex; flex-direction:column; align-items:center; justify-content:center;
-  gap:.75rem;
-  box-shadow:3px 5px 14px rgba(0,0,0,.07);
-  transition:transform .2s, box-shadow .2s;
+  gap:1rem;
+  box-shadow:6px 6px 0 rgba(0,0,0,.20);
+  transition:transform .18s, box-shadow .18s;
   aspect-ratio:1.1; text-align:center;
+  background:white;
 }
-.expect-card:hover { transform:translateY(-4px); box-shadow:4px 8px 20px rgba(0,0,0,.12); }
-.expect-card[data-color="red"]    { border-color:#e05252; background:#fff5f5; }
-.expect-card[data-color="blue"]   { border-color:#4a86c0; background:#f0f6ff; }
-.expect-card[data-color="green"]  { border-color:#4aab7a; background:#f0faf4; }
-.expect-card[data-color="yellow"] { border-color:#c8950a; background:#fffbf0; }
-.expect-card-icon { width:52px; height:52px; display:flex; align-items:center; justify-content:center; }
+.expect-card:hover { transform:translate(-2px,-2px); box-shadow:8px 8px 0 rgba(0,0,0,.20); }
+.expect-card[data-color="red"]    { border-color:#E05252; background:#FDECEA; }
+.expect-card[data-color="blue"]   { border-color:#5B8CE8; background:#E8F0FE; }
+.expect-card[data-color="green"]  { border-color:#4AAB7A; background:#E8F5E9; }
+.expect-card[data-color="yellow"] { border-color:#C8950A; background:#FFF8E1; }
+.expect-card-icon { width:84px; height:84px; display:flex; align-items:center; justify-content:center; }
 .expect-card-icon svg { width:100%; height:100%; display:block; }
-.expect-card[data-color="red"]    .expect-card-icon { color:#e05252; }
-.expect-card[data-color="blue"]   .expect-card-icon { color:#4a86c0; }
-.expect-card[data-color="green"]  .expect-card-icon { color:#4aab7a; }
-.expect-card[data-color="yellow"] .expect-card-icon { color:#c8950a; }
-.expect-card-name { font-family:var(--fh); font-size:1.05rem; font-weight:700; color:var(--ink); line-height:1.3; }
+.expect-card-name { font-family:var(--fh); font-size:1.35rem; font-weight:700; color:var(--ink); line-height:1.25; }
 /* modal overlay */
 .expect-modal-bg { position:fixed; inset:0; z-index:600; background:rgba(40,35,30,.5); backdrop-filter:blur(3px); display:flex; align-items:center; justify-content:center; opacity:0; pointer-events:none; transition:opacity .25s; }
 .expect-modal-bg.open { opacity:1; pointer-events:all; }
@@ -2630,14 +2624,89 @@ function toggleMembers() {
 /* ── Course Expectations ── */
 (function(){
   const CSVG = {
-    family:   `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>`,
-    access:   `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="4" r="2"/><path d="M9 9h5l1.5 5.5h2.5"/><circle cx="9" cy="20" r="3"/><circle cx="17.5" cy="20" r="3"/><path d="M9 13H6a1 1 0 0 1-1-1V9"/></svg>`,
-    elderly:  `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="2.5"/><path d="M9.5 10h5"/><path d="M10 8.5v8"/><path d="M8.5 16.5l-2 5.5"/><path d="M13.5 16.5l1 4h3.5v1.5"/></svg>`,
-    house:    `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5L12 3l9 7.5"/><path d="M19 8.5v12.5H5V8.5"/><path d="M9 21V13h6v8"/></svg>`,
-    brain:    `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96-.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24A2.5 2.5 0 0 1 9.5 2z"/><path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96-.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24A2.5 2.5 0 0 0 14.5 2z"/></svg>`,
-    building: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 22h18"/><rect x="4" y="9" width="16" height="13"/><path d="M4 9l4-6h8l4 6"/><rect x="8" y="14" width="3" height="3"/><rect x="13" y="14" width="3" height="3"/><path d="M10 22v-5h4v5"/></svg>`,
-    hospital: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M12 8v8"/><path d="M8 12h8"/><path d="M9 4V2h6v2"/></svg>`,
-    school:   `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 22h20"/><path d="M4 11v11"/><path d="M20 11v11"/><path d="M12 2L2 9h20L12 2z"/><rect x="8.5" y="15" width="3" height="4"/><rect x="12.5" y="15" width="3" height="4"/></svg>`,
+    family: `<svg viewBox="0 0 80 68" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="17" cy="12" r="8" fill="#FBBF94"/>
+      <ellipse cx="13" cy="6" rx="9" ry="5.5" fill="#6B4C3B"/>
+      <rect x="7" y="21" width="20" height="20" rx="6" fill="#5B7FDE"/>
+      <rect x="7" y="34" width="8" height="18" rx="4" fill="#4A6FCC"/>
+      <rect x="19" y="34" width="8" height="18" rx="4" fill="#4A6FCC"/>
+      <circle cx="63" cy="15" r="7.5" fill="#FBBF94"/>
+      <ellipse cx="63" cy="9" rx="9" ry="5" fill="#7B4F2E"/>
+      <path d="M53 25 Q63 21 73 25 L71 56 H55 Z" fill="#E8688A"/>
+      <circle cx="40" cy="30" r="6.5" fill="#FBBF94"/>
+      <rect x="33" y="38" width="14" height="18" rx="5" fill="#FFC83D"/>
+    </svg>`,
+    access: `<svg viewBox="0 0 72 72" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="48" cy="9" r="7" fill="#3B82CE"/>
+      <circle cx="22" cy="52" r="13" stroke="#3B82CE" stroke-width="5" fill="none"/>
+      <circle cx="48" cy="52" r="13" stroke="#3B82CE" stroke-width="5" fill="none"/>
+      <path d="M42 21 L28 21 L26 36 L44 36 L50 48" stroke="#3B82CE" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      <line x1="26" y1="28" x2="18" y2="28" stroke="#3B82CE" stroke-width="5" stroke-linecap="round"/>
+    </svg>`,
+    elderly: `<svg viewBox="0 0 72 72" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="30" cy="10" r="9" fill="#FBBF94"/>
+      <ellipse cx="30" cy="5" rx="10" ry="6" fill="#B8B8B8"/>
+      <circle cx="24" cy="12" r="3.5" stroke="#555" stroke-width="1.5" fill="none"/>
+      <circle cx="33" cy="12" r="3.5" stroke="#555" stroke-width="1.5" fill="none"/>
+      <line x1="27.5" y1="12" x2="29.5" y2="12" stroke="#555" stroke-width="1.5"/>
+      <rect x="20" y="20" width="20" height="22" rx="6" fill="#4A8A6A"/>
+      <rect x="20" y="35" width="8" height="22" rx="4" fill="#3E7A5A"/>
+      <rect x="32" y="35" width="8" height="22" rx="4" fill="#3E7A5A"/>
+      <line x1="50" y1="30" x2="58" y2="65" stroke="#8B6E3A" stroke-width="4" stroke-linecap="round"/>
+      <path d="M46 32 Q50 26 54 32" stroke="#8B6E3A" stroke-width="4" fill="none" stroke-linecap="round"/>
+    </svg>`,
+    house: `<svg viewBox="0 0 72 72" xmlns="http://www.w3.org/2000/svg">
+      <rect x="8" y="32" width="56" height="36" rx="4" fill="#FDEBC8"/>
+      <path d="M4 34 L36 8 L68 34 Z" fill="#D4884A"/>
+      <rect x="29" y="48" width="14" height="20" rx="3" fill="#8B5E3C"/>
+      <rect x="12" y="40" width="12" height="10" rx="2" fill="#87CEEB"/>
+      <rect x="48" y="40" width="12" height="10" rx="2" fill="#87CEEB"/>
+      <circle cx="34" cy="40" r="3.5" fill="#FBBF94"/>
+      <circle cx="40" cy="42" r="3" fill="#FBBF94"/>
+      <circle cx="36" cy="44.5" r="2.5" fill="#FBBF94"/>
+    </svg>`,
+    brain: `<svg viewBox="0 0 72 68" xmlns="http://www.w3.org/2000/svg">
+      <path d="M36 16 C19 16 7 26 7 40 C7 54 17 62 27 62 C31 62 34 60 36 57" fill="#F4A0A0" stroke="#D96060" stroke-width="2"/>
+      <path d="M36 16 C53 16 65 26 65 40 C65 54 55 62 45 62 C41 62 38 60 36 57" fill="#F4A0A0" stroke="#D96060" stroke-width="2"/>
+      <path d="M17 30 C21 25 30 25 34 30" stroke="#D96060" stroke-width="2" stroke-linecap="round" fill="none"/>
+      <path d="M38 30 C42 25 51 25 55 30" stroke="#D96060" stroke-width="2" stroke-linecap="round" fill="none"/>
+      <path d="M11 43 C15 38 22 40 24 45" stroke="#D96060" stroke-width="2" stroke-linecap="round" fill="none"/>
+      <path d="M48 45 C50 40 57 38 61 43" stroke="#D96060" stroke-width="2" stroke-linecap="round" fill="none"/>
+      <path d="M19 54 C23 49 30 51 32 55" stroke="#D96060" stroke-width="2" stroke-linecap="round" fill="none"/>
+      <path d="M40 55 C42 51 49 49 53 54" stroke="#D96060" stroke-width="2" stroke-linecap="round" fill="none"/>
+      <line x1="36" y1="16" x2="36" y2="57" stroke="#D96060" stroke-width="1.5" stroke-dasharray="4,3"/>
+    </svg>`,
+    building: `<svg viewBox="0 0 72 72" xmlns="http://www.w3.org/2000/svg">
+      <rect x="10" y="22" width="52" height="48" rx="3" fill="#F5C842"/>
+      <rect x="18" y="14" width="36" height="10" rx="2" fill="#E0B030"/>
+      <rect x="28" y="6" width="16" height="10" rx="2" fill="#D4A020"/>
+      <rect x="4" y="68" width="64" height="4" rx="2" fill="#A08050"/>
+      <path d="M30 70 L30 52 Q36 45 42 52 L42 70" fill="#B8783A"/>
+      <rect x="14" y="28" width="9" height="9" rx="1.5" fill="#A8D8F0"/>
+      <rect x="27" y="28" width="9" height="9" rx="1.5" fill="#A8D8F0"/>
+      <rect x="49" y="28" width="9" height="9" rx="1.5" fill="#A8D8F0"/>
+      <rect x="14" y="42" width="9" height="9" rx="1.5" fill="#A8D8F0"/>
+      <rect x="49" y="42" width="9" height="9" rx="1.5" fill="#A8D8F0"/>
+    </svg>`,
+    hospital: `<svg viewBox="0 0 72 72" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="36" cy="36" r="30" fill="white" stroke="#CCC" stroke-width="3"/>
+      <rect x="26" y="14" width="20" height="44" rx="5" fill="#E84040"/>
+      <rect x="14" y="26" width="44" height="20" rx="5" fill="#E84040"/>
+    </svg>`,
+    school: `<svg viewBox="0 0 72 72" xmlns="http://www.w3.org/2000/svg">
+      <rect x="8" y="28" width="56" height="42" rx="3" fill="#C07448"/>
+      <path d="M4 30 L36 10 L68 30 Z" fill="#9B5838"/>
+      <rect x="27" y="10" width="18" height="24" rx="2" fill="#A86040"/>
+      <circle cx="36" cy="19" r="6" fill="white"/>
+      <line x1="36" y1="14" x2="36" y2="19" stroke="#444" stroke-width="1.5" stroke-linecap="round"/>
+      <line x1="36" y1="19" x2="40" y2="21" stroke="#444" stroke-width="1.5" stroke-linecap="round"/>
+      <line x1="36" y1="9" x2="36" y2="2" stroke="#888" stroke-width="1.5"/>
+      <rect x="36" y="2" width="9" height="5" fill="#E84040"/>
+      <rect x="12" y="36" width="12" height="10" rx="2" fill="#87CEEB"/>
+      <rect x="48" y="36" width="12" height="10" rx="2" fill="#87CEEB"/>
+      <rect x="29" y="36" width="14" height="10" rx="2" fill="#87CEEB"/>
+      <rect x="30" y="50" width="12" height="20" rx="2" fill="#7A4B28"/>
+    </svg>`,
   };
   const MSVG = {
     code:   `<svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><polyline points="5 7 1 9 5 11"/><polyline points="13 7 17 9 13 11"/><line x1="10" y1="4" x2="8" y2="14"/></svg>`,
@@ -2654,7 +2723,7 @@ function toggleMembers() {
     {iconSvg:MSVG.arrow,  text:'提升工作效率：掌握AI工具的實務技巧，優化日常行政流程，讓社工師專注於服務對象。'},
   ];
   const CMAP = {'var(--orange)':'red','var(--blue)':'blue','var(--green)':'green','var(--yellow)':'yellow'};
-  const CHEX = {red:'#e05252',blue:'#4a86c0',green:'#4aab7a',yellow:'#c8950a'};
+  const CHEX = {red:'#E05252',blue:'#5B8CE8',green:'#4AAB7A',yellow:'#C8950A'};
   const DEF_INST=[
     {name:'兒少機構',   iconSvg:CSVG.family,   colorKey:'red',    tag:'兒少服務',    desc:'專為兒童保護、安置、家庭服務機構的社工師設計', items:COMMON_ITEMS},
     {name:'身心障礙機構',iconSvg:CSVG.access,   colorKey:'blue',   tag:'身心障礙服務', desc:'適用於身心障礙福利機構、日間照顧、職業重建等服務', items:COMMON_ITEMS},
@@ -2669,7 +2738,7 @@ function toggleMembers() {
   const INST = rawInst.map((inst,i)=>{
     const def = DEF_INST[i]||DEF_INST[0];
     const ck = CMAP[inst.color]||inst.colorKey||inst.color||def.colorKey||'red';
-    return { name:inst.name||def.name, iconSvg:def.iconSvg, colorKey:ck, colorHex:CHEX[ck]||'#e05252', tag:inst.tag||def.tag, desc:inst.desc||def.desc, items:COMMON_ITEMS };
+    return { name:inst.name||def.name, iconSvg:def.iconSvg, colorKey:ck, colorHex:CHEX[ck]||'#E05252', tag:inst.tag||def.tag, desc:inst.desc||def.desc, items:COMMON_ITEMS };
   });
   const wrap = document.getElementById('expect-circles');
   if(!wrap) return;
