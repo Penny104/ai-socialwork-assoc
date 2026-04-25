@@ -477,7 +477,7 @@
       "items": []
     },
     {
-      "name": "醫院",
+      "name": "醫院社工",
       "icon": "🏥",
       "color": "var(--green)",
       "tag": "醫療社會工作",
@@ -509,5 +509,5 @@
     "email": "tatswin2022@gmail.com",
     "phone": "+886-2-0000-0000"
   },
-  "_version": 1777137789322
+  "_version": 1777138343215
 }
