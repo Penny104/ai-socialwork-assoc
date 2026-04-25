@@ -474,7 +474,7 @@
       "items": []
     },
     {
-      "name": "學校",
+      "name": "學校社工",
       "icon": "🏫",
       "color": "var(--yellow)",
       "tag": "學校社會工作",
@@ -498,5 +498,5 @@
     "email": "tatswin2022@gmail.com",
     "phone": "+886-2-0000-0000"
   },
-  "_version": 1777131793869
+  "_version": 1777131804787
 }
