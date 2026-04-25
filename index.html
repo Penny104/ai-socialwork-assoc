@@ -2695,15 +2695,47 @@ function toggleMembers() {
   const CMAP = {'var(--orange)':'red','var(--blue)':'blue','var(--green)':'green','var(--yellow)':'yellow'};
   const CHEX = {red:'#E05252',blue:'#5B8CE8',green:'#4AAB7A',yellow:'#C8950A'};
   const DEF_INST=[
-    {name:'兒少機構',   iconSvg:CSVG.family,   colorKey:'red',    tag:'兒少服務',    desc:'專為兒童保護、安置、家庭服務機構的社工師設計', items:COMMON_ITEMS},
-    {name:'身心障礙機構',iconSvg:CSVG.access,   colorKey:'blue',   tag:'身心障礙服務', desc:'適用於身心障礙福利機構、日間照顧、職業重建等服務', items:COMMON_ITEMS},
-    {name:'老人服務機構',iconSvg:CSVG.elderly,  colorKey:'green',  tag:'老人福利服務', desc:'適用於長照機構、居家服務、日間照顧中心的服務人員', items:COMMON_ITEMS},
-    {name:'家庭服務中心',iconSvg:CSVG.house,    colorKey:'yellow', tag:'家庭福利服務', desc:'適用於家庭服務中心、社區服務、一般個案管理', items:COMMON_ITEMS},
-    {name:'心理衛生機構',iconSvg:CSVG.brain,    colorKey:'red',    tag:'心理健康服務', desc:'適用於心理衛生中心、精神醫療社工、諮商機構', items:COMMON_ITEMS},
-    {name:'社區發展機構',iconSvg:CSVG.building, colorKey:'blue',   tag:'社區發展服務', desc:'適用於社區發展協會、社福中心、社區照顧關懷據點', items:COMMON_ITEMS},
-    {name:'醫院',       iconSvg:CSVG.hospital, colorKey:'green',  tag:'醫療社會工作', desc:'適用於醫院社工部門、出院準備服務、安寧緩和', items:COMMON_ITEMS},
-    {name:'學校',       iconSvg:CSVG.school,   colorKey:'yellow', tag:'學校社會工作', desc:'適用於學校社工師、兒少輔導機構、教育部相關單位', items:COMMON_ITEMS},
+    {name:'兒少機構',   icon:'👨‍👩‍👧', color:'var(--orange)', tag:'兒少服務',    desc:'專為兒童保護、安置、家庭服務機構的社工師設計', items:COMMON_ITEMS},
+    {name:'身心障礙機構',icon:'♿',                                     color:'var(--blue)',   tag:'身心障礙服務', desc:'適用於身心障礙福利機構、日間照顧、職業重建等服務', items:COMMON_ITEMS},
+    {name:'老人服務機構',icon:'👴',                                  color:'var(--green)',  tag:'老人福利服務', desc:'適用於長照機構、居家服務、日間照顧中心的服務人員', items:COMMON_ITEMS},
+    {name:'家庭服務中心',icon:'🏠',                                  color:'var(--yellow)', tag:'家庭福利服務', desc:'適用於家庭服務中心、社區服務、一般個案管理', items:COMMON_ITEMS},
+    {name:'心理衛生機構',icon:'🧠',                                  color:'var(--orange)', tag:'心理健康服務', desc:'適用於心理衛生中心、精神醫療社工、諮商機構', items:COMMON_ITEMS},
+    {name:'社區發展機構',icon:'🏛️',                            color:'var(--blue)',   tag:'社區發展服務', desc:'適用於社區發展協會、社福中心、社區照顧關懷據點', items:COMMON_ITEMS},
+    {name:'醫院',       icon:'🏥',                                  color:'var(--green)',  tag:'醫療社會工作', desc:'適用於醫院社工部門、出院準備服務、安寧緩和', items:COMMON_ITEMS},
+    {name:'學校',       icon:'🏫',                                  color:'var(--yellow)', tag:'學校社會工作', desc:'適用於學校社工師、兒少輔導機構、教育部相關單位', items:COMMON_ITEMS},
   ];
+  /* icon emoji → SVG mapping (covers variants & fallback by name keyword) */
+  const ICON_MAP = {
+    '👨‍👩‍👧':CSVG.family,'👪':CSVG.family,'🧒':CSVG.family,'👶':CSVG.family,'👧':CSVG.family,'👦':CSVG.family,'🦸':CSVG.family,
+    '♿':CSVG.access,'🦽':CSVG.access,'🦼':CSVG.access,
+    '👴':CSVG.elderly,'👵':CSVG.elderly,'🧓':CSVG.elderly,
+    '🏠':CSVG.house,'🏡':CSVG.house,'🏘':CSVG.house,
+    '🧠':CSVG.brain,'🙆':CSVG.brain,
+    '🏛':CSVG.building,'🏛️':CSVG.building,'🏢':CSVG.building,'🏗':CSVG.building,
+    '🏥':CSVG.hospital,'🩺':CSVG.hospital,'💊':CSVG.hospital,
+    '🏫':CSVG.school,'📚':CSVG.school,'🎓':CSVG.school,'✏️':CSVG.school,
+  };
+  const NAME_KW = [
+    ['兒少',CSVG.family],['児童',CSVG.family],['児福',CSVG.family],['安置',CSVG.family],
+    ['身心障',CSVG.access],['障礙',CSVG.access],['輔具',CSVG.access],['職重',CSVG.access],
+    ['老人',CSVG.elderly],['長照',CSVG.elderly],['高齡',CSVG.elderly],['樂齡',CSVG.elderly],['居家',CSVG.elderly],
+    ['家庭',CSVG.house],['家服',CSVG.house],['親子',CSVG.house],
+    ['心理',CSVG.brain],['精神',CSVG.brain],['諸商',CSVG.brain],['衛生',CSVG.brain],
+    ['社區',CSVG.building],['社福',CSVG.building],['社發',CSVG.building],
+    ['醫院',CSVG.hospital],['醫療',CSVG.hospital],['安寧',CSVG.hospital],['護理',CSVG.hospital],
+    ['學校',CSVG.school],['教育',CSVG.school],['學社',CSVG.school],
+  ];
+  function resolveIcon(emoji,name){
+    if(emoji){
+      if(ICON_MAP[emoji]) return ICON_MAP[emoji];
+      const chars=[...emoji];
+      const c2=chars[0]+(chars[1]||'');
+      if(ICON_MAP[c2]) return ICON_MAP[c2];
+      if(chars[0]&&ICON_MAP[chars[0]]) return ICON_MAP[chars[0]];
+    }
+    if(name){ for(const [kw,svg] of NAME_KW) if(name.includes(kw)) return svg; }
+    return CSVG.building;
+  }
   const EMAP = {'💻':MSVG.code,'💬':MSVG.chat,'🗣':MSVG.chat,'📋':MSVG.folder,'📁':MSVG.folder,'🗂':MSVG.folder,'🔍':MSVG.search,'🔎':MSVG.search,'⬆️':MSVG.arrow,'📈':MSVG.arrow,'💡':MSVG.arrow,'✅':MSVG.arrow,'🎙':MSVG.code,'🎤':MSVG.code,'🤖':MSVG.code,'🧠':MSVG.code,'📝':MSVG.folder,'📊':MSVG.search,'📌':MSVG.folder,'📞':MSVG.chat};
   function parseInstItems(arr){
     return arr.filter(t=>t&&t.trim()).map(txt=>{
@@ -2717,12 +2749,12 @@ function toggleMembers() {
       return {iconSvg:svg,text:text||txt.trim()};
     });
   }
-  const rawInst = (window.__SC__||{}).expect || DEF_INST;
-  const INST = rawInst.map((inst,i)=>{
-    const def = DEF_INST[i]||DEF_INST[0];
-    const ck = CMAP[inst.color]||inst.colorKey||inst.color||def.colorKey||'red';
+  const rawInst = (window.__SC__||{}).expect;
+  const src = (rawInst&&rawInst.length) ? rawInst : DEF_INST;
+  const INST = src.map((inst,i)=>{
+    const ck = CMAP[inst.color]||inst.colorKey||inst.color||['red','blue','green','yellow'][i%4];
     const items = (inst.items&&inst.items.length) ? (typeof inst.items[0]==='string' ? parseInstItems(inst.items) : inst.items) : COMMON_ITEMS;
-    return { name:inst.name||def.name, iconSvg:def.iconSvg, colorKey:ck, colorHex:CHEX[ck]||'#E05252', tag:inst.tag||def.tag, desc:inst.desc||def.desc, items:items };
+    return { name:inst.name||`機構${i+1}`, iconSvg:resolveIcon(inst.icon,inst.name), colorKey:ck, colorHex:CHEX[ck]||'#E05252', tag:inst.tag||'', desc:inst.desc||'', items:items };
   });
   const wrap = document.getElementById('expect-circles');
   if(!wrap) return;
