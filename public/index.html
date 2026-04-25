@@ -2763,11 +2763,25 @@ function toggleMembers() {
     {name:'醫院',       iconSvg:CSVG.hospital, colorKey:'green',  tag:'醫療社會工作', desc:'適用於醫院社工部門、出院準備服務、安寧緩和', items:COMMON_ITEMS},
     {name:'學校',       iconSvg:CSVG.school,   colorKey:'yellow', tag:'學校社會工作', desc:'適用於學校社工師、兒少輔導機構、教育部相關單位', items:COMMON_ITEMS},
   ];
+  const EMAP = {'💻':MSVG.code,'💬':MSVG.chat,'🗣':MSVG.chat,'📋':MSVG.folder,'📁':MSVG.folder,'🗂':MSVG.folder,'🔍':MSVG.search,'🔎':MSVG.search,'⬆️':MSVG.arrow,'📈':MSVG.arrow,'💡':MSVG.arrow,'✅':MSVG.arrow,'🎙':MSVG.code,'🎤':MSVG.code,'🤖':MSVG.code,'🧠':MSVG.code,'📝':MSVG.folder,'📊':MSVG.search,'📌':MSVG.folder,'📞':MSVG.chat};
+  function parseInstItems(arr){
+    return arr.filter(t=>t&&t.trim()).map(txt=>{
+      const chars=[...txt.trim()];
+      let svg=MSVG.code,text=txt.trim();
+      if(chars.length){
+        const c2=chars[0]+(chars[1]||'');
+        if(EMAP[c2]){svg=EMAP[c2];text=txt.slice(c2.length).trim();}
+        else if(EMAP[chars[0]]){svg=EMAP[chars[0]];text=txt.slice(chars[0].length).trim();}
+      }
+      return {iconSvg:svg,text:text||txt.trim()};
+    });
+  }
   const rawInst = (window.__SC__||{}).expect || DEF_INST;
   const INST = rawInst.map((inst,i)=>{
     const def = DEF_INST[i]||DEF_INST[0];
     const ck = CMAP[inst.color]||inst.colorKey||inst.color||def.colorKey||'red';
-    return { name:inst.name||def.name, iconSvg:def.iconSvg, colorKey:ck, colorHex:CHEX[ck]||'#E05252', tag:inst.tag||def.tag, desc:inst.desc||def.desc, items:COMMON_ITEMS };
+    const items = (inst.items&&inst.items.length) ? (typeof inst.items[0]==='string' ? parseInstItems(inst.items) : inst.items) : COMMON_ITEMS;
+    return { name:inst.name||def.name, iconSvg:def.iconSvg, colorKey:ck, colorHex:CHEX[ck]||'#E05252', tag:inst.tag||def.tag, desc:inst.desc||def.desc, items:items };
   });
   const wrap = document.getElementById('expect-circles');
   if(!wrap) return;
