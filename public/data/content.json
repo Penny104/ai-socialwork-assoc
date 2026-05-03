@@ -583,13 +583,13 @@
   ],
   "services": [
     {
-      "name": "Line Bot",
-      "desc": "📌 自動化流程\n📌 語音轉文字生成訪視紀錄\n📌 AI 智慧客服"
+      "name": "Line Bot （自動化流程服務）",
+      "desc": "📌 語音轉文字生成訪視紀錄\n📌 AI 智慧客服"
     }
   ],
   "config": {
     "email": "tatswin2022@gmail.com",
     "phone": "+886-2-0000-0000"
   },
-  "_version": 1777821209975
+  "_version": 1777821254973
 }
