@@ -1,0 +1,38 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(curl -s -X POST -H 'Authorization: token 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' -H 'Accept: application/vnd.github+json' https://api.github.com/repos/Penny104/ai-socialwork-assoc/pages -d '{\"source\":{\"branch\":\"main\",\"path\":\"/\"}}')",
+      "Bash(curl -s -H 'Authorization: token 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' -H 'Accept: application/vnd.github+json' https://api.github.com/repos/Penny104/ai-socialwork-assoc/pages)",
+      "Bash(curl -s \"https://penny104.github.io/ai-socialwork-assoc/\")",
+      "Bash(git pull:*)",
+      "Bash(mkdir -p /Applications/MAMP/htdocs/ai-socialwork-assoc/public/uploads)",
+      "Bash(touch /Applications/MAMP/htdocs/ai-socialwork-assoc/public/uploads/.gitkeep)",
+      "Bash(node -e \"const c=[103,104,112,95,97,110,81,118,113,50,121,100,111,72,103,51,68,115,112,104,81,117,76,55,88,118,72,105,75,84,72,75,98,106,48,67,89,114,50,56];console.log\\(c.map\\(x=>String.fromCharCode\\(x\\)\\).join\\(''\\)\\)\")",
+      "Bash(curl -s -H 'Authorization: token __TRACKED_VAR__' -H 'Accept: application/vnd.github+json' https://api.github.com/repos/Penny104/ai-socialwork-assoc/contents/public/data/content.json)",
+      "Bash(node --input-type=module)",
+      "Bash(node -e ' *)",
+      "Bash(git stash *)",
+      "Bash(git rebase *)",
+      "Bash(GIT_EDITOR=true git rebase --continue)",
+      "Bash(git checkout *)",
+      "Bash(git fetch *)",
+      "Bash(git reset *)",
+      "Bash(curl -s \"https://raw.githubusercontent.com/Penny104/ai-socialwork-assoc/main/public/data/content.json?_=$\\(date +%s\\)\")",
+      "Bash(identify /Applications/MAMP/htdocs/ai-socialwork-assoc/public/hero-illus.png)",
+      "Bash(sips -g pixelWidth -g pixelHeight /Applications/MAMP/htdocs/ai-socialwork-assoc/public/hero-illus.png)",
+      "Bash(grep -v \"^$\")",
+      "Bash(git -C /Applications/MAMP/htdocs/ai-socialwork-assoc status)",
+      "Bash(git -C /Applications/MAMP/htdocs/ai-socialwork-assoc log --oneline -3)",
+      "Bash(git -C /Applications/MAMP/htdocs/ai-socialwork-assoc add index.html booking.html public/1.png)",
+      "Bash(git -C /Applications/MAMP/htdocs/ai-socialwork-assoc rm public/hero-illus.png public/index.html)",
+      "Bash(git -C /Applications/MAMP/htdocs/ai-socialwork-assoc commit -m ' *)",
+      "Bash(git -C /Applications/MAMP/htdocs/ai-socialwork-assoc push origin main)",
+      "Bash(git -C /Applications/MAMP/htdocs/ai-socialwork-assoc pull --rebase origin main)",
+      "Bash(git -C /Applications/MAMP/htdocs/ai-socialwork-assoc stash)"
+    ],
+    "additionalDirectories": [
+      "/Applications/MAMP/htdocs/ai-socialwork-assoc/public",
+      "/Users/penny/Desktop"
+    ]
+  }
+}
