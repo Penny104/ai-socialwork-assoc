@@ -68,6 +68,33 @@ body::after {
   transition:color .2s;
 }
 .nav-back:hover { color:var(--orange); }
+.nav-links {
+  display:flex; align-items:center; gap:1.8rem;
+  list-style:none; margin:0; padding:0;
+}
+.nav-links a {
+  font-family:var(--fh); font-size:.9rem; font-weight:500;
+  color:var(--ink); text-decoration:none;
+  transition:color .2s;
+  position:relative;
+}
+.nav-links a::after {
+  content:'';
+  position:absolute;
+  bottom:-3px; left:0; right:0;
+  height:2.5px;
+  background:var(--orange);
+  transform:scaleX(0);
+  transform-origin:left;
+  transition:transform .25s;
+}
+.nav-links a:hover { color:var(--orange); }
+.nav-links a:hover::after { transform:scaleX(1); }
+.nav-booking-link {
+  background:var(--orange); color:#fff !important;
+  padding:.3rem .9rem; border-radius:6px;
+  font-weight:600;
+}
 
 /* ── PAGE ── */
 .page {
@@ -381,6 +408,16 @@ body::after {
     <img style="height:32px;width:auto;" src="logo-icon.png" alt="協會Logo">
     <span>社團法人臺灣科技與社會工作協會</span>
   </a>
+  <ul class="nav-links">
+    <li><a href="index.html#hero">首頁</a></li>
+    <li><a href="index.html#milestones">協會介紹</a></li>
+    <li><a href="index.html#news">最新動態與消息</a></li>
+    <li><a href="index.html#team">團隊成員</a></li>
+    <li><a href="index.html#support">課程簡介</a></li>
+    <li><a href="index.html#expect">課程期待</a></li>
+    <li><a href="index.html#services">服務項目</a></li>
+    <li><a href="booking.html" class="nav-booking-link">課程預約</a></li>
+  </ul>
 </nav>
 
 <div style="position:relative;z-index:1;">
