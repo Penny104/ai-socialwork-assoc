@@ -1627,7 +1627,7 @@
 
     .member-grid {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(5, 1fr);
       gap: 2.5rem 1.5rem;
     }
 
@@ -1708,7 +1708,7 @@
 
     .expect-cards-wrap {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(5, 1fr);
       gap: 1.5rem;
       margin-top: 2.5rem;
       position: relative;
@@ -2639,7 +2639,7 @@
 
     .member-grid {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(5, 1fr);
       gap: 2.5rem 1.5rem;
     }
 
@@ -3265,7 +3265,7 @@
 
     .member-grid {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(5, 1fr);
       gap: 2.5rem 1.5rem;
     }
 
@@ -3346,7 +3346,7 @@
 
     .expect-cards-wrap {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(5, 1fr);
       gap: 1.5rem;
       margin-top: 2.5rem;
       position: relative;
@@ -4169,7 +4169,7 @@
 
     .member-grid {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(5, 1fr);
       gap: 2.5rem 1.5rem;
     }
 
@@ -4878,6 +4878,7 @@
     <!-- COURSE EXPECTATIONS -->
     <section class="expect-section" id="expect">
       <h2 class="sec-h">課程期待</h2>
+      <p style="font-size:.85rem;color:#9a8a7a;margin-top:-.5rem;margin-bottom:.5rem;">（依筆畫順序排列）</p>
       <div class="expect-cards-wrap" id="expect-circles"></div>
     </section>
 
@@ -4940,6 +4941,7 @@
         yellow: { bg: 'var(--yellow)', text: 'var(--ink)', deptBg: 'rgba(244,211,94,.15)', deptBorder: 'var(--yellow)', deptText: 'var(--ink)', tape: 'rgba(244,211,94,.65)' },
       };
       /* NEWS */
+      /* ▼ 最新動態：由新到舊排列，新增活動請加在陣列最前面 */
       const DEF_NEWS = [{ emoji: '🤖', caption: 'AI 社工工具箱\n正式發佈', date: '2024.11', color: 'orange' }, { emoji: '📚', caption: '科技 × 社工\n年度研討會', date: '2024.10', color: 'blue' }, { emoji: '🌏', caption: '亞太社工大會\n臺灣代表團', date: '2024.09', color: 'yellow' }, { emoji: '🎓', caption: '數位社工認證\n課程開班', date: '2024.08', color: 'green' }, { emoji: '💡', caption: 'AI 倫理白皮書\n正式發表', date: '2024.07', color: 'orange' }, { emoji: '🤝', caption: '三方合作備忘錄\n正式簽署', date: '2024.06', color: 'blue' }, { emoji: '📱', caption: '社工行動 App\nBeta 版上線', date: '2024.05', color: 'yellow' }];
       const newsEl = document.getElementById('news-track');
       if (newsEl) (sc.news || DEF_NEWS).forEach(n => { const c = CLR[n.color] || CLR.orange; const d = document.createElement('div'); d.className = 'polaroid'; d.innerHTML = `<div class="pol-tape" style="background:${c.tape};"></div>${n.photo ? `<div class="pol-img" style="padding:0;overflow:hidden;"><img src="${n.photo}" style="width:100%;height:100%;object-fit:cover;border-radius:2px;"></div>` : `<div class="pol-img">${n.emoji}</div>`}<div class="pol-cap">${n.caption.replace(/\n/g, '<br>')}</div><div class="pol-date">${n.date}</div>`; newsEl.appendChild(d); });
@@ -5348,15 +5350,18 @@
       ];
       const CMAP = { 'var(--orange)': 'red', 'var(--blue)': 'blue', 'var(--green)': 'green', 'var(--yellow)': 'yellow' };
       const CHEX = { red: '#E05252', blue: '#5B8CE8', green: '#4AAB7A', yellow: '#C8950A' };
+      /* ▼ 依筆畫順序排列；新增機構請加在最前面（若筆畫最少）或對應位置 */
       const DEF_INST = [
-        { name: '兒少機構', icon: '👨‍👩‍👧', color: 'var(--orange)', tag: '兒少服務', desc: '專為兒童保護、安置、家庭服務機構的社工師設計', items: COMMON_ITEMS },
-        { name: '身心障礙機構', icon: '♿', color: 'var(--blue)', tag: '身心障礙服務', desc: '適用於身心障礙福利機構、日間照顧、職業重建等服務', items: COMMON_ITEMS },
-        { name: '老人服務機構', icon: '👴', color: 'var(--green)', tag: '老人福利服務', desc: '適用於長照機構、居家服務、日間照顧中心的服務人員', items: COMMON_ITEMS },
-        { name: '家庭服務中心', icon: '🏠', color: 'var(--yellow)', tag: '家庭福利服務', desc: '適用於家庭服務中心、社區服務、一般個案管理', items: COMMON_ITEMS },
+        { name: '工會組織',     icon: '🤝', color: 'var(--yellow)', tag: '勞工服務',    desc: '適用於工會組織、勞工服務中心、職場社工等單位', items: COMMON_ITEMS },
         { name: '心理衛生機構', icon: '🧠', color: 'var(--orange)', tag: '心理健康服務', desc: '適用於心理衛生中心、精神醫療社工、諮商機構', items: COMMON_ITEMS },
-        { name: '社區發展機構', icon: '🏛️', color: 'var(--blue)', tag: '社區發展服務', desc: '適用於社區發展協會、社福中心、社區照顧關懷據點', items: COMMON_ITEMS },
-        { name: '醫院', icon: '🏥', color: 'var(--green)', tag: '醫療社會工作', desc: '適用於醫院社工部門、出院準備服務、安寧緩和', items: COMMON_ITEMS },
-        { name: '學校', icon: '🏫', color: 'var(--yellow)', tag: '學校社會工作', desc: '適用於學校社工師、兒少輔導機構、教育部相關單位', items: COMMON_ITEMS },
+        { name: '司法觀護單位', icon: '⚖️', color: 'var(--blue)',   tag: '司法社會工作', desc: '適用於觀護所、更生保護會、司法社工相關機構', items: COMMON_ITEMS },
+        { name: '老人服務機構', icon: '👴', color: 'var(--green)',  tag: '老人福利服務', desc: '適用於長照機構、居家服務、日間照顧中心的服務人員', items: COMMON_ITEMS },
+        { name: '社區發展機構', icon: '🏛️', color: 'var(--yellow)', tag: '社區發展服務', desc: '適用於社區發展協會、社福中心、社區照顧關懷據點', items: COMMON_ITEMS },
+        { name: '身心障礙機構', icon: '♿', color: 'var(--orange)', tag: '身心障礙服務', desc: '適用於身心障礙福利機構、日間照顧、職業重建等服務', items: COMMON_ITEMS },
+        { name: '兒少機構',     icon: '👨‍👩‍👧', color: 'var(--blue)',   tag: '兒少服務',    desc: '專為兒童保護、安置、家庭服務機構的社工師設計', items: COMMON_ITEMS },
+        { name: '政府單位',     icon: '🏢', color: 'var(--green)',  tag: '公部門服務',   desc: '適用於社會局處、公所社福課、政府社工相關單位', items: COMMON_ITEMS },
+        { name: '學校',         icon: '🏫', color: 'var(--yellow)', tag: '學校社會工作', desc: '適用於學校社工師、兒少輔導機構、教育部相關單位', items: COMMON_ITEMS },
+        { name: '醫院',         icon: '🏥', color: 'var(--orange)', tag: '醫療社會工作', desc: '適用於醫院社工部門、出院準備服務、安寧緩和', items: COMMON_ITEMS },
       ];
       /* icon emoji → SVG mapping (covers variants & fallback by name keyword) */
       const ICON_MAP = {
@@ -5375,6 +5380,9 @@
         ['老人', CSVG.elderly], ['長照', CSVG.elderly], ['高齡', CSVG.elderly], ['樂齡', CSVG.elderly], ['居家', CSVG.elderly],
         ['家庭', CSVG.house], ['家服', CSVG.house], ['親子', CSVG.house],
         ['心理', CSVG.brain], ['精神', CSVG.brain], ['諸商', CSVG.brain], ['衛生', CSVG.brain],
+        ['工會', CSVG.building], ['勞工', CSVG.building], ['職場', CSVG.building],
+        ['司法', CSVG.building], ['觀護', CSVG.building], ['更生', CSVG.building],
+        ['政府', CSVG.building], ['社局', CSVG.building], ['公所', CSVG.building],
         ['社區', CSVG.building], ['社福', CSVG.building], ['社發', CSVG.building],
         ['醫院', CSVG.hospital], ['醫療', CSVG.hospital], ['安寧', CSVG.hospital], ['護理', CSVG.hospital],
         ['學校', CSVG.school], ['教育', CSVG.school], ['學社', CSVG.school],
