@@ -276,6 +276,16 @@
       "service": "副教授",
       "contact": "聯絡方式",
       "photo": ""
+    },
+    {
+      "emoji": "👤",
+      "name": "毛崧宇",
+      "role": "職稱",
+      "title": "職稱",
+      "org": "",
+      "service": "",
+      "contact": "",
+      "photo": ""
     }
   ],
   "courses": [
@@ -618,5 +628,5 @@
     "email": "tatswin2022@gmail.com",
     "phone": "+886-2-0000-0000"
   },
-  "_version": 1778421334687
+  "_version": 1778421632322
 }
