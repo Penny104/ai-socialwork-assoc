@@ -129,6 +129,16 @@
     },
     {
       "emoji": "👤",
+      "name": "李彥澤",
+      "role": "職稱",
+      "title": "職稱",
+      "org": "",
+      "service": "",
+      "contact": "",
+      "photo": ""
+    },
+    {
+      "emoji": "👤",
       "name": "林武雄",
       "role": "理事",
       "title": "理事",
@@ -628,5 +638,5 @@
     "email": "tatswin2022@gmail.com",
     "phone": "+886-2-0000-0000"
   },
-  "_version": 1778421994990
+  "_version": 1778422020575
 }
