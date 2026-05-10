@@ -99,36 +99,6 @@
   "members": [
     {
       "emoji": "👤",
-      "name": "莊東憲",
-      "role": "常務理事",
-      "title": "常務理事",
-      "org": "中華民國醫務社會工作協會",
-      "service": "秘書長",
-      "contact": "聯絡方式",
-      "photo": ""
-    },
-    {
-      "emoji": "👤",
-      "name": "潘彥辰",
-      "role": "常務理事",
-      "title": "常務理事",
-      "org": "彰化縣政府社會處長青福利科",
-      "service": "社會工作師",
-      "contact": "聯絡方式",
-      "photo": ""
-    },
-    {
-      "emoji": "👤",
-      "name": "謝文中",
-      "role": "常務理事",
-      "title": "常務理事",
-      "org": "東吳大學社會工作學系",
-      "service": "副教授",
-      "contact": "聯絡方式",
-      "photo": ""
-    },
-    {
-      "emoji": "👤",
       "name": "白倩如",
       "role": "理事",
       "title": "理事",
@@ -159,21 +129,21 @@
     },
     {
       "emoji": "👤",
-      "name": "施柏宇",
-      "role": "理事",
-      "title": "理事",
-      "org": "南投縣學生輔導諮商中心",
-      "service": "學校社工師",
+      "name": "洪志宏",
+      "role": "常務監事",
+      "title": "常務監事",
+      "org": "社團法人臺中市長幼關懷協會",
+      "service": "總幹事",
       "contact": "聯絡方式",
       "photo": ""
     },
     {
       "emoji": "👤",
-      "name": "梁鎧麟",
+      "name": "施柏宇",
       "role": "理事",
       "title": "理事",
-      "org": "國立暨南國際大學高齡健康與長期照顧管理學士學位原住民族專班",
-      "service": "助理教授",
+      "org": "南投縣學生輔導諮商中心",
+      "service": "學校社工師",
       "contact": "聯絡方式",
       "photo": ""
     },
@@ -189,61 +159,11 @@
     },
     {
       "emoji": "👤",
-      "name": "曾台隆",
-      "role": "理事",
-      "title": "理事",
-      "org": "家扶基金會",
-      "service": "專員",
-      "contact": "聯絡方式",
-      "photo": ""
-    },
-    {
-      "emoji": "👤",
-      "name": "黃志忠",
-      "role": "理事",
-      "title": "理事",
-      "org": "國立暨南國際大學社會政策與社會工作學系",
-      "service": "副教授",
-      "contact": "聯絡方式",
-      "photo": ""
-    },
-    {
-      "emoji": "👤",
-      "name": "黃瑞杉",
-      "role": "理事",
-      "title": "理事",
-      "org": "臺中市政府社會局綜合企劃科",
-      "service": "科長",
-      "contact": "聯絡方式",
-      "photo": ""
-    },
-    {
-      "emoji": "👤",
-      "name": "劉美芝",
-      "role": "理事",
-      "title": "理事",
-      "org": "家扶基金會",
-      "service": "高級專員",
-      "contact": "聯絡方式",
-      "photo": ""
-    },
-    {
-      "emoji": "👤",
-      "name": "洪志宏",
-      "role": "常務監事",
-      "title": "常務監事",
-      "org": "社團法人臺中市長幼關懷協會",
-      "service": "總幹事",
-      "contact": "聯絡方式",
-      "photo": ""
-    },
-    {
-      "emoji": "👤",
-      "name": "張明晃",
-      "role": "監事",
-      "title": "監事",
-      "org": "財團法人伊甸社會福利基金會臺中家庭服務中心",
-      "service": "主任",
+      "name": "莊東憲",
+      "role": "常務理事",
+      "title": "常務理事",
+      "org": "中華民國醫務社會工作協會",
+      "service": "秘書長",
       "contact": "聯絡方式",
       "photo": ""
     },
@@ -274,6 +194,86 @@
       "title": "監事",
       "org": "家扶基金會社會工作處",
       "service": "處長",
+      "contact": "聯絡方式",
+      "photo": ""
+    },
+    {
+      "emoji": "👤",
+      "name": "梁鎧麟",
+      "role": "理事",
+      "title": "理事",
+      "org": "國立暨南國際大學高齡健康與長期照顧管理學士學位原住民族專班",
+      "service": "助理教授",
+      "contact": "聯絡方式",
+      "photo": ""
+    },
+    {
+      "emoji": "👤",
+      "name": "張明晃",
+      "role": "監事",
+      "title": "監事",
+      "org": "財團法人伊甸社會福利基金會臺中家庭服務中心",
+      "service": "主任",
+      "contact": "聯絡方式",
+      "photo": ""
+    },
+    {
+      "emoji": "👤",
+      "name": "黃志忠",
+      "role": "理事",
+      "title": "理事",
+      "org": "國立暨南國際大學社會政策與社會工作學系",
+      "service": "副教授",
+      "contact": "聯絡方式",
+      "photo": ""
+    },
+    {
+      "emoji": "👤",
+      "name": "黃瑞杉",
+      "role": "理事",
+      "title": "理事",
+      "org": "臺中市政府社會局綜合企劃科",
+      "service": "科長",
+      "contact": "聯絡方式",
+      "photo": ""
+    },
+    {
+      "emoji": "👤",
+      "name": "曾台隆",
+      "role": "理事",
+      "title": "理事",
+      "org": "家扶基金會",
+      "service": "專員",
+      "contact": "聯絡方式",
+      "photo": ""
+    },
+    {
+      "emoji": "👤",
+      "name": "劉美芝",
+      "role": "理事",
+      "title": "理事",
+      "org": "家扶基金會",
+      "service": "高級專員",
+      "contact": "聯絡方式",
+      "photo": ""
+    },
+    {
+      "emoji": "👤",
+      "name": "潘彥辰",
+      "role": "常務理事",
+      "title": "常務理事",
+      "org": "彰化縣政府社會處長青福利科",
+      "service": "社會工作師",
+      "contact": "聯絡方式",
+      "photo": ""
+    },
+    {
+      "emoji": "👤",
+      "name": "謝文中",
+      "role": "常務理事",
+      "title": "常務理事",
+      "org": "東吳大學社會工作學系",
+      "service": "副教授",
       "contact": "聯絡方式",
       "photo": ""
     }
@@ -618,5 +618,5 @@
     "email": "tatswin2022@gmail.com",
     "phone": "+886-2-0000-0000"
   },
-  "_version": 1778396340031
+  "_version": 1778421334687
 }

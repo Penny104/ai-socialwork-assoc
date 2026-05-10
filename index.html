@@ -4944,7 +4944,7 @@
       /* ▼ 最新動態：由新到舊排列，新增活動請加在陣列最前面 */
       const DEF_NEWS = [{ emoji: '🤖', caption: 'AI 社工工具箱\n正式發佈', date: '2024.11', color: 'orange' }, { emoji: '📚', caption: '科技 × 社工\n年度研討會', date: '2024.10', color: 'blue' }, { emoji: '🌏', caption: '亞太社工大會\n臺灣代表團', date: '2024.09', color: 'yellow' }, { emoji: '🎓', caption: '數位社工認證\n課程開班', date: '2024.08', color: 'green' }, { emoji: '💡', caption: 'AI 倫理白皮書\n正式發表', date: '2024.07', color: 'orange' }, { emoji: '🤝', caption: '三方合作備忘錄\n正式簽署', date: '2024.06', color: 'blue' }, { emoji: '📱', caption: '社工行動 App\nBeta 版上線', date: '2024.05', color: 'yellow' }];
       const newsEl = document.getElementById('news-track');
-      if (newsEl) (sc.news || DEF_NEWS).forEach(n => { const c = CLR[n.color] || CLR.orange; const d = document.createElement('div'); d.className = 'polaroid'; d.innerHTML = `<div class="pol-tape" style="background:${c.tape};"></div>${n.photo ? `<div class="pol-img" style="padding:0;overflow:hidden;"><img src="${n.photo}" style="width:100%;height:100%;object-fit:cover;border-radius:2px;"></div>` : `<div class="pol-img">${n.emoji}</div>`}<div class="pol-cap">${n.caption.replace(/\n/g, '<br>')}</div><div class="pol-date">${n.date}</div>`; newsEl.appendChild(d); });
+      if (newsEl) [...(sc.news || DEF_NEWS)].reverse().forEach(n => { const c = CLR[n.color] || CLR.orange; const d = document.createElement('div'); d.className = 'polaroid'; d.innerHTML = `<div class="pol-tape" style="background:${c.tape};"></div>${n.photo ? `<div class="pol-img" style="padding:0;overflow:hidden;"><img src="${n.photo}" style="width:100%;height:100%;object-fit:cover;border-radius:2px;"></div>` : `<div class="pol-img">${n.emoji}</div>`}<div class="pol-cap">${n.caption.replace(/\n/g, '<br>')}</div><div class="pol-date">${n.date}</div>`; newsEl.appendChild(d); });
       /* CORE TEAM */
       const DEF_TEAM = [{ emoji: '👩‍💼', dept: '理事長', color: 'orange', name: '陳雅慧', role: '社工師 · 理事長 · 社工系教授', bio: '擁有 20 年社工實務經驗，專長於科技融入社會服務的政策推動與教學設計。相信每一個科技工具，背後都應有溫暖的初心。' }, { emoji: '👨‍💻', dept: '技術部', color: 'blue', name: '林建宏', role: '資深工程師 · 技術總監', bio: '畢業於台大資工所，前大廠 AI 研究員。深信科技不只是工具，更是連結人與人之間愛的橋樑。負責協會所有數位平台建置。' }, { emoji: '👩‍🔬', dept: '研究部', color: 'green', name: '黃怡婷', role: '研究員 · AI 倫理專家', bio: '專注於 AI 在社會福利領域的倫理研究，著有《數位社工的可能與邊界》，長期推動「以人為本的 AI 治理」政策倡議。' }];
       const teamEl = document.getElementById('team-list');
@@ -4960,8 +4960,8 @@
     ${m.service ? `<div class="mem-detail"><span class="mem-detail-icon">💼</span><span>${m.service}</span></div>` : ''}
   </div>`
       const topEl = document.getElementById('member-top'); const colEl = document.getElementById('member-collapse');
-      if (topEl) topEl.innerHTML = mems.slice(0, 4).map((m, i) => mkB(m, i)).join('');
-      if (colEl) colEl.innerHTML = mems.slice(4).map((m, i) => mkB(m, i + 4)).join('');
+      if (topEl) topEl.innerHTML = mems.slice(0, 5).map((m, i) => mkB(m, i)).join('');
+      if (colEl) colEl.innerHTML = mems.slice(5).map((m, i) => mkB(m, i + 5)).join('');
       /* COURSES */
       const PIN = bg => `<svg viewBox="0 0 20 30" xmlns="http://www.w3.org/2000/svg"><circle cx="10" cy="9" r="8" fill="${bg}" stroke="var(--ink)" stroke-width="1.5"/><ellipse cx="7.5" cy="6.5" rx="2.5" ry="1.5" fill="white" opacity=".35" transform="rotate(-20,7.5,6.5)"/><rect x="9" y="16" width="2" height="12" rx="1" fill="var(--ink)" opacity=".55"/></svg>`;
       const DEF_CRS = [
