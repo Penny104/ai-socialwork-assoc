@@ -4878,7 +4878,7 @@
     <!-- COURSE EXPECTATIONS -->
     <section class="expect-section" id="expect">
       <h2 class="sec-h">課程期待</h2>
-      <p style="font-size:.85rem;color:#9a8a7a;margin-top:-.5rem;margin-bottom:.5rem;">（依筆畫順序排列）</p>
+      <p class="member-grid-title" style="margin-top:-.3rem;margin-bottom:1rem;">— 服務對象機構（依筆畫順序排列）</p>
       <div class="expect-cards-wrap" id="expect-circles"></div>
     </section>
 
@@ -5333,6 +5333,46 @@
       <rect x="48" y="36" width="12" height="10" rx="2" fill="#87CEEB" stroke="#111" stroke-width="1.5"/>
       <rect x="30" y="50" width="12" height="20" rx="2" fill="#7A4B28" stroke="#111" stroke-width="1.5"/>
     </svg>`,
+        government: `<svg viewBox="0 0 72 72" xmlns="http://www.w3.org/2000/svg" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="8" y="32" width="56" height="36" rx="3" fill="#B8D4EC" stroke="#111" stroke-width="2.5"/>
+      <rect x="16" y="22" width="40" height="12" rx="2" fill="#9ABCD8" stroke="#111" stroke-width="2"/>
+      <rect x="14" y="34" width="5" height="30" rx="2" fill="#8AAEC8" stroke="#111" stroke-width="1.5"/>
+      <rect x="24" y="34" width="5" height="30" rx="2" fill="#8AAEC8" stroke="#111" stroke-width="1.5"/>
+      <rect x="34" y="34" width="5" height="30" rx="2" fill="#8AAEC8" stroke="#111" stroke-width="1.5"/>
+      <rect x="44" y="34" width="5" height="30" rx="2" fill="#8AAEC8" stroke="#111" stroke-width="1.5"/>
+      <rect x="54" y="34" width="5" height="30" rx="2" fill="#8AAEC8" stroke="#111" stroke-width="1.5"/>
+      <line x1="36" y1="4" x2="36" y2="22" stroke="#111" stroke-width="2"/>
+      <polygon points="36,4 60,10 36,16" fill="#E84040" stroke="#111" stroke-width="1.5"/>
+    </svg>`,
+        justice: `<svg viewBox="0 0 72 72" xmlns="http://www.w3.org/2000/svg" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="36" y1="8" x2="36" y2="66" stroke="#111" stroke-width="3"/>
+      <line x1="12" y1="18" x2="60" y2="18" stroke="#111" stroke-width="2.5"/>
+      <circle cx="36" cy="10" r="4" fill="#F5C842" stroke="#111" stroke-width="2"/>
+      <line x1="12" y1="18" x2="6" y2="36" stroke="#111" stroke-width="2"/>
+      <line x1="6" y1="36" x2="18" y2="36" stroke="#111" stroke-width="2"/>
+      <path d="M4 36 Q12 40 20 36" fill="#F5C842" stroke="#111" stroke-width="2"/>
+      <line x1="60" y1="18" x2="54" y2="36" stroke="#111" stroke-width="2"/>
+      <line x1="54" y1="36" x2="66" y2="36" stroke="#111" stroke-width="2"/>
+      <path d="M52 36 Q60 40 68 36" fill="#F5C842" stroke="#111" stroke-width="2"/>
+      <rect x="28" y="62" width="16" height="5" rx="2" fill="#8B5E3C" stroke="#111" stroke-width="2"/>
+      <rect x="20" y="66" width="32" height="3" rx="1.5" fill="#6B4030" stroke="#111" stroke-width="1.5"/>
+    </svg>`,
+        union: `<svg viewBox="0 0 72 72" xmlns="http://www.w3.org/2000/svg" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="18" cy="11" r="7.5" fill="#FBBF94" stroke="#111" stroke-width="2.2"/>
+      <rect x="10" y="20" width="16" height="18" rx="5" fill="#5B7FDE" stroke="#111" stroke-width="2.2"/>
+      <rect x="10" y="33" width="6" height="14" rx="3" fill="#4A6FCC" stroke="#111" stroke-width="2"/>
+      <rect x="20" y="33" width="6" height="14" rx="3" fill="#4A6FCC" stroke="#111" stroke-width="2"/>
+      <circle cx="54" cy="11" r="7.5" fill="#FBBF94" stroke="#111" stroke-width="2.2"/>
+      <rect x="46" y="20" width="16" height="18" rx="5" fill="#E8688A" stroke="#111" stroke-width="2.2"/>
+      <rect x="46" y="33" width="6" height="14" rx="3" fill="#D4507A" stroke="#111" stroke-width="2"/>
+      <rect x="56" y="33" width="6" height="14" rx="3" fill="#D4507A" stroke="#111" stroke-width="2"/>
+      <path d="M26 27 C32 22 40 22 46 27" fill="none" stroke="#F5C842" stroke-width="5"/>
+      <path d="M26 27 C32 22 40 22 46 27" fill="none" stroke="#111" stroke-width="2"/>
+      <circle cx="36" cy="55" r="11" fill="#FFF3CD" stroke="#111" stroke-width="2.2"/>
+      <path d="M30 55 C32 51 40 51 42 55" fill="none" stroke="#111" stroke-width="1.8"/>
+      <circle cx="30" cy="53" r="2" fill="#FBBF94" stroke="#111" stroke-width="1.5"/>
+      <circle cx="42" cy="53" r="2" fill="#FBBF94" stroke="#111" stroke-width="1.5"/>
+    </svg>`,
       };
       const MSVG = {
         code: `<svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><polyline points="5 7 1 9 5 11"/><polyline points="13 7 17 9 13 11"/><line x1="10" y1="4" x2="8" y2="14"/></svg>`,
@@ -5370,7 +5410,10 @@
         '👴': CSVG.elderly, '👵': CSVG.elderly, '🧓': CSVG.elderly,
         '🏠': CSVG.house, '🏡': CSVG.house, '🏘': CSVG.house,
         '🧠': CSVG.brain, '🙆': CSVG.brain,
-        '🏛': CSVG.building, '🏛️': CSVG.building, '🏢': CSVG.building, '🏗': CSVG.building,
+        '🏛': CSVG.building, '🏛️': CSVG.building, '🏗': CSVG.building,
+        '🏢': CSVG.government, '🏦': CSVG.government, '🚩': CSVG.government,
+        '⚖️': CSVG.justice, '⚖': CSVG.justice,
+        '🤝': CSVG.union, '👷': CSVG.union, '👥': CSVG.union,
         '🏥': CSVG.hospital, '🩺': CSVG.hospital, '💊': CSVG.hospital,
         '🏫': CSVG.school, '📚': CSVG.school, '🎓': CSVG.school, '✏️': CSVG.school,
       };
@@ -5380,9 +5423,9 @@
         ['老人', CSVG.elderly], ['長照', CSVG.elderly], ['高齡', CSVG.elderly], ['樂齡', CSVG.elderly], ['居家', CSVG.elderly],
         ['家庭', CSVG.house], ['家服', CSVG.house], ['親子', CSVG.house],
         ['心理', CSVG.brain], ['精神', CSVG.brain], ['諸商', CSVG.brain], ['衛生', CSVG.brain],
-        ['工會', CSVG.building], ['勞工', CSVG.building], ['職場', CSVG.building],
-        ['司法', CSVG.building], ['觀護', CSVG.building], ['更生', CSVG.building],
-        ['政府', CSVG.building], ['社局', CSVG.building], ['公所', CSVG.building],
+        ['工會', CSVG.union], ['勞工', CSVG.union], ['職場', CSVG.union],
+        ['司法', CSVG.justice], ['觀護', CSVG.justice], ['更生', CSVG.justice],
+        ['政府', CSVG.government], ['社局', CSVG.government], ['公所', CSVG.government],
         ['社區', CSVG.building], ['社福', CSVG.building], ['社發', CSVG.building],
         ['醫院', CSVG.hospital], ['醫療', CSVG.hospital], ['安寧', CSVG.hospital], ['護理', CSVG.hospital],
         ['學校', CSVG.school], ['教育', CSVG.school], ['學社', CSVG.school],
