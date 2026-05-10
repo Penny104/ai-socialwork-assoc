@@ -513,13 +513,14 @@ function buildNewsUI(){
 function addNews(){newsData.push({emoji:'📢',caption:'新消息標題\n副標題',date:'2024.12',color:'orange',photo:''});buildNewsUI();}
 function saveNews(){
   const s=sc();
-  s.news=newsData.map((_,i)=>({
+  const raw=newsData.map((_,i)=>({
     emoji:document.getElementById(`n-e-${i}`).value,
     caption:document.getElementById(`n-c-${i}`).value,
     date:document.getElementById(`n-d-${i}`).value,
     color:document.getElementById(`n-col-${i}`).value,
     photo:document.getElementById(`n-p-${i}`).value,
   }));
+  s.news=[...raw].sort((a,b)=>(b.date||'').localeCompare(a.date||''));
   saveSC(s);newsData=[...s.news];buildNewsUI();pushToGitHub();toast('t-news');
 }
 
