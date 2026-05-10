@@ -33,6 +33,13 @@
     },
     {
       "emoji": "📢",
+      "caption": "新消息標題\\n副標題",
+      "date": "2026.07",
+      "color": "orange",
+      "photo": ""
+    },
+    {
+      "emoji": "📢",
       "caption": "更生保護會AI倫理課程",
       "date": "2026.04.20",
       "color": "orange",
@@ -659,5 +666,5 @@
     "email": "tatswin2022@gmail.com",
     "phone": "+886-2-0000-0000"
   },
-  "_version": 1778422685641
+  "_version": 1778422919491
 }
