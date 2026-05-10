@@ -99,16 +99,6 @@
   "members": [
     {
       "emoji": "👤",
-      "name": "毛鬆與",
-      "role": "職稱",
-      "title": "職稱",
-      "org": "",
-      "service": "",
-      "contact": "",
-      "photo": ""
-    },
-    {
-      "emoji": "👤",
       "name": "白倩如",
       "role": "理事",
       "title": "理事",
@@ -125,16 +115,6 @@
       "org": "正得資訊有限公司",
       "service": "董事長",
       "contact": "聯絡方式",
-      "photo": ""
-    },
-    {
-      "emoji": "👤",
-      "name": "李彥澤",
-      "role": "職稱",
-      "title": "職稱",
-      "org": "",
-      "service": "",
-      "contact": "",
       "photo": ""
     },
     {
@@ -638,5 +618,5 @@
     "email": "tatswin2022@gmail.com",
     "phone": "+886-2-0000-0000"
   },
-  "_version": 1778423227226
+  "_version": 1778423406520
 }
