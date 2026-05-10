@@ -86,6 +86,7 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;bac
 .editor-box-title{font-family:var(--fh);font-size:1rem;font-weight:700;margin-bottom:1.35rem;display:flex;align-items:center;gap:.55rem;}
 .e-badge{font-size:.66rem;font-weight:700;padding:.14rem .55rem;border-radius:4px;background:var(--yellow);color:var(--ink);border:1.5px solid var(--ink);letter-spacing:.06em;}
 .item-card{border:1.5px solid var(--grid);border-radius:9px;padding:1.1rem 1.2rem;margin-bottom:.9rem;background:var(--bg);position:relative;}
+.item-card-unsaved{border-color:#d94f4f !important;background:#fff8f8 !important;box-shadow:0 0 0 3px rgba(217,79,79,.1);}
 .item-num{font-family:var(--fh);font-size:.68rem;font-weight:700;color:var(--orange);letter-spacing:.1em;margin-bottom:.75rem;}
 .ef{display:flex;flex-direction:column;gap:.28rem;margin-bottom:.65rem;}
 .ef label{font-family:var(--fh);font-size:.74rem;font-weight:600;letter-spacing:.03em;}
@@ -126,6 +127,24 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;bac
   .tabs-row{gap:.2rem;}
   .a-tab{font-size:.72rem;padding:.36rem .65rem;}
 }
+
+/* MODAL */
+.modal-overlay{position:fixed;inset:0;z-index:500;background:rgba(62,54,46,.48);display:flex;align-items:center;justify-content:center;padding:1rem;}
+.modal-box{background:white;border:2px solid var(--ink);border-radius:18px;box-shadow:7px 8px 0 var(--ink);width:100%;max-width:580px;max-height:90vh;display:flex;flex-direction:column;}
+.modal-head{padding:1.25rem 1.75rem .95rem;border-bottom:1.5px solid var(--grid);display:flex;align-items:center;justify-content:space-between;flex-shrink:0;}
+.modal-head-title{font-family:var(--fh);font-size:1.05rem;font-weight:700;}
+.modal-close{background:none;border:none;cursor:pointer;font-size:1.1rem;color:#9a8a7a;padding:.2rem .45rem;border-radius:5px;line-height:1;transition:.15s;}
+.modal-close:hover{background:#f3ede4;color:var(--ink);}
+.modal-body{flex:1;overflow-y:auto;padding:1.25rem 1.75rem;}
+.modal-pos{margin-top:1rem;padding-top:1rem;border-top:1.5px solid var(--grid);}
+.modal-pos>label{font-family:var(--fh);font-size:.78rem;font-weight:700;letter-spacing:.04em;display:block;margin-bottom:.4rem;}
+.modal-pos select{border:1.5px solid var(--grid);border-radius:6px;padding:.5rem .75rem;font-family:var(--fh);font-size:.86rem;color:var(--ink);background:white;width:100%;cursor:pointer;outline:none;}
+.modal-pos select:focus{border-color:var(--orange);}
+.modal-foot{padding:.95rem 1.75rem 1.25rem;border-top:1.5px solid var(--grid);display:flex;justify-content:flex-end;gap:.75rem;flex-shrink:0;}
+.btn-modal-cancel{padding:.55rem 1.25rem;background:white;color:var(--ink);border:2px solid var(--grid);border-radius:8px;font-family:var(--fh);font-size:.88rem;font-weight:600;cursor:pointer;transition:.18s;}
+.btn-modal-cancel:hover{border-color:var(--orange);color:var(--orange);}
+.btn-modal-ok{padding:.55rem 1.45rem;background:var(--ink);color:white;border:none;border-radius:8px;font-family:var(--fh);font-size:.88rem;font-weight:700;cursor:pointer;box-shadow:3px 3px 0 var(--orange);transition:.18s;}
+.btn-modal-ok:hover{transform:translate(-1px,-1px);box-shadow:4px 4px 0 var(--orange);}
 </style>
 </head>
 <body>
@@ -304,6 +323,21 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;bac
   </main>
 </div>
 
+<!-- ADD MODAL -->
+<div class="modal-overlay" id="add-modal" style="display:none;" onclick="if(event.target===this)closeModal()">
+  <div class="modal-box">
+    <div class="modal-head">
+      <span class="modal-head-title" id="modal-title">新增項目</span>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-body" id="modal-body"></div>
+    <div class="modal-foot">
+      <button class="btn-modal-cancel" onclick="closeModal()">取消</button>
+      <button class="btn-modal-ok" onclick="modalConfirm()">確認新增</button>
+    </div>
+  </div>
+</div>
+
 <script>
 /* ═══ AUTH ═══ */
 function getCred(){const c=JSON.parse(localStorage.getItem('adminCred')||'null');return c||{u:'Tatswin',p:'tatswin2024'};}
@@ -367,6 +401,32 @@ function upload(e,cb){
 }
 
 const CLR_OPTS=`<option value="orange">橘色</option><option value="blue">藍色</option><option value="green">綠色</option><option value="yellow">黃色</option>`;
+
+/* ═══ MODAL SYSTEM ═══ */
+let _modalOnConfirm=null;
+function openAddModal(title,fieldsHTML,currentCount,onConfirm){
+  document.getElementById('modal-title').textContent=title;
+  let posSection='';
+  if(currentCount!=null){
+    let posHTML='<option value="0">最前面（第 1 位）</option>';
+    for(let i=1;i<=currentCount;i++){
+      posHTML+=`<option value="${i}"${i===currentCount?' selected':''}>第 ${i} 筆之後${i===currentCount?'（最後面）':''}</option>`;
+    }
+    posSection=`<div class="modal-pos"><label>插入位置</label><select id="modal-pos-sel">${posHTML}</select></div>`;
+  }
+  document.getElementById('modal-body').innerHTML=fieldsHTML+posSection;
+  _modalOnConfirm=onConfirm;
+  document.getElementById('add-modal').style.display='flex';
+}
+function closeModal(){document.getElementById('add-modal').style.display='none';_modalOnConfirm=null;}
+function modalConfirm(){if(_modalOnConfirm)_modalOnConfirm();}
+function scrollToNewItem(containerId,index){
+  setTimeout(()=>{
+    const cards=document.getElementById(containerId)?.querySelectorAll('.item-card');
+    if(!cards||!cards[index])return;
+    cards[index].scrollIntoView({behavior:'smooth',block:'center'});
+  },60);
+}
 
 /* ═══ BLOCKED DATES ═══ */
 function renderBlockedDates(){
@@ -490,7 +550,7 @@ function renderNews(){
 }
 function buildNewsUI(){
   document.getElementById('news-ed').innerHTML=newsData.map((n,i)=>`
-    <div class="item-card">
+    <div class="item-card${n._unsaved?' item-card-unsaved':''}">
       <button class="btn-del" onclick="newsData.splice(${i},1);buildNewsUI()">✕</button>
       <div class="item-num">消息 ${i+1}</div>
       <div class="two-col">
@@ -510,7 +570,30 @@ function buildNewsUI(){
   // Set select values
   newsData.forEach((n,i)=>{const el=document.getElementById(`n-col-${i}`);if(el)el.value=n.color||'orange';});
 }
-function addNews(){newsData.push({emoji:'📢',caption:'新消息標題\n副標題',date:'2024.12',color:'orange',photo:''});buildNewsUI();}
+function addNews(){
+  openAddModal('新增消息',`
+    <div class="two-col">
+      <div class="ef"><label>Emoji / 圖示</label><input id="m-ne" value="📢"></div>
+      <div class="ef"><label>日期</label><input id="m-nd" placeholder="2025.01"></div>
+    </div>
+    <div class="ef"><label>標題（換行用 \\n）</label><input id="m-nc" value="新消息標題\\n副標題"></div>
+    <div class="ef"><label>膠帶顏色</label><select id="m-ncol">${CLR_OPTS}</select></div>
+    <div class="ef"><label>照片 URL（可選）</label><input id="m-np" placeholder="https://..."></div>
+  `,null,()=>{
+    const item={
+      emoji:document.getElementById('m-ne').value,
+      caption:document.getElementById('m-nc').value,
+      date:document.getElementById('m-nd').value,
+      color:document.getElementById('m-ncol').value,
+      photo:document.getElementById('m-np').value,
+      _unsaved:true,
+    };
+    newsData.push(item);
+    newsData.sort((a,b)=>(b.date||'').localeCompare(a.date||''));
+    const pos=newsData.indexOf(item);
+    closeModal();buildNewsUI();scrollToNewItem('news-ed',pos);
+  });
+}
 function saveNews(){
   const s=sc();
   const raw=newsData.map((_,i)=>({
@@ -534,7 +617,7 @@ let teamData=[];
 function renderTeam(){teamData=[...(sc().coreTeam||DEF_TEAM)];buildTeamUI();}
 function buildTeamUI(){
   document.getElementById('team-ed').innerHTML=teamData.map((m,i)=>`
-    <div class="item-card">
+    <div class="item-card${m._unsaved?' item-card-unsaved':''}">
       <button class="btn-del" onclick="teamData.splice(${i},1);buildTeamUI()">✕</button>
       <div class="item-num">成員 ${i+1}</div>
       <div class="two-col">
@@ -555,7 +638,32 @@ function buildTeamUI(){
     </div>`).join('');
   teamData.forEach((m,i)=>{const el=document.getElementById(`tm-col-${i}`);if(el)el.value=m.color||'orange';});
 }
-function addTeam(){teamData.push({emoji:'👤',dept:'部門',color:'blue',name:'新成員',role:'職位',bio:'簡介...',photo:''});buildTeamUI();}
+function addTeam(){
+  openAddModal('新增團隊成員',`
+    <div class="two-col">
+      <div class="ef"><label>Emoji 頭像</label><input id="m-te" value="👤"></div>
+      <div class="ef"><label>部門標籤</label><input id="m-tdept" placeholder="部門"></div>
+      <div class="ef"><label>姓名</label><input id="m-tn" placeholder="姓名"></div>
+      <div class="ef"><label>顏色主題</label><select id="m-tcol">${CLR_OPTS}</select></div>
+    </div>
+    <div class="ef"><label>職位</label><input id="m-tr" placeholder="職位"></div>
+    <div class="ef"><label>個人簡介</label><textarea id="m-tb" rows="3" placeholder="簡介..."></textarea></div>
+    <div class="ef"><label>照片 URL（可選）</label><input id="m-tp" placeholder="https://..."></div>
+  `,teamData.length,()=>{
+    const pos=parseInt(document.getElementById('modal-pos-sel').value);
+    teamData.splice(pos,0,{
+      emoji:document.getElementById('m-te').value,
+      dept:document.getElementById('m-tdept').value,
+      color:document.getElementById('m-tcol').value,
+      name:document.getElementById('m-tn').value,
+      role:document.getElementById('m-tr').value,
+      bio:document.getElementById('m-tb').value,
+      photo:document.getElementById('m-tp').value,
+      _unsaved:true,
+    });
+    closeModal();buildTeamUI();scrollToNewItem('team-ed',pos);
+  });
+}
 function saveTeam(){
   const s=sc();
   s.coreTeam=teamData.map((_,i)=>({
@@ -576,7 +684,7 @@ let memData=[];
 function renderMembers(){memData=[...(sc().members||DEF_MEM)];buildMembersUI();}
 function buildMembersUI(){
   document.getElementById('members-ed').innerHTML=memData.map((m,i)=>`
-    <div class="item-card">
+    <div class="item-card${m._unsaved?' item-card-unsaved':''}">
       <button class="btn-del" onclick="memData.splice(${i},1);buildMembersUI()">✕</button>
       <div class="item-num">成員 ${i+1}</div>
       <div class="three-col">
@@ -598,7 +706,35 @@ function buildMembersUI(){
       </div>
     </div>`).join('');
 }
-function addMember(){memData.push({emoji:'👤',name:'新成員',role:'職稱',title:'職稱',org:'',service:'',contact:'',photo:''});buildMembersUI();}
+function addMember(){
+  openAddModal('新增全體成員',`
+    <div class="three-col">
+      <div class="ef"><label>Emoji</label><input id="m-mbe" value="👤"></div>
+      <div class="ef"><label>姓名</label><input id="m-mbn" placeholder="姓名"></div>
+      <div class="ef"><label>職稱</label><input id="m-mbr" placeholder="職稱"></div>
+    </div>
+    <div class="two-col">
+      <div class="ef"><label>現職單位</label><input id="m-mborg" placeholder="單位名稱"></div>
+      <div class="ef"><label>服務職稱</label><input id="m-mbsvc" placeholder="服務職稱"></div>
+    </div>
+    <div class="ef"><label>聯絡方式</label><input id="m-mbc" placeholder="email 或電話"></div>
+    <div class="ef"><label>照片 URL（可選）</label><input id="m-mbp" placeholder="https://..."></div>
+  `,memData.length,()=>{
+    const pos=parseInt(document.getElementById('modal-pos-sel').value);
+    memData.splice(pos,0,{
+      emoji:document.getElementById('m-mbe').value,
+      name:document.getElementById('m-mbn').value,
+      role:document.getElementById('m-mbr').value,
+      title:document.getElementById('m-mbr').value,
+      org:document.getElementById('m-mborg').value,
+      service:document.getElementById('m-mbsvc').value,
+      contact:document.getElementById('m-mbc').value,
+      photo:document.getElementById('m-mbp').value,
+      _unsaved:true,
+    });
+    closeModal();buildMembersUI();scrollToNewItem('members-ed',pos);
+  });
+}
 
 /* 姓氏筆畫對照表（繁體，常見姓氏） */
 const SURNAME_STROKES = {
@@ -685,7 +821,7 @@ let crsData=[];
 function renderCourses(){crsData=JSON.parse(JSON.stringify(sc().courses||DEF_CRS));buildCoursesUI();}
 function buildCoursesUI(){
   document.getElementById('courses-ed').innerHTML=crsData.map((c,i)=>`
-    <div class="item-card">
+    <div class="item-card${c._unsaved?' item-card-unsaved':''}">
       <button class="btn-del" onclick="crsData.splice(${i},1);buildCoursesUI()">✕</button>
       <div class="item-num">課程卡片 ${i+1}</div>
       <div class="three-col">
@@ -711,7 +847,27 @@ function buildCoursesUI(){
       </div>`).join('');
   });
 }
-function addCourse(){crsData.push({tag:'新課程',color:'orange',rot:'0deg',title:'課程標題',items:[{bold:'項目名稱',text:'說明文字...'}]});buildCoursesUI();}
+function addCourse(){
+  openAddModal('新增課程卡片',`
+    <div class="three-col">
+      <div class="ef"><label>分類標籤</label><input id="m-crtag" placeholder="課程標籤"></div>
+      <div class="ef"><label>顏色主題</label><select id="m-crcol">${CLR_OPTS}</select></div>
+      <div class="ef"><label>傾斜角度</label><input id="m-crrot" value="0deg" placeholder="-1.2deg"></div>
+    </div>
+    <div class="ef"><label>課程標題</label><input id="m-crtit" placeholder="課程標題"></div>
+  `,crsData.length,()=>{
+    const pos=parseInt(document.getElementById('modal-pos-sel').value);
+    crsData.splice(pos,0,{
+      tag:document.getElementById('m-crtag').value,
+      color:document.getElementById('m-crcol').value,
+      rot:document.getElementById('m-crrot').value,
+      title:document.getElementById('m-crtit').value,
+      items:[{bold:'項目名稱',text:'說明文字...'}],
+      _unsaved:true,
+    });
+    closeModal();buildCoursesUI();scrollToNewItem('courses-ed',pos);
+  });
+}
 function saveCourses(){
   const s=sc();
   s.courses=crsData.map((c,i)=>({
@@ -736,7 +892,7 @@ let lectData=[];
 function renderLecturers(){lectData=[...(sc().lecturers||DEF_LECT)];buildLecturersUI();}
 function buildLecturersUI(){
   document.getElementById('lect-ed').innerHTML=lectData.map((l,i)=>`
-    <div class="item-card">
+    <div class="item-card${l._unsaved?' item-card-unsaved':''}">
       <button class="btn-del" onclick="lectData.splice(${i},1);buildLecturersUI()">✕</button>
       <div class="item-num">講師 ${i+1}</div>
       <div class="ef"><label>講師頭貼</label>
@@ -762,7 +918,32 @@ function buildLecturersUI(){
       <div class="ef"><label>個人簡介</label><textarea id="l-b-${i}" rows="3">${esc(l.bio||'')}</textarea></div>
     </div>`).join('');
 }
-function addLecturer(){lectData.push({avatar:'👤',tag:'講師',name:'新講師',role:'職位',skills:'',bio:'',photo:''});buildLecturersUI();}
+function addLecturer(){
+  openAddModal('新增講師',`
+    <div class="two-col">
+      <div class="ef"><label>頭像 Emoji</label><input id="m-la" value="👤"></div>
+      <div class="ef"><label>標籤</label><input id="m-lg" placeholder="講師 · 職稱"></div>
+      <div class="ef"><label>姓名</label><input id="m-ln" placeholder="姓名"></div>
+      <div class="ef"><label>職位</label><input id="m-lr" placeholder="職位"></div>
+    </div>
+    <div class="ef"><label>專長標籤（逗號分隔）</label><input id="m-ls" placeholder="專長一,專長二"></div>
+    <div class="ef"><label>個人簡介</label><textarea id="m-lb" rows="3" placeholder="簡介..."></textarea></div>
+    <div class="ef"><label>照片 URL（可選）</label><input id="m-lp" placeholder="https://..."></div>
+  `,lectData.length,()=>{
+    const pos=parseInt(document.getElementById('modal-pos-sel').value);
+    lectData.splice(pos,0,{
+      photo:document.getElementById('m-lp').value,
+      avatar:document.getElementById('m-la').value,
+      tag:document.getElementById('m-lg').value,
+      name:document.getElementById('m-ln').value,
+      role:document.getElementById('m-lr').value,
+      skills:document.getElementById('m-ls').value,
+      bio:document.getElementById('m-lb').value,
+      _unsaved:true,
+    });
+    closeModal();buildLecturersUI();scrollToNewItem('lect-ed',pos);
+  });
+}
 function saveLecturers(){
   const s=sc();
   s.lecturers=lectData.map((_,i)=>({
@@ -793,7 +974,7 @@ let expectData=[];
 function renderExpect(){expectData=JSON.parse(JSON.stringify(sc().expect||DEF_INST));buildExpectUI();}
 function buildExpectUI(){
   document.getElementById('expect-ed').innerHTML=expectData.map((inst,i)=>`
-    <div class="item-card">
+    <div class="item-card${inst._unsaved?' item-card-unsaved':''}">
       <button class="btn-del" onclick="expectData.splice(${i},1);buildExpectUI()">✕</button>
       <div class="item-num">機構類型 ${i+1}</div>
       <div class="three-col">
@@ -812,7 +993,32 @@ function buildExpectUI(){
     </div>`).join('');
   expectData.forEach((inst,i)=>{const el=document.getElementById(`ex-cl-${i}`);if(el)el.value=inst.color||'var(--orange)';});
 }
-function addExpect(){expectData.push({name:'新機構',icon:'🏢',color:'var(--orange)',tag:'服務類型',desc:'服務說明',items:['服務項目一','服務項目二']});buildExpectUI();}
+function addExpect(){
+  openAddModal('新增機構類型',`
+    <div class="three-col">
+      <div class="ef"><label>圖示 Emoji</label><input id="m-exic" value="🏢"></div>
+      <div class="ef"><label>機構名稱</label><input id="m-exnm" placeholder="機構名稱"></div>
+      <div class="ef"><label>分類標籤</label><input id="m-extg" placeholder="服務類型"></div>
+    </div>
+    <div class="two-col">
+      <div class="ef"><label>顏色主題</label><select id="m-excl">${EXP_CLR_OPTS}</select></div>
+      <div class="ef"><label>說明文字</label><input id="m-exds" placeholder="服務說明"></div>
+    </div>
+    <div class="ef"><label>課程項目（每行一項）</label><textarea id="m-exit" rows="4" placeholder="服務項目一&#10;服務項目二"></textarea></div>
+  `,expectData.length,()=>{
+    const pos=parseInt(document.getElementById('modal-pos-sel').value);
+    expectData.splice(pos,0,{
+      name:document.getElementById('m-exnm').value,
+      icon:document.getElementById('m-exic').value,
+      color:document.getElementById('m-excl').value,
+      tag:document.getElementById('m-extg').value,
+      desc:document.getElementById('m-exds').value,
+      items:document.getElementById('m-exit').value.split('\n').map(x=>x.trim()).filter(Boolean),
+      _unsaved:true,
+    });
+    closeModal();buildExpectUI();scrollToNewItem('expect-ed',pos);
+  });
+}
 function saveExpect(){
   const s=sc();
   s.expect=expectData.map((_,i)=>({
@@ -834,14 +1040,27 @@ let svcData=[];
 function renderServices(){svcData=JSON.parse(JSON.stringify(sc().services||DEF_SVC));buildServicesUI();}
 function buildServicesUI(){
   document.getElementById('services-ed').innerHTML=svcData.map((sv,i)=>`
-    <div class="item-card">
+    <div class="item-card${sv._unsaved?' item-card-unsaved':''}">
       <button class="btn-del" onclick="svcData.splice(${i},1);buildServicesUI()">✕</button>
       <div class="item-num">服務項目 ${i+1}</div>
       <div class="ef"><label>服務名稱</label><input id="sv-nm-${i}" value="${esc(sv.name||'')}"></div>
       <div class="ef"><label>服務說明（每行一個列點）</label><textarea id="sv-ds-${i}" rows="6">${esc(sv.desc||'')}</textarea></div>
     </div>`).join('');
 }
-function addService(){svcData.push({name:'新服務項目',desc:'服務說明...'});buildServicesUI();}
+function addService(){
+  openAddModal('新增服務項目',`
+    <div class="ef"><label>服務名稱</label><input id="m-svnm" placeholder="服務名稱"></div>
+    <div class="ef"><label>服務說明（每行一個列點）</label><textarea id="m-svds" rows="5" placeholder="服務說明..."></textarea></div>
+  `,svcData.length,()=>{
+    const pos=parseInt(document.getElementById('modal-pos-sel').value);
+    svcData.splice(pos,0,{
+      name:document.getElementById('m-svnm').value,
+      desc:document.getElementById('m-svds').value,
+      _unsaved:true,
+    });
+    closeModal();buildServicesUI();scrollToNewItem('services-ed',pos);
+  });
+}
 function saveServices(){
   const s=sc();
   s.services=svcData.map((_,i)=>({
