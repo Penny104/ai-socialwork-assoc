@@ -99,6 +99,16 @@
   "members": [
     {
       "emoji": "👤",
+      "name": "毛鬆與",
+      "role": "職稱",
+      "title": "職稱",
+      "org": "",
+      "service": "",
+      "contact": "",
+      "photo": ""
+    },
+    {
+      "emoji": "👤",
       "name": "白倩如",
       "role": "理事",
       "title": "理事",
@@ -129,16 +139,6 @@
     },
     {
       "emoji": "👤",
-      "name": "洪志宏",
-      "role": "常務監事",
-      "title": "常務監事",
-      "org": "社團法人臺中市長幼關懷協會",
-      "service": "總幹事",
-      "contact": "聯絡方式",
-      "photo": ""
-    },
-    {
-      "emoji": "👤",
       "name": "施柏宇",
       "role": "理事",
       "title": "理事",
@@ -149,11 +149,11 @@
     },
     {
       "emoji": "👤",
-      "name": "連俊瑋",
-      "role": "理事",
-      "title": "理事",
-      "org": "國立臺中科技大學資訊管理系",
-      "service": "教授",
+      "name": "洪志宏",
+      "role": "常務監事",
+      "title": "常務監事",
+      "org": "社團法人臺中市長幼關懷協會",
+      "service": "總幹事",
       "contact": "聯絡方式",
       "photo": ""
     },
@@ -169,31 +169,21 @@
     },
     {
       "emoji": "👤",
-      "name": "陳玟如",
-      "role": "監事",
-      "title": "監事",
-      "org": "國立臺北大學社會工作學系",
-      "service": "副教授",
+      "name": "連俊瑋",
+      "role": "理事",
+      "title": "理事",
+      "org": "國立臺中科技大學資訊管理系",
+      "service": "教授",
       "contact": "聯絡方式",
       "photo": ""
     },
     {
       "emoji": "👤",
-      "name": "陳筠騏",
+      "name": "張明晃",
       "role": "監事",
       "title": "監事",
-      "org": "真愛基金會",
-      "service": "執行長",
-      "contact": "聯絡方式",
-      "photo": ""
-    },
-    {
-      "emoji": "👤",
-      "name": "陳乘斌",
-      "role": "監事",
-      "title": "監事",
-      "org": "家扶基金會社會工作處",
-      "service": "處長",
+      "org": "財團法人伊甸社會福利基金會臺中家庭服務中心",
+      "service": "主任",
       "contact": "聯絡方式",
       "photo": ""
     },
@@ -209,11 +199,41 @@
     },
     {
       "emoji": "👤",
-      "name": "張明晃",
+      "name": "陳玟如",
       "role": "監事",
       "title": "監事",
-      "org": "財團法人伊甸社會福利基金會臺中家庭服務中心",
-      "service": "主任",
+      "org": "國立臺北大學社會工作學系",
+      "service": "副教授",
+      "contact": "聯絡方式",
+      "photo": ""
+    },
+    {
+      "emoji": "👤",
+      "name": "陳乘斌",
+      "role": "監事",
+      "title": "監事",
+      "org": "家扶基金會社會工作處",
+      "service": "處長",
+      "contact": "聯絡方式",
+      "photo": ""
+    },
+    {
+      "emoji": "👤",
+      "name": "陳筠騏",
+      "role": "監事",
+      "title": "監事",
+      "org": "真愛基金會",
+      "service": "執行長",
+      "contact": "聯絡方式",
+      "photo": ""
+    },
+    {
+      "emoji": "👤",
+      "name": "曾台隆",
+      "role": "理事",
+      "title": "理事",
+      "org": "家扶基金會",
+      "service": "專員",
       "contact": "聯絡方式",
       "photo": ""
     },
@@ -234,16 +254,6 @@
       "title": "理事",
       "org": "臺中市政府社會局綜合企劃科",
       "service": "科長",
-      "contact": "聯絡方式",
-      "photo": ""
-    },
-    {
-      "emoji": "👤",
-      "name": "曾台隆",
-      "role": "理事",
-      "title": "理事",
-      "org": "家扶基金會",
-      "service": "專員",
       "contact": "聯絡方式",
       "photo": ""
     },
@@ -275,16 +285,6 @@
       "org": "東吳大學社會工作學系",
       "service": "副教授",
       "contact": "聯絡方式",
-      "photo": ""
-    },
-    {
-      "emoji": "👤",
-      "name": "毛崧宇",
-      "role": "職稱",
-      "title": "職稱",
-      "org": "",
-      "service": "",
-      "contact": "",
       "photo": ""
     }
   ],
@@ -628,5 +628,5 @@
     "email": "tatswin2022@gmail.com",
     "phone": "+886-2-0000-0000"
   },
-  "_version": 1778421927343
+  "_version": 1778421994990
 }
