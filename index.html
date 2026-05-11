@@ -1992,11 +1992,11 @@
     .service-card-linebot {
       position: relative;
       width: 360px;
-      background: linear-gradient(150deg, #f0fff5 0%, #e3f9ec 100%);
-      border: 2.5px solid #06C755;
+      background: linear-gradient(150deg, #fff8f5 0%, #fef0eb 100%);
+      border: 2.5px solid var(--orange);
       border-radius: 14px;
       padding: 1.5rem 1.75rem 1.75rem;
-      box-shadow: 5px 6px 0 #06C755;
+      box-shadow: 5px 6px 0 var(--orange);
       transition: transform .22s, box-shadow .22s;
       overflow: hidden;
       cursor: pointer;
@@ -2004,7 +2004,7 @@
     }
     .service-card-linebot:hover {
       transform: rotate(0) translateY(-5px);
-      box-shadow: 7px 10px 0 #06C755;
+      box-shadow: 7px 10px 0 var(--orange);
     }
     .lb-chat-deco {
       position: absolute;
@@ -2017,7 +2017,7 @@
       pointer-events: none;
     }
     .lb-bubble {
-      background: #06C755;
+      background: var(--orange);
       color: white;
       font-size: .68rem;
       font-family: var(--fh);
@@ -2046,7 +2046,7 @@
     }
     .lb-card-hint {
       font-size: .78rem;
-      color: #06C755;
+      color: var(--orange);
       font-family: var(--fh);
       font-weight: 600;
     }
@@ -2083,7 +2083,7 @@
     }
     .lb-overlay.open .lb-modal { transform: translateY(0); }
     .lb-mhead {
-      background: #06C755;
+      background: var(--orange);
       padding: 1.4rem 2rem 1.2rem;
       position: relative;
       flex-shrink: 0;
@@ -2164,7 +2164,7 @@
       color: var(--ink);
       margin-bottom: .85rem;
       padding-left: .7rem;
-      border-left: 3.5px solid #06C755;
+      border-left: 3.5px solid var(--orange);
     }
     .lb-features {
       display: grid;
@@ -2181,7 +2181,7 @@
       gap: .6rem;
       transition: border-color .18s, box-shadow .18s;
     }
-    .lb-feat:hover { border-color: #06C755; box-shadow: 3px 3px 0 #06C755; }
+    .lb-feat:hover { border-color: var(--orange); box-shadow: 3px 3px 0 var(--orange); }
     .lb-feat-icon { font-size: 1.4rem; flex-shrink: 0; margin-top: .05rem; }
     .lb-feat-name { font-family: var(--fh); font-size: .86rem; font-weight: 700; color: var(--ink); margin-bottom: .18rem; }
     .lb-feat-desc { font-size: .74rem; color: #7a6c60; line-height: 1.55; }
@@ -2189,14 +2189,14 @@
     .lb-step { display: flex; gap: .85rem; align-items: flex-start; }
     .lb-step-num {
       width: 26px; height: 26px; border-radius: 50%;
-      background: #06C755; color: white;
+      background: var(--orange); color: white;
       font-family: var(--fh); font-weight: 700; font-size: .82rem;
       display: flex; align-items: center; justify-content: center; flex-shrink: 0;
     }
     .lb-step-text { font-size: .86rem; color: var(--ink); line-height: 1.7; padding-top: .1rem; }
     .lb-step-text strong { font-family: var(--fh); font-weight: 700; }
     .lb-cta {
-      background: #06C755;
+      background: var(--orange);
       color: white;
       border: none;
       border-radius: 10px;
@@ -2208,7 +2208,7 @@
       display: block;
       width: 100%;
       transition: filter .18s, transform .15s;
-      box-shadow: 3px 3px 0 #05a847;
+      box-shadow: 3px 3px 0 var(--ink);
     }
     .lb-cta:hover { filter: brightness(1.08); transform: translateY(-2px); }
     @media(max-width:600px) {
@@ -5129,13 +5129,13 @@
           <!-- 流程圖 -->
           <div class="lb-flow">
             <div class="lb-flow-node">
-              <div class="lb-flow-icon" style="background:#e8f8ee;">💬</div>
+              <div class="lb-flow-icon" style="background:#fff5f0;">💬</div>
               <div class="lb-flow-label">社工 /<br>服務對象</div>
             </div>
             <div class="lb-flow-arr">→</div>
             <div class="lb-flow-node">
-              <div class="lb-flow-icon" style="background:#dcf0e0;">
-                <svg viewBox="0 0 28 28" width="26" height="26" fill="none"><rect width="28" height="28" rx="7" fill="#06C755"/><path d="M14 6C9.58 6 6 9.13 6 13c0 2.18 1.14 4.12 2.93 5.44L8 22l3.85-1.7A8.9 8.9 0 0014 20.5c4.42 0 8-3.13 8-7s-3.58-7-8-7z" fill="white"/></svg>
+              <div class="lb-flow-icon" style="background:#fde8e4;">
+                <svg viewBox="0 0 28 28" width="26" height="26" fill="none"><rect width="28" height="28" rx="7" fill="var(--orange)"/><path d="M14 6C9.58 6 6 9.13 6 13c0 2.18 1.14 4.12 2.93 5.44L8 22l3.85-1.7A8.9 8.9 0 0014 20.5c4.42 0 8-3.13 8-7s-3.58-7-8-7z" fill="white"/></svg>
               </div>
               <div class="lb-flow-label">LINE Bot</div>
             </div>
@@ -5153,7 +5153,7 @@
             </div>
             <div class="lb-flow-arr">→</div>
             <div class="lb-flow-node">
-              <div class="lb-flow-icon" style="background:#e8f8ee;">📄</div>
+              <div class="lb-flow-icon" style="background:#fff5f0;">📄</div>
               <div class="lb-flow-label">自動回覆<br>/ 生成紀錄</div>
             </div>
           </div>
@@ -5353,8 +5353,8 @@
       const svcEl = document.getElementById('service-grid');
       const ROBOT_SVG = `<svg viewBox="0 0 110 128" width="110" height="128" xmlns="http://www.w3.org/2000/svg">
         <line x1="55" y1="16" x2="55" y2="5" stroke="#3E362E" stroke-width="2.5" stroke-linecap="round"/>
-        <circle cx="55" cy="4" r="4.5" fill="#06C755"/>
-        <rect x="18" y="16" width="74" height="54" rx="17" fill="#06C755"/>
+        <circle cx="55" cy="4" r="4.5" fill="var(--orange)"/>
+        <rect x="18" y="16" width="74" height="54" rx="17" fill="var(--orange)"/>
         <ellipse cx="42" cy="25" rx="13" ry="6" fill="rgba(255,255,255,.18)" transform="rotate(-15,42,25)"/>
         <circle cx="41" cy="41" r="10.5" fill="white"/>
         <circle cx="69" cy="41" r="10.5" fill="white"/>
@@ -5363,12 +5363,12 @@
         <circle cx="44" cy="39.5" r="1.8" fill="white"/>
         <circle cx="72" cy="39.5" r="1.8" fill="white"/>
         <path d="M 42 55 Q 55 63 68 55" stroke="white" stroke-width="2.5" fill="none" stroke-linecap="round"/>
-        <rect x="24" y="76" width="62" height="44" rx="13" fill="#05a847"/>
+        <rect x="24" y="76" width="62" height="44" rx="13" fill="var(--ink)"/>
         <rect x="36" y="85" width="38" height="20" rx="6" fill="rgba(255,255,255,.18)"/>
-        <rect x="5" y="78" width="17" height="34" rx="8.5" fill="#05a847"/>
-        <rect x="88" y="78" width="17" height="34" rx="8.5" fill="#05a847"/>
-        <circle cx="13.5" cy="116" r="7" fill="#06C755"/>
-        <circle cx="96.5" cy="116" r="7" fill="#06C755"/>
+        <rect x="5" y="78" width="17" height="34" rx="8.5" fill="var(--ink)"/>
+        <rect x="88" y="78" width="17" height="34" rx="8.5" fill="var(--ink)"/>
+        <circle cx="13.5" cy="116" r="7" fill="var(--orange)"/>
+        <circle cx="96.5" cy="116" r="7" fill="var(--orange)"/>
       </svg>`;
       if (svcEl) svcEl.innerHTML = (sc.services || DEF_SVC).map(s => {
         if (/line\s*bot/i.test(s.name)) {
