@@ -688,9 +688,12 @@ const DEF_MEM=Array.from({length:18},()=>({emoji:'👤',name:'成員姓名',role
 let memData=[];
 function renderMembers(){memData=[...(sc().members||DEF_MEM)];buildMembersUI();}
 function buildMembersUI(){
+  const n=memData.length;
   document.getElementById('members-ed').innerHTML=memData.map((m,i)=>`
     <div class="item-card${m._unsaved?' item-card-unsaved':''}">
       <button class="btn-del" onclick="memData.splice(${i},1);buildMembersUI()">✕</button>
+      <button class="btn-move btn-move-up" onclick="moveMember(${i},-1)" ${i===0?'disabled':''}>▲</button>
+      <button class="btn-move btn-move-dn" onclick="moveMember(${i},1)" ${i===n-1?'disabled':''}>▼</button>
       <div class="item-num">成員 ${i+1}</div>
       <div class="three-col">
         <div class="ef"><label>Emoji</label><input id="mb-e-${i}" value="${esc(m.emoji||'👤')}"></div>
@@ -710,6 +713,27 @@ function buildMembersUI(){
         </div>
       </div>
     </div>`).join('');
+}
+function moveMember(i,dir){
+  syncMemData();
+  const j=i+dir;
+  if(j<0||j>=memData.length) return;
+  [memData[i],memData[j]]=[memData[j],memData[i]];
+  buildMembersUI();
+  document.getElementById('members-ed').querySelectorAll('.item-card')[j]?.scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+function syncMemData(){
+  memData=memData.map((_,i)=>({
+    ..._,
+    emoji:document.getElementById(`mb-e-${i}`)?.value||_.emoji,
+    name:document.getElementById(`mb-n-${i}`)?.value||_.name,
+    role:document.getElementById(`mb-r-${i}`)?.value||_.role,
+    title:document.getElementById(`mb-r-${i}`)?.value||_.title,
+    org:document.getElementById(`mb-org-${i}`)?.value||_.org,
+    service:document.getElementById(`mb-svc-${i}`)?.value||_.service,
+    contact:document.getElementById(`mb-c-${i}`)?.value||_.contact,
+    photo:document.getElementById(`mb-p-${i}`)?.value||_.photo,
+  }));
 }
 function addMember(){
   openAddModal('新增全體成員',`
