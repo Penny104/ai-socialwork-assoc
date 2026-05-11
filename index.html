@@ -1988,6 +1988,233 @@
       letter-spacing: .05em;
     }
 
+    /* ══ LINE BOT CARD ══ */
+    .service-card-linebot {
+      position: relative;
+      width: 360px;
+      background: linear-gradient(150deg, #f0fff5 0%, #e3f9ec 100%);
+      border: 2.5px solid #06C755;
+      border-radius: 14px;
+      padding: 1.5rem 1.75rem 1.75rem;
+      box-shadow: 5px 6px 0 #06C755;
+      transition: transform .22s, box-shadow .22s;
+      overflow: hidden;
+      cursor: pointer;
+      transform: rotate(-1deg);
+    }
+    .service-card-linebot:hover {
+      transform: rotate(0) translateY(-5px);
+      box-shadow: 7px 10px 0 #06C755;
+    }
+    .lb-chat-deco {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: .4rem;
+      pointer-events: none;
+    }
+    .lb-bubble {
+      background: #06C755;
+      color: white;
+      font-size: .68rem;
+      font-family: var(--fh);
+      font-weight: 600;
+      padding: .3rem .75rem;
+      border-radius: 12px 12px 2px 12px;
+      white-space: nowrap;
+      box-shadow: 2px 2px 0 rgba(0,0,0,.08);
+    }
+    .lb-bubble.sm {
+      font-size: .62rem;
+      opacity: .6;
+      border-radius: 10px 10px 2px 10px;
+    }
+    .lb-robot-wrap {
+      display: flex;
+      justify-content: center;
+      margin: .25rem 0 1rem;
+    }
+    .lb-card-name {
+      font-family: var(--fh);
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--ink);
+      margin-bottom: .3rem;
+    }
+    .lb-card-hint {
+      font-size: .78rem;
+      color: #06C755;
+      font-family: var(--fh);
+      font-weight: 600;
+    }
+
+    /* ══ LINE BOT MODAL ══ */
+    .lb-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 900;
+      background: rgba(62,54,46,.5);
+      backdrop-filter: blur(4px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .25s;
+    }
+    .lb-overlay.open { opacity: 1; pointer-events: all; }
+    .lb-modal {
+      background: #FDFBF7;
+      border: 2.5px solid var(--ink);
+      border-radius: 20px;
+      box-shadow: 8px 10px 0 var(--ink);
+      width: 100%;
+      max-width: 680px;
+      max-height: 88vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      transform: translateY(20px);
+      transition: transform .28s;
+    }
+    .lb-overlay.open .lb-modal { transform: translateY(0); }
+    .lb-mhead {
+      background: #06C755;
+      padding: 1.4rem 2rem 1.2rem;
+      position: relative;
+      flex-shrink: 0;
+    }
+    .lb-mhead-title {
+      font-family: var(--fh);
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: white;
+    }
+    .lb-mhead-sub {
+      font-size: .84rem;
+      color: rgba(255,255,255,.8);
+      margin-top: .25rem;
+    }
+    .lb-mclose {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      border: none;
+      background: rgba(255,255,255,.25);
+      color: white;
+      cursor: pointer;
+      font-size: .95rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background .18s;
+    }
+    .lb-mclose:hover { background: rgba(255,255,255,.4); }
+    .lb-mbody {
+      flex: 1;
+      overflow-y: auto;
+      padding: 1.6rem 2rem;
+    }
+    .lb-flow {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: .4rem;
+      background: white;
+      border: 1.5px solid var(--grid);
+      border-radius: 12px;
+      padding: 1rem 1.25rem;
+      margin-bottom: 1.75rem;
+      flex-wrap: wrap;
+    }
+    .lb-flow-node {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: .25rem;
+    }
+    .lb-flow-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+    }
+    .lb-flow-label {
+      font-family: var(--fh);
+      font-size: .64rem;
+      font-weight: 700;
+      color: #7a6c60;
+      text-align: center;
+    }
+    .lb-flow-arr { color: #bbb; font-size: 1.1rem; flex-shrink: 0; }
+    .lb-sec-title {
+      font-family: var(--fh);
+      font-size: .95rem;
+      font-weight: 700;
+      color: var(--ink);
+      margin-bottom: .85rem;
+      padding-left: .7rem;
+      border-left: 3.5px solid #06C755;
+    }
+    .lb-features {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: .8rem;
+      margin-bottom: 1.75rem;
+    }
+    .lb-feat {
+      background: white;
+      border: 1.5px solid var(--grid);
+      border-radius: 10px;
+      padding: .85rem 1rem;
+      display: flex;
+      gap: .6rem;
+      transition: border-color .18s, box-shadow .18s;
+    }
+    .lb-feat:hover { border-color: #06C755; box-shadow: 3px 3px 0 #06C755; }
+    .lb-feat-icon { font-size: 1.4rem; flex-shrink: 0; margin-top: .05rem; }
+    .lb-feat-name { font-family: var(--fh); font-size: .86rem; font-weight: 700; color: var(--ink); margin-bottom: .18rem; }
+    .lb-feat-desc { font-size: .74rem; color: #7a6c60; line-height: 1.55; }
+    .lb-steps { display: flex; flex-direction: column; gap: .7rem; margin-bottom: 1.5rem; }
+    .lb-step { display: flex; gap: .85rem; align-items: flex-start; }
+    .lb-step-num {
+      width: 26px; height: 26px; border-radius: 50%;
+      background: #06C755; color: white;
+      font-family: var(--fh); font-weight: 700; font-size: .82rem;
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    }
+    .lb-step-text { font-size: .86rem; color: var(--ink); line-height: 1.7; padding-top: .1rem; }
+    .lb-step-text strong { font-family: var(--fh); font-weight: 700; }
+    .lb-cta {
+      background: #06C755;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      padding: .82rem 2rem;
+      font-family: var(--fh);
+      font-size: .98rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: block;
+      width: 100%;
+      transition: filter .18s, transform .15s;
+      box-shadow: 3px 3px 0 #05a847;
+    }
+    .lb-cta:hover { filter: brightness(1.08); transform: translateY(-2px); }
+    @media(max-width:600px) {
+      .lb-features { grid-template-columns: 1fr; }
+    }
+
     .expect-modal-close {
       position: absolute;
       top: 1.1rem;
@@ -4889,6 +5116,121 @@
     </section>
 
 
+    <!-- LINE BOT MODAL -->
+    <div class="lb-overlay" id="lb-overlay" onclick="if(event.target===this)closeLbModal()">
+      <div class="lb-modal">
+        <div class="lb-mhead">
+          <div class="lb-mhead-title">🤖 n8n × LINE Bot 智慧服務</div>
+          <div class="lb-mhead-sub">自動化流程串接，讓 LINE Bot 成為社工的全天候助理</div>
+          <button class="lb-mclose" onclick="closeLbModal()">✕</button>
+        </div>
+        <div class="lb-mbody">
+
+          <!-- 流程圖 -->
+          <div class="lb-flow">
+            <div class="lb-flow-node">
+              <div class="lb-flow-icon" style="background:#e8f8ee;">💬</div>
+              <div class="lb-flow-label">社工 /<br>服務對象</div>
+            </div>
+            <div class="lb-flow-arr">→</div>
+            <div class="lb-flow-node">
+              <div class="lb-flow-icon" style="background:#dcf0e0;">
+                <svg viewBox="0 0 28 28" width="26" height="26" fill="none"><rect width="28" height="28" rx="7" fill="#06C755"/><path d="M14 6C9.58 6 6 9.13 6 13c0 2.18 1.14 4.12 2.93 5.44L8 22l3.85-1.7A8.9 8.9 0 0014 20.5c4.42 0 8-3.13 8-7s-3.58-7-8-7z" fill="white"/></svg>
+              </div>
+              <div class="lb-flow-label">LINE Bot</div>
+            </div>
+            <div class="lb-flow-arr">→</div>
+            <div class="lb-flow-node">
+              <div class="lb-flow-icon" style="background:#fff3e0;">
+                <svg viewBox="0 0 28 28" width="26" height="26" fill="none"><rect width="28" height="28" rx="7" fill="#FF6933"/><circle cx="14" cy="14" r="5" fill="white"/><circle cx="7" cy="8" r="2.5" fill="white"/><circle cx="21" cy="8" r="2.5" fill="white"/><circle cx="7" cy="20" r="2.5" fill="white"/><circle cx="21" cy="20" r="2.5" fill="white"/><line x1="9" y1="9.5" x2="11.5" y2="11.5" stroke="white" stroke-width="1.5"/><line x1="19" y1="9.5" x2="16.5" y2="11.5" stroke="white" stroke-width="1.5"/><line x1="9" y1="18.5" x2="11.5" y2="16.5" stroke="white" stroke-width="1.5"/><line x1="19" y1="18.5" x2="16.5" y2="16.5" stroke="white" stroke-width="1.5"/></svg>
+              </div>
+              <div class="lb-flow-label">n8n<br>自動化</div>
+            </div>
+            <div class="lb-flow-arr">→</div>
+            <div class="lb-flow-node">
+              <div class="lb-flow-icon" style="background:#f0f0ff;">🧠</div>
+              <div class="lb-flow-label">AI 模型<br>處理</div>
+            </div>
+            <div class="lb-flow-arr">→</div>
+            <div class="lb-flow-node">
+              <div class="lb-flow-icon" style="background:#e8f8ee;">📄</div>
+              <div class="lb-flow-label">自動回覆<br>/ 生成紀錄</div>
+            </div>
+          </div>
+
+          <!-- 功能介紹 -->
+          <div class="lb-sec-title">可以為大家提供哪些服務？</div>
+          <div class="lb-features">
+            <div class="lb-feat">
+              <div class="lb-feat-icon">🎤</div>
+              <div>
+                <div class="lb-feat-name">語音轉訪視紀錄</div>
+                <div class="lb-feat-desc">錄製訪談語音後傳送，自動轉換為結構化訪視紀錄，省去大量打字時間。</div>
+              </div>
+            </div>
+            <div class="lb-feat">
+              <div class="lb-feat-icon">🤖</div>
+              <div>
+                <div class="lb-feat-name">AI 智慧問答客服</div>
+                <div class="lb-feat-desc">24 小時自動回答服務對象的常見問題，連結社福資源資料庫即時媒合。</div>
+              </div>
+            </div>
+            <div class="lb-feat">
+              <div class="lb-feat-icon">🔔</div>
+              <div>
+                <div class="lb-feat-name">個案追蹤提醒</div>
+                <div class="lb-feat-desc">設定個案追蹤時程，到期自動推播提醒訊息給社工，不再錯漏。</div>
+              </div>
+            </div>
+            <div class="lb-feat">
+              <div class="lb-feat-icon">📋</div>
+              <div>
+                <div class="lb-feat-name">對話式表單填報</div>
+                <div class="lb-feat-desc">透過 LINE 對話引導填寫服務申請表，自動整理成結構化資料匯出。</div>
+              </div>
+            </div>
+            <div class="lb-feat">
+              <div class="lb-feat-icon">🔗</div>
+              <div>
+                <div class="lb-feat-name">社福資源媒合</div>
+                <div class="lb-feat-desc">根據服務對象的需求描述，自動搜尋並推薦適合的社會福利資源。</div>
+              </div>
+            </div>
+            <div class="lb-feat">
+              <div class="lb-feat-icon">🚨</div>
+              <div>
+                <div class="lb-feat-name">緊急通報自動流程</div>
+                <div class="lb-feat-desc">偵測到高風險關鍵字時，自動觸發通報流程並同步通知督導。</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 如何使用 -->
+          <div class="lb-sec-title">如何開始使用？</div>
+          <div class="lb-steps">
+            <div class="lb-step">
+              <div class="lb-step-num">1</div>
+              <div class="lb-step-text"><strong>加入 LINE Bot 好友</strong> — 掃描 QR Code 或搜尋帳號，點選加入好友即可立即啟用。</div>
+            </div>
+            <div class="lb-step">
+              <div class="lb-step-num">2</div>
+              <div class="lb-step-text"><strong>選擇所需功能</strong> — 輸入指令關鍵字（如「訪視紀錄」、「資源查詢」）或直接傳送語音，Bot 自動判斷流程。</div>
+            </div>
+            <div class="lb-step">
+              <div class="lb-step-num">3</div>
+              <div class="lb-step-text"><strong>接收處理結果</strong> — n8n 後台自動串接 AI 模型完成處理，數秒內將結果回傳至 LINE 對話視窗。</div>
+            </div>
+            <div class="lb-step">
+              <div class="lb-step-num">4</div>
+              <div class="lb-step-text"><strong>客製化機構需求</strong> — 可依各機構工作流程進行客製化設定，歡迎聯繫我們洽談導入方案。</div>
+            </div>
+          </div>
+
+          <button class="lb-cta" onclick="window.location.href='booking.html'">了解導入方案 · 立即預約諮詢</button>
+        </div>
+      </div>
+    </div>
+
     <!-- FOOTER -->
     <footer class="footer">
       <div class="footer-logo">社團法人臺灣科技與社會工作協會</div>
@@ -5009,7 +5351,43 @@
       /* SERVICES */
       const DEF_SVC = [{ name: '工具書', desc: 'AI 社工實務應用工具書，系統整理 AI 工具於社會工作各場域的操作指引與具體案例。\\n\\n涵蓋個案管理、行政記錄、評估報告、服務計畫設計等核心業務，提供社工師易讀易用的實戰參考手冊，可作為機構內部培訓教材或個人自學資源。' }];
       const svcEl = document.getElementById('service-grid');
-      if (svcEl) svcEl.innerHTML = (sc.services || DEF_SVC).map(s => { const lines = (s.desc || '').split(/\n/).map(l => l.trim()).filter(Boolean); const body = lines.length ? `<ul class="service-list">${lines.map(l => `<li>${l}</li>`).join('')}</ul>` : `<div class="service-desc"></div>`; return `<div class="service-card"><div class="service-tape"></div><div class="service-name">${s.name}</div>${body}</div>`; }).join('');
+      const ROBOT_SVG = `<svg viewBox="0 0 110 128" width="110" height="128" xmlns="http://www.w3.org/2000/svg">
+        <line x1="55" y1="16" x2="55" y2="5" stroke="#3E362E" stroke-width="2.5" stroke-linecap="round"/>
+        <circle cx="55" cy="4" r="4.5" fill="#06C755"/>
+        <rect x="18" y="16" width="74" height="54" rx="17" fill="#06C755"/>
+        <ellipse cx="42" cy="25" rx="13" ry="6" fill="rgba(255,255,255,.18)" transform="rotate(-15,42,25)"/>
+        <circle cx="41" cy="41" r="10.5" fill="white"/>
+        <circle cx="69" cy="41" r="10.5" fill="white"/>
+        <circle cx="42" cy="42" r="5.5" fill="#3E362E"/>
+        <circle cx="70" cy="42" r="5.5" fill="#3E362E"/>
+        <circle cx="44" cy="39.5" r="1.8" fill="white"/>
+        <circle cx="72" cy="39.5" r="1.8" fill="white"/>
+        <path d="M 42 55 Q 55 63 68 55" stroke="white" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+        <rect x="24" y="76" width="62" height="44" rx="13" fill="#05a847"/>
+        <rect x="36" y="85" width="38" height="20" rx="6" fill="rgba(255,255,255,.18)"/>
+        <rect x="5" y="78" width="17" height="34" rx="8.5" fill="#05a847"/>
+        <rect x="88" y="78" width="17" height="34" rx="8.5" fill="#05a847"/>
+        <circle cx="13.5" cy="116" r="7" fill="#06C755"/>
+        <circle cx="96.5" cy="116" r="7" fill="#06C755"/>
+      </svg>`;
+      if (svcEl) svcEl.innerHTML = (sc.services || DEF_SVC).map(s => {
+        if (/line\s*bot/i.test(s.name)) {
+          return `<div class="service-card-linebot" onclick="openLbModal()" role="button" tabindex="0">
+            <div class="lb-chat-deco">
+              <div class="lb-bubble">語音轉訪視紀錄 🎤</div>
+              <div class="lb-bubble sm">已自動生成紀錄 📄</div>
+            </div>
+            <div class="lb-robot-wrap">${ROBOT_SVG}</div>
+            <div class="lb-card-name">LINE Bot 自動化服務</div>
+            <div class="lb-card-hint">點我了解 n8n 串接功能 →</div>
+          </div>`;
+        }
+        const lines = (s.desc || '').split(/\n/).map(l => l.trim()).filter(Boolean);
+        const body = lines.length ? `<ul class="service-list">${lines.map(l => `<li>${l}</li>`).join('')}</ul>` : `<div class="service-desc"></div>`;
+        return `<div class="service-card"><div class="service-tape"></div><div class="service-name">${s.name}</div>${body}</div>`;
+      }).join('');
+      function openLbModal(){ document.getElementById('lb-overlay').classList.add('open'); document.body.style.overflow='hidden'; }
+      function closeLbModal(){ document.getElementById('lb-overlay').classList.remove('open'); document.body.style.overflow=''; }
       /* FOOTER */
       const cfg = sc.config || {};
       const fEmail = document.getElementById('footer-email');
