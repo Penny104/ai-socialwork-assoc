@@ -110,6 +110,11 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;bac
 .btn-add:hover{border-color:var(--green);color:var(--green);}
 .btn-del{position:absolute;top:.7rem;right:.7rem;width:26px;height:26px;background:white;border:1.5px solid var(--grid);border-radius:6px;cursor:pointer;font-size:.85rem;display:flex;align-items:center;justify-content:center;transition:.18s;}
 .btn-del:hover{background:var(--orange);border-color:var(--orange);color:white;}
+.btn-move{position:absolute;width:24px;height:24px;background:white;border:1.5px solid var(--grid);border-radius:5px;cursor:pointer;font-size:.7rem;display:flex;align-items:center;justify-content:center;transition:.18s;right:.7rem;}
+.btn-move:hover{background:var(--blue);border-color:var(--blue);color:white;}
+.btn-move:disabled{opacity:.25;cursor:default;}
+.btn-move-up{top:2.4rem;}
+.btn-move-dn{top:3.6rem;}
 .course-items-ed{display:flex;flex-direction:column;gap:.5rem;margin-top:.5rem;}
 .ci-row{display:flex;gap:.5rem;align-items:flex-start;}
 .ci-row input{flex:0 0 34%;font-size:.82rem;}
@@ -973,9 +978,12 @@ const EXP_CLR_OPTS=`<option value="var(--orange)">橘色</option><option value="
 let expectData=[];
 function renderExpect(){expectData=JSON.parse(JSON.stringify(sc().expect||DEF_INST));buildExpectUI();}
 function buildExpectUI(){
+  const n=expectData.length;
   document.getElementById('expect-ed').innerHTML=expectData.map((inst,i)=>`
     <div class="item-card${inst._unsaved?' item-card-unsaved':''}">
       <button class="btn-del" onclick="expectData.splice(${i},1);buildExpectUI()">✕</button>
+      <button class="btn-move btn-move-up" onclick="moveExpect(${i},-1)" ${i===0?'disabled':''}>▲</button>
+      <button class="btn-move btn-move-dn" onclick="moveExpect(${i},1)" ${i===n-1?'disabled':''}>▼</button>
       <div class="item-num">機構類型 ${i+1}</div>
       <div class="three-col">
         <div class="ef"><label>圖示 Emoji</label><input id="ex-ic-${i}" value="${esc(inst.icon||'🏢')}"></div>
@@ -992,6 +1000,25 @@ function buildExpectUI(){
       </div>
     </div>`).join('');
   expectData.forEach((inst,i)=>{const el=document.getElementById(`ex-cl-${i}`);if(el)el.value=inst.color||'var(--orange)';});
+}
+function moveExpect(i,dir){
+  syncExpectData();
+  const j=i+dir;
+  if(j<0||j>=expectData.length) return;
+  [expectData[i],expectData[j]]=[expectData[j],expectData[i]];
+  buildExpectUI();
+  document.getElementById('expect-ed').querySelectorAll('.item-card')[j]?.scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+function syncExpectData(){
+  expectData=expectData.map((_,i)=>({
+    ..._,
+    icon:document.getElementById(`ex-ic-${i}`)?.value||_.icon,
+    name:document.getElementById(`ex-nm-${i}`)?.value||_.name,
+    tag:document.getElementById(`ex-tg-${i}`)?.value||_.tag,
+    color:document.getElementById(`ex-cl-${i}`)?.value||_.color,
+    desc:document.getElementById(`ex-ds-${i}`)?.value||_.desc,
+    items:(document.getElementById(`ex-it-${i}`)?.value||'').split('\n').map(x=>x.trim()).filter(Boolean),
+  }));
 }
 function addExpect(){
   openAddModal('新增機構類型',`
