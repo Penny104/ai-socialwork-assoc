@@ -237,13 +237,13 @@
 
     /* 主標題：對照圖片，字極大 */
     .hero-cover-title {
-      font-family: var(--fh);
+      font-family: 'BiauKai', '標楷體', 'DFKai-SB', 'KaiTi', cursive;
       font-size: clamp(2.8rem, 6vw, 5.5rem);
       font-weight: 700;
-      line-height: 1.12;
+      line-height: 1.2;
       color: #3D3530;
       margin-bottom: 1rem;
-      letter-spacing: -.01em;
+      letter-spacing: .02em;
     }
 
     /* 標題下細橫線 */
@@ -2017,20 +2017,23 @@
       pointer-events: none;
     }
     .lb-bubble {
-      background: var(--orange);
-      color: white;
+      background: var(--yellow);
+      color: var(--ink);
       font-size: .68rem;
       font-family: var(--fh);
       font-weight: 600;
-      padding: .3rem .75rem;
-      border-radius: 12px 12px 2px 12px;
+      padding: .28rem .75rem;
+      border-radius: 4px;
+      border: 1.5px solid var(--ink);
       white-space: nowrap;
-      box-shadow: 2px 2px 0 rgba(0,0,0,.08);
+      transform: rotate(-1.2deg);
+      box-shadow: 2px 2px 0 var(--ink);
     }
     .lb-bubble.sm {
       font-size: .62rem;
-      opacity: .6;
-      border-radius: 10px 10px 2px 10px;
+      background: var(--bg);
+      transform: rotate(.8deg);
+      opacity: .9;
     }
     .lb-robot-wrap {
       display: flex;
@@ -2053,166 +2056,123 @@
 
     /* ══ LINE BOT MODAL ══ */
     .lb-overlay {
-      position: fixed;
-      inset: 0;
-      z-index: 900;
-      background: rgba(62,54,46,.5);
-      backdrop-filter: blur(4px);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 1.5rem;
-      opacity: 0;
-      pointer-events: none;
+      position: fixed; inset: 0; z-index: 900;
+      background: rgba(62,54,46,.48);
+      backdrop-filter: blur(5px);
+      display: flex; align-items: center; justify-content: center;
+      padding: 1.25rem;
+      opacity: 0; pointer-events: none;
       transition: opacity .25s;
     }
     .lb-overlay.open { opacity: 1; pointer-events: all; }
     .lb-modal {
-      background: #FDFBF7;
+      background: var(--bg);
       border: 2.5px solid var(--ink);
       border-radius: 20px;
       box-shadow: 8px 10px 0 var(--ink);
-      width: 100%;
-      max-width: 680px;
-      max-height: 88vh;
-      display: flex;
-      flex-direction: column;
-      overflow: hidden;
-      transform: translateY(20px);
-      transition: transform .28s;
+      width: 100%; max-width: 700px; max-height: 90vh;
+      display: flex; flex-direction: column; overflow: hidden;
+      transform: translateY(22px); transition: transform .28s;
     }
     .lb-overlay.open .lb-modal { transform: translateY(0); }
+
+    /* Header */
     .lb-mhead {
       background: var(--orange);
-      padding: 1.4rem 2rem 1.2rem;
-      position: relative;
-      flex-shrink: 0;
+      padding: 1.4rem 2rem 1.3rem;
+      position: relative; flex-shrink: 0;
+      display: flex; align-items: center; gap: 1.25rem;
     }
+    .lb-mhead-robot { flex-shrink: 0; }
+    .lb-mhead-text {}
     .lb-mhead-title {
-      font-family: var(--fh);
-      font-size: 1.4rem;
-      font-weight: 700;
-      color: white;
+      font-family: var(--fh); font-size: 1.45rem; font-weight: 700; color: white; line-height: 1.2;
     }
-    .lb-mhead-sub {
-      font-size: .84rem;
-      color: rgba(255,255,255,.8);
-      margin-top: .25rem;
-    }
+    .lb-mhead-sub { font-size: .84rem; color: rgba(255,255,255,.82); margin-top: .2rem; }
     .lb-mclose {
-      position: absolute;
-      top: 1rem;
-      right: 1rem;
-      width: 30px;
-      height: 30px;
-      border-radius: 50%;
-      border: none;
-      background: rgba(255,255,255,.25);
-      color: white;
-      cursor: pointer;
-      font-size: .95rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      position: absolute; top: 1rem; right: 1rem;
+      width: 30px; height: 30px; border-radius: 50%; border: none;
+      background: rgba(255,255,255,.25); color: white;
+      cursor: pointer; font-size: .9rem;
+      display: flex; align-items: center; justify-content: center;
       transition: background .18s;
     }
     .lb-mclose:hover { background: rgba(255,255,255,.4); }
-    .lb-mbody {
-      flex: 1;
-      overflow-y: auto;
-      padding: 1.6rem 2rem;
-    }
+
+    /* Body */
+    .lb-mbody { flex: 1; overflow-y: auto; padding: 1.6rem 2rem 2rem; }
+
+    /* Flow diagram */
     .lb-flow {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: .4rem;
-      background: white;
-      border: 1.5px solid var(--grid);
-      border-radius: 12px;
-      padding: 1rem 1.25rem;
+      display: flex; align-items: center; justify-content: center;
+      gap: .5rem; flex-wrap: wrap;
+      background: white; border: 1.5px solid var(--grid);
+      border-radius: 14px; padding: 1.1rem 1.25rem;
       margin-bottom: 1.75rem;
-      flex-wrap: wrap;
     }
-    .lb-flow-node {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: .25rem;
-    }
+    .lb-flow-node { display: flex; flex-direction: column; align-items: center; gap: .3rem; }
     .lb-flow-icon {
-      width: 42px;
-      height: 42px;
-      border-radius: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.3rem;
+      width: 44px; height: 44px; border-radius: 11px;
+      border: 1.5px solid var(--grid);
+      display: flex; align-items: center; justify-content: center; font-size: 1.3rem;
+      background: var(--bg);
     }
-    .lb-flow-label {
-      font-family: var(--fh);
-      font-size: .64rem;
-      font-weight: 700;
-      color: #7a6c60;
-      text-align: center;
-    }
-    .lb-flow-arr { color: #bbb; font-size: 1.1rem; flex-shrink: 0; }
+    .lb-flow-label { font-family: var(--fh); font-size: .64rem; font-weight: 700; color: #7a6c60; text-align: center; }
+    .lb-flow-arr { color: var(--grid); font-size: 1.2rem; flex-shrink: 0; }
+
+    /* Section title */
+    .lb-sec { margin-bottom: 1.6rem; }
     .lb-sec-title {
-      font-family: var(--fh);
-      font-size: .95rem;
-      font-weight: 700;
-      color: var(--ink);
-      margin-bottom: .85rem;
-      padding-left: .7rem;
+      font-family: var(--fh); font-size: 1rem; font-weight: 700; color: var(--ink);
+      margin-bottom: .9rem; padding-left: .75rem;
       border-left: 3.5px solid var(--orange);
     }
-    .lb-features {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: .8rem;
-      margin-bottom: 1.75rem;
-    }
+
+    /* Feature grid */
+    .lb-feat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: .85rem; }
     .lb-feat {
-      background: white;
-      border: 1.5px solid var(--grid);
-      border-radius: 10px;
-      padding: .85rem 1rem;
-      display: flex;
-      gap: .6rem;
-      transition: border-color .18s, box-shadow .18s;
+      background: white; border: 1.5px solid var(--grid); border-radius: 12px;
+      padding: .9rem 1rem; display: flex; gap: .65rem;
+      transition: border-color .18s, box-shadow .18s, transform .18s;
     }
-    .lb-feat:hover { border-color: var(--orange); box-shadow: 3px 3px 0 var(--orange); }
-    .lb-feat-icon { font-size: 1.4rem; flex-shrink: 0; margin-top: .05rem; }
-    .lb-feat-name { font-family: var(--fh); font-size: .86rem; font-weight: 700; color: var(--ink); margin-bottom: .18rem; }
-    .lb-feat-desc { font-size: .74rem; color: #7a6c60; line-height: 1.55; }
-    .lb-steps { display: flex; flex-direction: column; gap: .7rem; margin-bottom: 1.5rem; }
-    .lb-step { display: flex; gap: .85rem; align-items: flex-start; }
+    .lb-feat:hover {
+      border-color: var(--orange); box-shadow: 3px 3px 0 var(--orange);
+      transform: translate(-1px,-1px);
+    }
+    .lb-feat-icon { font-size: 1.45rem; flex-shrink: 0; margin-top: .05rem; }
+    .lb-feat-name { font-family: var(--fh); font-size: .88rem; font-weight: 700; color: var(--ink); margin-bottom: .2rem; }
+    .lb-feat-desc { font-size: .76rem; color: #7a6c60; line-height: 1.6; }
+
+    /* Steps */
+    .lb-steps { display: flex; flex-direction: column; gap: .8rem; }
+    .lb-step { display: flex; gap: .9rem; align-items: flex-start; }
     .lb-step-num {
-      width: 26px; height: 26px; border-radius: 50%;
+      width: 28px; height: 28px; border-radius: 50%; flex-shrink: 0;
       background: var(--orange); color: white;
-      font-family: var(--fh); font-weight: 700; font-size: .82rem;
-      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+      font-family: var(--fh); font-weight: 700; font-size: .84rem;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 2px 2px 0 var(--ink);
     }
-    .lb-step-text { font-size: .86rem; color: var(--ink); line-height: 1.7; padding-top: .1rem; }
-    .lb-step-text strong { font-family: var(--fh); font-weight: 700; }
+    .lb-step-body { padding-top: .1rem; }
+    .lb-step-title { font-family: var(--fh); font-size: .9rem; font-weight: 700; color: var(--ink); margin-bottom: .15rem; }
+    .lb-step-desc { font-size: .8rem; color: #7a6c60; line-height: 1.65; }
+
+    /* CTA */
+    .lb-cta-wrap { margin-top: 1.75rem; }
     .lb-cta {
-      background: var(--orange);
-      color: white;
-      border: none;
-      border-radius: 10px;
-      padding: .82rem 2rem;
-      font-family: var(--fh);
-      font-size: .98rem;
-      font-weight: 700;
-      cursor: pointer;
-      display: block;
-      width: 100%;
-      transition: filter .18s, transform .15s;
-      box-shadow: 3px 3px 0 var(--ink);
+      display: block; width: 100%;
+      background: var(--orange); color: white; border: 2px solid var(--ink);
+      border-radius: 12px; padding: .88rem 2rem;
+      font-family: var(--fh); font-size: 1rem; font-weight: 700;
+      cursor: pointer; text-align: center; text-decoration: none;
+      box-shadow: 4px 4px 0 var(--ink);
+      transition: transform .18s, box-shadow .18s;
     }
-    .lb-cta:hover { filter: brightness(1.08); transform: translateY(-2px); }
-    @media(max-width:600px) {
-      .lb-features { grid-template-columns: 1fr; }
+    .lb-cta:hover { transform: translate(-2px,-2px); box-shadow: 6px 6px 0 var(--ink); }
+
+    @media(max-width:600px){
+      .lb-feat-grid { grid-template-columns: 1fr; }
+      .lb-mhead { flex-direction: column; align-items: flex-start; gap: .5rem; }
     }
 
     .expect-modal-close {
@@ -5116,117 +5076,161 @@
     </section>
 
 
+
     <!-- LINE BOT MODAL -->
     <div class="lb-overlay" id="lb-overlay" onclick="if(event.target===this)closeLbModal()">
-      <div class="lb-modal">
+      <div class="lb-modal" role="dialog" aria-modal="true">
+
+        <!-- Header -->
         <div class="lb-mhead">
-          <div class="lb-mhead-title">🤖 n8n × LINE Bot 智慧服務</div>
-          <div class="lb-mhead-sub">自動化流程串接，讓 LINE Bot 成為社工的全天候助理</div>
-          <button class="lb-mclose" onclick="closeLbModal()">✕</button>
+          <div class="lb-mhead-robot">
+            <svg viewBox="0 0 72 88" width="72" height="88" xmlns="http://www.w3.org/2000/svg">
+              <line x1="36" y1="9" x2="36" y2="2" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+              <circle cx="36" cy="1" r="4" fill="#F4D35E" stroke="white" stroke-width="2"/>
+              <rect x="8" y="9" width="56" height="36" rx="13" fill="white" opacity=".95"/>
+              <circle cx="24" cy="25" r="8" fill="#5C8EAD"/>
+              <circle cx="48" cy="25" r="8" fill="#5C8EAD"/>
+              <circle cx="25" cy="26" r="4" fill="#3E362E"/>
+              <circle cx="49" cy="26" r="4" fill="#3E362E"/>
+              <circle cx="27" cy="23" r="1.5" fill="white"/>
+              <circle cx="51" cy="23" r="1.5" fill="white"/>
+              <path d="M 25 36 Q 36 43 47 36" stroke="#3E362E" stroke-width="2" fill="none" stroke-linecap="round"/>
+              <rect x="28" y="44" width="16" height="7" rx="3" fill="rgba(255,255,255,.4)"/>
+              <rect x="12" y="49" width="48" height="36" rx="11" fill="rgba(255,255,255,.22)" stroke="white" stroke-width="1.5"/>
+              <rect x="22" y="57" width="28" height="22" rx="6" fill="rgba(255,255,255,.25)"/>
+              <rect x="2" y="51" width="9" height="24" rx="4.5" fill="rgba(255,255,255,.3)" stroke="white" stroke-width="1.5"/>
+              <rect x="61" y="51" width="9" height="24" rx="4.5" fill="rgba(255,255,255,.3)" stroke="white" stroke-width="1.5"/>
+            </svg>
+          </div>
+          <div class="lb-mhead-text">
+            <div class="lb-mhead-title">LINE Bot 自動化服務</div>
+            <div class="lb-mhead-sub">n8n 串接 LINE Bot，讓 AI 成為社工全天候的智慧助理</div>
+          </div>
+          <button class="lb-mclose" onclick="closeLbModal()" aria-label="關閉">✕</button>
         </div>
+
+        <!-- Body -->
         <div class="lb-mbody">
 
           <!-- 流程圖 -->
           <div class="lb-flow">
             <div class="lb-flow-node">
-              <div class="lb-flow-icon" style="background:#fff5f0;">💬</div>
+              <div class="lb-flow-icon">💬</div>
               <div class="lb-flow-label">社工 /<br>服務對象</div>
             </div>
             <div class="lb-flow-arr">→</div>
             <div class="lb-flow-node">
-              <div class="lb-flow-icon" style="background:#fde8e4;">
-                <svg viewBox="0 0 28 28" width="26" height="26" fill="none"><rect width="28" height="28" rx="7" fill="var(--orange)"/><path d="M14 6C9.58 6 6 9.13 6 13c0 2.18 1.14 4.12 2.93 5.44L8 22l3.85-1.7A8.9 8.9 0 0014 20.5c4.42 0 8-3.13 8-7s-3.58-7-8-7z" fill="white"/></svg>
+              <div class="lb-flow-icon" style="background:#e8f5e9;">
+                <svg viewBox="0 0 24 24" width="22" height="22" fill="none"><rect width="24" height="24" rx="6" fill="#4CAF50"/><path d="M12 4C7.58 4 4 7.13 4 11c0 2.18 1.14 4.12 2.93 5.44L6 20l3.85-1.7A8.9 8.9 0 0012 18.5c4.42 0 8-3.13 8-7s-3.58-7-8-7z" fill="white"/></svg>
               </div>
               <div class="lb-flow-label">LINE Bot</div>
             </div>
             <div class="lb-flow-arr">→</div>
             <div class="lb-flow-node">
               <div class="lb-flow-icon" style="background:#fff3e0;">
-                <svg viewBox="0 0 28 28" width="26" height="26" fill="none"><rect width="28" height="28" rx="7" fill="#FF6933"/><circle cx="14" cy="14" r="5" fill="white"/><circle cx="7" cy="8" r="2.5" fill="white"/><circle cx="21" cy="8" r="2.5" fill="white"/><circle cx="7" cy="20" r="2.5" fill="white"/><circle cx="21" cy="20" r="2.5" fill="white"/><line x1="9" y1="9.5" x2="11.5" y2="11.5" stroke="white" stroke-width="1.5"/><line x1="19" y1="9.5" x2="16.5" y2="11.5" stroke="white" stroke-width="1.5"/><line x1="9" y1="18.5" x2="11.5" y2="16.5" stroke="white" stroke-width="1.5"/><line x1="19" y1="18.5" x2="16.5" y2="16.5" stroke="white" stroke-width="1.5"/></svg>
+                <svg viewBox="0 0 24 24" width="22" height="22" fill="none"><rect width="24" height="24" rx="6" fill="#FF6933"/><circle cx="12" cy="12" r="4" fill="white"/><circle cx="6" cy="7" r="2" fill="white"/><circle cx="18" cy="7" r="2" fill="white"/><circle cx="6" cy="17" r="2" fill="white"/><circle cx="18" cy="17" r="2" fill="white"/></svg>
               </div>
               <div class="lb-flow-label">n8n<br>自動化</div>
             </div>
             <div class="lb-flow-arr">→</div>
             <div class="lb-flow-node">
-              <div class="lb-flow-icon" style="background:#f0f0ff;">🧠</div>
+              <div class="lb-flow-icon" style="background:#f3e5f5;">🧠</div>
               <div class="lb-flow-label">AI 模型<br>處理</div>
             </div>
             <div class="lb-flow-arr">→</div>
             <div class="lb-flow-node">
-              <div class="lb-flow-icon" style="background:#fff5f0;">📄</div>
+              <div class="lb-flow-icon">📄</div>
               <div class="lb-flow-label">自動回覆<br>/ 生成紀錄</div>
             </div>
           </div>
 
           <!-- 功能介紹 -->
-          <div class="lb-sec-title">可以為大家提供哪些服務？</div>
-          <div class="lb-features">
-            <div class="lb-feat">
-              <div class="lb-feat-icon">🎤</div>
-              <div>
-                <div class="lb-feat-name">語音轉訪視紀錄</div>
-                <div class="lb-feat-desc">錄製訪談語音後傳送，自動轉換為結構化訪視紀錄，省去大量打字時間。</div>
+          <div class="lb-sec">
+            <div class="lb-sec-title">可以為大家提供哪些服務？</div>
+            <div class="lb-feat-grid">
+              <div class="lb-feat">
+                <div class="lb-feat-icon">🎤</div>
+                <div>
+                  <div class="lb-feat-name">語音轉訪視紀錄</div>
+                  <div class="lb-feat-desc">錄製訪談語音後直接傳入 LINE，自動轉換為結構化訪視紀錄，大幅節省打字時間。</div>
+                </div>
               </div>
-            </div>
-            <div class="lb-feat">
-              <div class="lb-feat-icon">🤖</div>
-              <div>
-                <div class="lb-feat-name">AI 智慧問答客服</div>
-                <div class="lb-feat-desc">24 小時自動回答服務對象的常見問題，連結社福資源資料庫即時媒合。</div>
+              <div class="lb-feat">
+                <div class="lb-feat-icon">🤖</div>
+                <div>
+                  <div class="lb-feat-name">AI 智慧問答客服</div>
+                  <div class="lb-feat-desc">24 小時自動回答常見問題，串接社福資源資料庫即時媒合，降低社工人工回覆負擔。</div>
+                </div>
               </div>
-            </div>
-            <div class="lb-feat">
-              <div class="lb-feat-icon">🔔</div>
-              <div>
-                <div class="lb-feat-name">個案追蹤提醒</div>
-                <div class="lb-feat-desc">設定個案追蹤時程，到期自動推播提醒訊息給社工，不再錯漏。</div>
+              <div class="lb-feat">
+                <div class="lb-feat-icon">🔔</div>
+                <div>
+                  <div class="lb-feat-name">個案追蹤提醒</div>
+                  <div class="lb-feat-desc">設定追蹤時程後，到期自動推播提醒至社工 LINE，確保每位服務對象不遺漏。</div>
+                </div>
               </div>
-            </div>
-            <div class="lb-feat">
-              <div class="lb-feat-icon">📋</div>
-              <div>
-                <div class="lb-feat-name">對話式表單填報</div>
-                <div class="lb-feat-desc">透過 LINE 對話引導填寫服務申請表，自動整理成結構化資料匯出。</div>
+              <div class="lb-feat">
+                <div class="lb-feat-icon">📋</div>
+                <div>
+                  <div class="lb-feat-name">對話式表單填報</div>
+                  <div class="lb-feat-desc">透過 LINE 對話引導填寫服務申請，自動整理成結構化資料，支援匯出或存入系統。</div>
+                </div>
               </div>
-            </div>
-            <div class="lb-feat">
-              <div class="lb-feat-icon">🔗</div>
-              <div>
-                <div class="lb-feat-name">社福資源媒合</div>
-                <div class="lb-feat-desc">根據服務對象的需求描述，自動搜尋並推薦適合的社會福利資源。</div>
+              <div class="lb-feat">
+                <div class="lb-feat-icon">🔗</div>
+                <div>
+                  <div class="lb-feat-name">社福資源媒合</div>
+                  <div class="lb-feat-desc">根據服務對象描述，AI 自動比對並推薦最適合的社會福利資源，省去人工查詢時間。</div>
+                </div>
               </div>
-            </div>
-            <div class="lb-feat">
-              <div class="lb-feat-icon">🚨</div>
-              <div>
-                <div class="lb-feat-name">緊急通報自動流程</div>
-                <div class="lb-feat-desc">偵測到高風險關鍵字時，自動觸發通報流程並同步通知督導。</div>
+              <div class="lb-feat">
+                <div class="lb-feat-icon">🚨</div>
+                <div>
+                  <div class="lb-feat-name">緊急通報自動流程</div>
+                  <div class="lb-feat-desc">偵測到高風險關鍵字時，自動觸發通報流程並同步通知督導，即時保障服務對象安全。</div>
+                </div>
               </div>
             </div>
           </div>
 
           <!-- 如何使用 -->
-          <div class="lb-sec-title">如何開始使用？</div>
-          <div class="lb-steps">
-            <div class="lb-step">
-              <div class="lb-step-num">1</div>
-              <div class="lb-step-text"><strong>加入 LINE Bot 好友</strong> — 掃描 QR Code 或搜尋帳號，點選加入好友即可立即啟用。</div>
-            </div>
-            <div class="lb-step">
-              <div class="lb-step-num">2</div>
-              <div class="lb-step-text"><strong>選擇所需功能</strong> — 輸入指令關鍵字（如「訪視紀錄」、「資源查詢」）或直接傳送語音，Bot 自動判斷流程。</div>
-            </div>
-            <div class="lb-step">
-              <div class="lb-step-num">3</div>
-              <div class="lb-step-text"><strong>接收處理結果</strong> — n8n 後台自動串接 AI 模型完成處理，數秒內將結果回傳至 LINE 對話視窗。</div>
-            </div>
-            <div class="lb-step">
-              <div class="lb-step-num">4</div>
-              <div class="lb-step-text"><strong>客製化機構需求</strong> — 可依各機構工作流程進行客製化設定，歡迎聯繫我們洽談導入方案。</div>
+          <div class="lb-sec">
+            <div class="lb-sec-title">如何開始使用？</div>
+            <div class="lb-steps">
+              <div class="lb-step">
+                <div class="lb-step-num">1</div>
+                <div class="lb-step-body">
+                  <div class="lb-step-title">加入 LINE Bot 好友</div>
+                  <div class="lb-step-desc">掃描 QR Code 或搜尋帳號，加入好友後即可立即啟用所有自動化功能。</div>
+                </div>
+              </div>
+              <div class="lb-step">
+                <div class="lb-step-num">2</div>
+                <div class="lb-step-body">
+                  <div class="lb-step-title">輸入指令或傳送語音</div>
+                  <div class="lb-step-desc">輸入關鍵字（如「訪視紀錄」、「資源查詢」）或直接錄製語音，Bot 自動判斷並啟動對應流程。</div>
+                </div>
+              </div>
+              <div class="lb-step">
+                <div class="lb-step-num">3</div>
+                <div class="lb-step-body">
+                  <div class="lb-step-title">接收 AI 處理結果</div>
+                  <div class="lb-step-desc">n8n 後台串接 AI 模型完成處理，數秒內將結果回傳至 LINE 對話視窗，即開即用。</div>
+                </div>
+              </div>
+              <div class="lb-step">
+                <div class="lb-step-num">4</div>
+                <div class="lb-step-body">
+                  <div class="lb-step-title">客製化機構流程</div>
+                  <div class="lb-step-desc">可依各機構工作流程進行客製化設定，量身打造最適合的自動化方案。</div>
+                </div>
+              </div>
             </div>
           </div>
 
-          <button class="lb-cta" onclick="window.location.href='booking.html'">了解導入方案 · 立即預約諮詢</button>
+          <div class="lb-cta-wrap">
+            <a href="booking.html" class="lb-cta">立即預約課程諮詢 →</a>
+          </div>
         </div>
       </div>
     </div>
@@ -5351,24 +5355,31 @@
       /* SERVICES */
       const DEF_SVC = [{ name: '工具書', desc: 'AI 社工實務應用工具書，系統整理 AI 工具於社會工作各場域的操作指引與具體案例。\\n\\n涵蓋個案管理、行政記錄、評估報告、服務計畫設計等核心業務，提供社工師易讀易用的實戰參考手冊，可作為機構內部培訓教材或個人自學資源。' }];
       const svcEl = document.getElementById('service-grid');
-      const ROBOT_SVG = `<svg viewBox="0 0 110 128" width="110" height="128" xmlns="http://www.w3.org/2000/svg">
-        <line x1="55" y1="16" x2="55" y2="5" stroke="#3E362E" stroke-width="2.5" stroke-linecap="round"/>
-        <circle cx="55" cy="4" r="4.5" fill="var(--orange)"/>
-        <rect x="18" y="16" width="74" height="54" rx="17" fill="var(--orange)"/>
-        <ellipse cx="42" cy="25" rx="13" ry="6" fill="rgba(255,255,255,.18)" transform="rotate(-15,42,25)"/>
-        <circle cx="41" cy="41" r="10.5" fill="white"/>
-        <circle cx="69" cy="41" r="10.5" fill="white"/>
-        <circle cx="42" cy="42" r="5.5" fill="#3E362E"/>
-        <circle cx="70" cy="42" r="5.5" fill="#3E362E"/>
-        <circle cx="44" cy="39.5" r="1.8" fill="white"/>
-        <circle cx="72" cy="39.5" r="1.8" fill="white"/>
-        <path d="M 42 55 Q 55 63 68 55" stroke="white" stroke-width="2.5" fill="none" stroke-linecap="round"/>
-        <rect x="24" y="76" width="62" height="44" rx="13" fill="var(--ink)"/>
-        <rect x="36" y="85" width="38" height="20" rx="6" fill="rgba(255,255,255,.18)"/>
-        <rect x="5" y="78" width="17" height="34" rx="8.5" fill="var(--ink)"/>
-        <rect x="88" y="78" width="17" height="34" rx="8.5" fill="var(--ink)"/>
-        <circle cx="13.5" cy="116" r="7" fill="var(--orange)"/>
-        <circle cx="96.5" cy="116" r="7" fill="var(--orange)"/>
+      const ROBOT_SVG = `<svg viewBox="0 0 130 162" width="130" height="162" xmlns="http://www.w3.org/2000/svg">
+        <line x1="65" y1="14" x2="65" y2="3" stroke="#3E362E" stroke-width="3" stroke-linecap="round"/>
+        <circle cx="65" cy="2" r="6" fill="#F4D35E" stroke="#3E362E" stroke-width="2.5"/>
+        <rect x="15" y="14" width="100" height="62" rx="20" fill="#FDFBF7" stroke="#3E362E" stroke-width="3"/>
+        <circle cx="44" cy="42" r="13" fill="#5C8EAD" stroke="#3E362E" stroke-width="2.5"/>
+        <circle cx="86" cy="42" r="13" fill="#5C8EAD" stroke="#3E362E" stroke-width="2.5"/>
+        <circle cx="45" cy="43" r="6.5" fill="#3E362E"/>
+        <circle cx="87" cy="43" r="6.5" fill="#3E362E"/>
+        <circle cx="48" cy="39" r="2.5" fill="white"/>
+        <circle cx="90" cy="39" r="2.5" fill="white"/>
+        <path d="M 46 63 Q 65 74 84 63" stroke="#3E362E" stroke-width="2.8" fill="none" stroke-linecap="round"/>
+        <rect x="53" y="75" width="24" height="11" rx="5" fill="#E8DCC4" stroke="#3E362E" stroke-width="2"/>
+        <rect x="20" y="84" width="90" height="62" rx="16" fill="#F26D5B" stroke="#3E362E" stroke-width="3"/>
+        <rect x="34" y="96" width="62" height="38" rx="9" fill="#5C8EAD" stroke="#3E362E" stroke-width="2"/>
+        <circle cx="55" cy="108" r="5" fill="#FDFBF7" stroke="#3E362E" stroke-width="1.5"/>
+        <circle cx="75" cy="108" r="5" fill="#FDFBF7" stroke="#3E362E" stroke-width="1.5"/>
+        <rect x="43" y="119" width="44" height="8" rx="4" fill="#FDFBF7" opacity=".65"/>
+        <rect x="2" y="88" width="16" height="42" rx="8" fill="#F26D5B" stroke="#3E362E" stroke-width="2.5"/>
+        <circle cx="10" cy="134" r="9" fill="#FDFBF7" stroke="#3E362E" stroke-width="2.5"/>
+        <rect x="112" y="88" width="16" height="42" rx="8" fill="#F26D5B" stroke="#3E362E" stroke-width="2.5"/>
+        <circle cx="120" cy="134" r="9" fill="#FDFBF7" stroke="#3E362E" stroke-width="2.5"/>
+        <rect x="32" y="144" width="26" height="14" rx="7" fill="#3E362E"/>
+        <rect x="72" y="144" width="26" height="14" rx="7" fill="#3E362E"/>
+        <rect x="26" y="151" width="38" height="12" rx="6" fill="#F26D5B" stroke="#3E362E" stroke-width="2"/>
+        <rect x="66" y="151" width="38" height="12" rx="6" fill="#F26D5B" stroke="#3E362E" stroke-width="2"/>
       </svg>`;
       if (svcEl) svcEl.innerHTML = (sc.services || DEF_SVC).map(s => {
         if (/line\s*bot/i.test(s.name)) {
@@ -5379,7 +5390,7 @@
             </div>
             <div class="lb-robot-wrap">${ROBOT_SVG}</div>
             <div class="lb-card-name">LINE Bot 自動化服務</div>
-            <div class="lb-card-hint">點我了解 n8n 串接功能 →</div>
+            <div class="lb-card-hint">點我查看詳細功能 →</div>
           </div>`;
         }
         const lines = (s.desc || '').split(/\n/).map(l => l.trim()).filter(Boolean);
