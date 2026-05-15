@@ -212,7 +212,7 @@
       align-items: stretch;
       position: relative;
       overflow: hidden;
-      min-height: 100vh;
+      min-height: 65vh;
       background: url('public/1.png') 37% center/cover no-repeat;
     }
 
@@ -230,16 +230,16 @@
       flex-direction: column;
       align-items: flex-start;
       justify-content: center;
-      padding: 5.5rem 2rem 3rem 6rem;
+      padding: 3.5rem 2rem 2.5rem 6rem;
       position: relative;
       z-index: 2;
     }
 
     /* 主標題：對照圖片，字極大 */
     .hero-cover-title {
-      font-family: 'Noto Sans TC', sans-serif;
+      font-family: 'Fredoka', sans-serif;
       font-size: clamp(2.8rem, 6vw, 5.5rem);
-      font-weight: 900;
+      font-weight: 700;
       line-height: 1.2;
       color: #3D3530;
       margin-bottom: 1rem;
@@ -5384,11 +5384,6 @@
       if (svcEl) svcEl.innerHTML = (sc.services || DEF_SVC).map(s => {
         if (/line\s*bot/i.test(s.name)) {
           return `<div class="service-card-linebot" onclick="openLbModal()" role="button" tabindex="0">
-            <div class="lb-chat-deco">
-              <div class="lb-bubble">語音轉訪視紀錄 🎤</div>
-              <div class="lb-bubble sm">已自動生成紀錄 📄</div>
-            </div>
-            <div class="lb-robot-wrap">${ROBOT_SVG}</div>
             <div class="lb-card-name">LINE Bot 自動化服務</div>
             <div class="lb-card-hint">點我查看詳細功能 →</div>
           </div>`;
@@ -5397,8 +5392,8 @@
         const body = lines.length ? `<ul class="service-list">${lines.map(l => `<li>${l}</li>`).join('')}</ul>` : `<div class="service-desc"></div>`;
         return `<div class="service-card"><div class="service-tape"></div><div class="service-name">${s.name}</div>${body}</div>`;
       }).join('');
-      function openLbModal(){ document.getElementById('lb-overlay').classList.add('open'); document.body.style.overflow='hidden'; }
-      function closeLbModal(){ document.getElementById('lb-overlay').classList.remove('open'); document.body.style.overflow=''; }
+      window.openLbModal = function(){ document.getElementById('lb-overlay').classList.add('open'); document.body.style.overflow='hidden'; };
+      window.closeLbModal = function(){ document.getElementById('lb-overlay').classList.remove('open'); document.body.style.overflow=''; };
       /* FOOTER */
       const cfg = sc.config || {};
       const fEmail = document.getElementById('footer-email');
