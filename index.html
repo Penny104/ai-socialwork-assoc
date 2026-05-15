@@ -2056,25 +2056,17 @@
 
     /* ══ LINE BOT MODAL ══ */
     .lb-overlay {
-      position: fixed; inset: 0; z-index: 900;
-      background: rgba(62,54,46,.48);
-      backdrop-filter: blur(5px);
-      display: flex; align-items: center; justify-content: center;
-      padding: 1.25rem;
+      position: fixed; inset: 0; z-index: 1000;
       opacity: 0; pointer-events: none;
-      transition: opacity .25s;
+      transition: opacity .28s;
     }
     .lb-overlay.open { opacity: 1; pointer-events: all; }
     .lb-modal {
+      position: absolute; inset: 0;
       background: var(--bg);
-      border: 2.5px solid var(--ink);
-      border-radius: 20px;
-      box-shadow: 8px 10px 0 var(--ink);
-      width: 100%; max-width: 960px; max-height: 92vh;
-      display: flex; flex-direction: column; overflow: hidden;
-      transform: translateY(22px); transition: transform .28s;
+      display: flex; flex-direction: column;
+      overflow: hidden;
     }
-    .lb-overlay.open .lb-modal { transform: translateY(0); }
 
     /* Header */
     .lb-mhead {
@@ -2105,7 +2097,12 @@
       overflow-y: scroll;
       -webkit-overflow-scrolling: touch;
       overscroll-behavior: contain;
-      padding: 2rem 2.5rem 2.5rem;
+      padding: 0;
+    }
+    .lb-mbody-inner {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 2rem 2.5rem 3rem;
     }
 
     /* Flow diagram */
@@ -2166,7 +2163,7 @@
     @media(max-width:600px){
       .lb-feat-grid { grid-template-columns: 1fr; }
       .lb-mhead { flex-direction: column; align-items: flex-start; gap: .6rem; }
-      .lb-mbody { padding: 1.5rem 1.25rem 2rem; }
+      .lb-mbody-inner { padding: 1.5rem 1.25rem 2rem; }
     }
 
     .expect-modal-close {
@@ -5105,6 +5102,7 @@
 
         <!-- Body -->
         <div class="lb-mbody">
+          <div class="lb-mbody-inner">
 
           <!-- 流程圖 -->
           <div class="lb-flow">
@@ -5222,9 +5220,10 @@
             </div>
           </div>
 
-        </div>
-      </div>
-    </div>
+          </div><!-- /lb-mbody-inner -->
+        </div><!-- /lb-mbody -->
+      </div><!-- /lb-modal -->
+    </div><!-- /lb-overlay -->
 
     <!-- FOOTER -->
     <footer class="footer">
