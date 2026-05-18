@@ -4762,9 +4762,15 @@
       var r = sessionStorage.getItem('lbReturn');
       if (r) {
         sessionStorage.removeItem('lbReturn');
+        document.documentElement.style.opacity = '0';
         document.addEventListener('DOMContentLoaded', function(){
           var el = document.getElementById(r);
           if (el) el.scrollIntoView({behavior:'instant'});
+          requestAnimationFrame(function(){
+            requestAnimationFrame(function(){
+              document.documentElement.style.opacity = '';
+            });
+          });
         });
       }
     })();
