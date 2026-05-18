@@ -19,23 +19,15 @@
       --fh: 'Fredoka', sans-serif;
       --fb: 'Noto Sans TC', sans-serif;
     }
-
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    body {
-      font-family: var(--fb);
-      background: var(--bg);
-      color: var(--ink);
-      line-height: 1.7;
-    }
+    body { font-family: var(--fb); background: var(--bg); color: var(--ink); line-height: 1.7; }
 
     /* ── Navbar ── */
     .nav {
       position: fixed; top: 0; left: 0; right: 0; z-index: 200;
       display: flex; align-items: center; justify-content: space-between;
       padding: 1rem 2.5rem 1rem 4rem;
-      background: rgba(253,251,247,.92);
-      backdrop-filter: blur(14px);
+      background: rgba(253,251,247,.92); backdrop-filter: blur(14px);
       border-bottom: 2px solid var(--grid);
     }
     .nav-logo {
@@ -49,9 +41,7 @@
       font-family: var(--fh); font-size: .95rem; font-weight: 600;
       color: var(--ink); text-decoration: none;
       display: flex; align-items: center; gap: .4rem;
-      padding: .35rem 1rem;
-      border: 1.5px solid var(--grid);
-      border-radius: 20px;
+      padding: .35rem 1rem; border: 1.5px solid var(--grid); border-radius: 20px;
       transition: border-color .2s, color .2s;
     }
     .nav-back:hover { border-color: var(--orange); color: var(--orange); }
@@ -73,23 +63,17 @@
       font-family: var(--fh); font-size: clamp(1.9rem, 4vw, 2.8rem);
       font-weight: 700; color: white; line-height: 1.2; margin-bottom: .6rem;
     }
-    .lb-hero-sub {
-      font-size: 1.05rem; color: rgba(255,255,255,.85); max-width: 52ch;
-    }
+    .lb-hero-sub { font-size: 1.05rem; color: rgba(255,255,255,.85); max-width: 52ch; }
 
     /* ── Page body ── */
-    .lb-page {
-      max-width: 960px; margin: 0 auto;
-      padding: 3rem 2.5rem 5rem;
-    }
+    .lb-page { max-width: 960px; margin: 0 auto; padding: 3rem 2.5rem 5rem; }
 
     /* ── Flow diagram ── */
     .lb-flow {
       display: flex; align-items: center; justify-content: center;
       gap: 1rem; flex-wrap: wrap;
       background: white; border: 1.5px solid var(--grid);
-      border-radius: 18px; padding: 1.8rem 2rem;
-      margin-bottom: 3rem;
+      border-radius: 18px; padding: 1.8rem 2rem; margin-bottom: 3rem;
     }
     .lb-flow-node { display: flex; flex-direction: column; align-items: center; gap: .55rem; }
     .lb-flow-icon {
@@ -105,8 +89,7 @@
     .lb-sec { margin-bottom: 2.5rem; }
     .lb-sec-title {
       font-family: var(--fh); font-size: 1.3rem; font-weight: 700; color: var(--ink);
-      margin-bottom: 1.25rem; padding-left: .9rem;
-      border-left: 4px solid var(--orange);
+      margin-bottom: 1.25rem; padding-left: .9rem; border-left: 4px solid var(--orange);
     }
 
     /* ── Feature grid ── */
@@ -116,10 +99,7 @@
       padding: 1.4rem 1.5rem; display: flex; gap: .9rem;
       transition: border-color .18s, box-shadow .18s, transform .18s;
     }
-    .lb-feat:hover {
-      border-color: var(--orange); box-shadow: 3px 3px 0 var(--orange);
-      transform: translate(-1px,-1px);
-    }
+    .lb-feat:hover { border-color: var(--orange); box-shadow: 3px 3px 0 var(--orange); transform: translate(-1px,-1px); }
     .lb-feat-icon { font-size: 2rem; flex-shrink: 0; margin-top: .05rem; }
     .lb-feat-name { font-family: var(--fh); font-size: 1.1rem; font-weight: 700; color: var(--ink); margin-bottom: .3rem; }
     .lb-feat-desc { font-size: .95rem; color: #7a6c60; line-height: 1.7; }
@@ -139,18 +119,9 @@
     .lb-step-desc { font-size: .98rem; color: #7a6c60; line-height: 1.7; }
 
     /* ── Footer ── */
-    .footer {
-      background: var(--ink); color: rgba(255,255,255,.65);
-      padding: 3rem 5rem; text-align: center;
-    }
-    .footer-logo {
-      font-family: var(--fh); font-size: 1.5rem; font-weight: 700;
-      color: var(--yellow); margin-bottom: .75rem;
-    }
-    .footer-mission {
-      font-size: .83rem; line-height: 1.95; color: rgba(255,255,255,.5);
-      max-width: 56ch; margin: 0 auto .75rem; text-align: center;
-    }
+    .footer { background: var(--ink); color: rgba(255,255,255,.65); padding: 3rem 5rem; text-align: center; }
+    .footer-logo { font-family: var(--fh); font-size: 1.5rem; font-weight: 700; color: var(--yellow); margin-bottom: .75rem; }
+    .footer-mission { font-size: .83rem; line-height: 1.95; color: rgba(255,255,255,.5); max-width: 56ch; margin: 0 auto .75rem; }
     .footer-copy { font-size: .78rem; opacity: .4; margin-top: .5rem; }
 
     @media (max-width: 640px) {
@@ -163,7 +134,6 @@
 </head>
 <body>
 
-  <!-- Navbar -->
   <nav class="nav">
     <a class="nav-logo" href="index.html">
       <img class="nav-logo-mark" src="logo-icon.png" alt="協會Logo">
@@ -175,19 +145,16 @@
   <!-- Hero -->
   <div class="lb-hero">
     <div class="lb-hero-icon">🤖</div>
-    <div class="lb-hero-title">LINE Bot 自動化服務</div>
-    <div class="lb-hero-sub">n8n 串接 LINE Bot，讓 AI 成為社工全天候的智慧助理</div>
+    <div class="lb-hero-title" id="lb-title">LINE Bot 自動化服務</div>
+    <div class="lb-hero-sub" id="lb-sub">n8n 串接 LINE Bot，讓 AI 成為社工全天候的智慧助理</div>
   </div>
 
   <!-- Content -->
   <div class="lb-page">
 
-    <!-- 流程圖 -->
+    <!-- 流程圖（固定） -->
     <div class="lb-flow">
-      <div class="lb-flow-node">
-        <div class="lb-flow-icon">💬</div>
-        <div class="lb-flow-label">社工 /<br>服務對象</div>
-      </div>
+      <div class="lb-flow-node"><div class="lb-flow-icon">💬</div><div class="lb-flow-label">社工 /<br>服務對象</div></div>
       <div class="lb-flow-arr">→</div>
       <div class="lb-flow-node">
         <div class="lb-flow-icon" style="background:#e8f5e9;">
@@ -203,102 +170,24 @@
         <div class="lb-flow-label">n8n<br>自動化</div>
       </div>
       <div class="lb-flow-arr">→</div>
-      <div class="lb-flow-node">
-        <div class="lb-flow-icon" style="background:#f3e5f5;">🧠</div>
-        <div class="lb-flow-label">AI 模型<br>處理</div>
-      </div>
+      <div class="lb-flow-node"><div class="lb-flow-icon" style="background:#f3e5f5;">🧠</div><div class="lb-flow-label">AI 模型<br>處理</div></div>
       <div class="lb-flow-arr">→</div>
-      <div class="lb-flow-node">
-        <div class="lb-flow-icon">📄</div>
-        <div class="lb-flow-label">自動回覆<br>/ 生成紀錄</div>
-      </div>
+      <div class="lb-flow-node"><div class="lb-flow-icon">📄</div><div class="lb-flow-label">自動回覆<br>/ 生成紀錄</div></div>
     </div>
 
-    <!-- 功能介紹 -->
+    <!-- 功能介紹（動態） -->
     <div class="lb-sec">
       <div class="lb-sec-title">可以為大家提供哪些服務？</div>
-      <div class="lb-feat-grid">
-        <div class="lb-feat">
-          <div class="lb-feat-icon">🎤</div>
-          <div>
-            <div class="lb-feat-name">語音轉訪視紀錄</div>
-            <div class="lb-feat-desc">錄製訪談語音後直接傳入 LINE，自動轉換為結構化訪視紀錄，大幅節省打字時間。</div>
-          </div>
-        </div>
-        <div class="lb-feat">
-          <div class="lb-feat-icon">🤖</div>
-          <div>
-            <div class="lb-feat-name">AI 智慧問答客服</div>
-            <div class="lb-feat-desc">24 小時自動回答常見問題，串接社福資源資料庫即時媒合，降低社工人工回覆負擔。</div>
-          </div>
-        </div>
-        <div class="lb-feat">
-          <div class="lb-feat-icon">🔔</div>
-          <div>
-            <div class="lb-feat-name">個案追蹤提醒</div>
-            <div class="lb-feat-desc">設定追蹤時程後，到期自動推播提醒至社工 LINE，確保每位服務對象不遺漏。</div>
-          </div>
-        </div>
-        <div class="lb-feat">
-          <div class="lb-feat-icon">📋</div>
-          <div>
-            <div class="lb-feat-name">對話式表單填報</div>
-            <div class="lb-feat-desc">透過 LINE 對話引導填寫服務申請，自動整理成結構化資料，支援匯出或存入系統。</div>
-          </div>
-        </div>
-        <div class="lb-feat">
-          <div class="lb-feat-icon">🔗</div>
-          <div>
-            <div class="lb-feat-name">社福資源媒合</div>
-            <div class="lb-feat-desc">根據服務對象描述，AI 自動比對並推薦最適合的社會福利資源，省去人工查詢時間。</div>
-          </div>
-        </div>
-        <div class="lb-feat">
-          <div class="lb-feat-icon">🚨</div>
-          <div>
-            <div class="lb-feat-name">緊急通報自動流程</div>
-            <div class="lb-feat-desc">偵測到高風險關鍵字時，自動觸發通報流程並同步通知督導，即時保障服務對象安全。</div>
-          </div>
-        </div>
-      </div>
+      <div class="lb-feat-grid" id="lb-feat-grid"></div>
     </div>
 
-    <!-- 如何使用 -->
+    <!-- 使用步驟（動態） -->
     <div class="lb-sec">
       <div class="lb-sec-title">如何開始使用？</div>
-      <div class="lb-steps">
-        <div class="lb-step">
-          <div class="lb-step-num">1</div>
-          <div class="lb-step-body">
-            <div class="lb-step-title">加入 LINE Bot 好友</div>
-            <div class="lb-step-desc">掃描 QR Code 或搜尋帳號，加入好友後即可立即啟用所有自動化功能。</div>
-          </div>
-        </div>
-        <div class="lb-step">
-          <div class="lb-step-num">2</div>
-          <div class="lb-step-body">
-            <div class="lb-step-title">輸入指令或傳送語音</div>
-            <div class="lb-step-desc">輸入關鍵字（如「訪視紀錄」、「資源查詢」）或直接錄製語音，Bot 自動判斷並啟動對應流程。</div>
-          </div>
-        </div>
-        <div class="lb-step">
-          <div class="lb-step-num">3</div>
-          <div class="lb-step-body">
-            <div class="lb-step-title">接收 AI 處理結果</div>
-            <div class="lb-step-desc">n8n 後台串接 AI 模型完成處理，數秒內將結果回傳至 LINE 對話視窗，即開即用。</div>
-          </div>
-        </div>
-        <div class="lb-step">
-          <div class="lb-step-num">4</div>
-          <div class="lb-step-body">
-            <div class="lb-step-title">客製化機構流程</div>
-            <div class="lb-step-desc">可依各機構工作流程進行客製化設定，量身打造最適合的自動化方案。</div>
-          </div>
-        </div>
-      </div>
+      <div class="lb-steps" id="lb-steps"></div>
     </div>
 
-  </div><!-- /lb-page -->
+  </div>
 
   <footer class="footer">
     <div class="footer-logo">社團法人臺灣科技與社會工作協會</div>
@@ -306,5 +195,72 @@
     <p class="footer-copy">© 2024 Taiwan Technology & Social Work Association. All Rights Reserved.</p>
   </footer>
 
+  <script>
+    const DEF_LB = {
+      title: 'LINE Bot 自動化服務',
+      subtitle: 'n8n 串接 LINE Bot，讓 AI 成為社工全天候的智慧助理',
+      features: [
+        {icon:'🎤', name:'語音轉訪視紀錄', desc:'錄製訪談語音後直接傳入 LINE，自動轉換為結構化訪視紀錄，大幅節省打字時間。'},
+        {icon:'🤖', name:'AI 智慧問答客服', desc:'24 小時自動回答常見問題，串接社福資源資料庫即時媒合，降低社工人工回覆負擔。'},
+        {icon:'🔔', name:'個案追蹤提醒', desc:'設定追蹤時程後，到期自動推播提醒至社工 LINE，確保每位服務對象不遺漏。'},
+        {icon:'📋', name:'對話式表單填報', desc:'透過 LINE 對話引導填寫服務申請，自動整理成結構化資料，支援匯出或存入系統。'},
+        {icon:'🔗', name:'社福資源媒合', desc:'根據服務對象描述，AI 自動比對並推薦最適合的社會福利資源，省去人工查詢時間。'},
+        {icon:'🚨', name:'緊急通報自動流程', desc:'偵測到高風險關鍵字時，自動觸發通報流程並同步通知督導，即時保障服務對象安全。'}
+      ],
+      steps: [
+        {title:'加入 LINE Bot 好友', desc:'掃描 QR Code 或搜尋帳號，加入好友後即可立即啟用所有自動化功能。'},
+        {title:'輸入指令或傳送語音', desc:'輸入關鍵字（如「訪視紀錄」、「資源查詢」）或直接錄製語音，Bot 自動判斷並啟動對應流程。'},
+        {title:'接收 AI 處理結果', desc:'n8n 後台串接 AI 模型完成處理，數秒內將結果回傳至 LINE 對話視窗，即開即用。'},
+        {title:'客製化機構流程', desc:'可依各機構工作流程進行客製化設定，量身打造最適合的自動化方案。'}
+      ]
+    };
+
+    function render(sc) {
+      const lb = (sc && sc.linebot) ? sc.linebot : {};
+      document.getElementById('lb-title').textContent = lb.title || DEF_LB.title;
+      document.getElementById('lb-sub').textContent   = lb.subtitle || DEF_LB.subtitle;
+      document.getElementById('lb-feat-grid').innerHTML =
+        (lb.features || DEF_LB.features).map(f =>
+          `<div class="lb-feat">
+            <div class="lb-feat-icon">${f.icon}</div>
+            <div>
+              <div class="lb-feat-name">${f.name}</div>
+              <div class="lb-feat-desc">${f.desc}</div>
+            </div>
+          </div>`
+        ).join('');
+      document.getElementById('lb-steps').innerHTML =
+        (lb.steps || DEF_LB.steps).map((s, i) =>
+          `<div class="lb-step">
+            <div class="lb-step-num">${i + 1}</div>
+            <div class="lb-step-body">
+              <div class="lb-step-title">${s.title}</div>
+              <div class="lb-step-desc">${s.desc}</div>
+            </div>
+          </div>`
+        ).join('');
+    }
+
+    /* 先用 localStorage 立即渲染，再從 GitHub 確認是否有新版本 */
+    const cached = JSON.parse(localStorage.getItem('siteContent') || '{}');
+    render(cached);
+
+    (async function syncContent() {
+      try {
+        const r = await fetch(
+          'https://raw.githubusercontent.com/Penny104/ai-socialwork-assoc/main/public/data/content.json?_=' + Date.now(),
+          { cache: 'no-store' }
+        );
+        if (!r.ok) return;
+        const fresh = await r.json();
+        const localVer  = (cached._version)  || 0;
+        const remoteVer = (fresh._version) || 0;
+        if (remoteVer > localVer) {
+          localStorage.setItem('siteContent', JSON.stringify(fresh));
+          render(fresh);
+        }
+      } catch (e) {}
+    })();
+  </script>
 </body>
 </html>
