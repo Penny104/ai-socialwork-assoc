@@ -304,7 +304,8 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;bac
         <div class="save-row"><span class="save-toast" id="t-lb-head">✓ 已儲存</span><button class="btn-save" onclick="saveLbHead()">儲存標題</button></div>
       </div>
       <div class="editor-box">
-        <div class="editor-box-title">六大功能介紹 <span class="e-badge">FEATURES</span></div>
+        <div class="editor-box-title">功能介紹 <span class="e-badge">FEATURES</span></div>
+        <button class="btn-add" onclick="addLbFeat()">＋ 新增功能欄位</button>
         <div id="lb-feat-ed"></div>
         <div class="save-row"><span class="save-toast" id="t-lb-feat">✓ 已儲存</span><button class="btn-save" onclick="saveLbFeatures()">儲存功能</button></div>
       </div>
@@ -1160,27 +1161,45 @@ const DEF_LB_STEPS = [
   {title:'接收 AI 處理結果', desc:'n8n 後台串接 AI 模型完成處理，數秒內將結果回傳至 LINE 對話視窗，即開即用。'},
   {title:'客製化機構流程', desc:'可依各機構工作流程進行客製化設定，量身打造最適合的自動化方案。'}
 ];
+let lbFeatData = [];
 function getLb(){ return sc().linebot || {}; }
+function syncLbFeatData(){
+  lbFeatData = lbFeatData.map((f,i)=>({
+    icon: document.getElementById(`lbf-icon-${i}`)?.value ?? f.icon,
+    name: document.getElementById(`lbf-name-${i}`)?.value ?? f.name,
+    desc: document.getElementById(`lbf-desc-${i}`)?.value ?? f.desc,
+  }));
+}
+function buildLbFeatUI(){
+  document.getElementById('lb-feat-ed').innerHTML = lbFeatData.map((f,i)=>`
+    <div class="editor-item" style="position:relative;margin-bottom:1rem;">
+      <button class="btn-del" onclick="syncLbFeatData();lbFeatData.splice(${i},1);buildLbFeatUI()">✕</button>
+      <div style="font-family:var(--fh);font-size:.82rem;font-weight:700;color:#7a6c60;margin-bottom:.5rem;">功能 ${i+1}</div>
+      <div class="two-col">
+        <div class="ef"><label>Emoji 圖示</label><input type="text" id="lbf-icon-${i}" value="${esc(f.icon)}" style="width:80px;"></div>
+        <div class="ef"><label>功能名稱</label><input type="text" id="lbf-name-${i}" value="${esc(f.name)}"></div>
+      </div>
+      <div class="ef"><label>說明文字</label><textarea id="lbf-desc-${i}" rows="2" style="resize:vertical;">${esc(f.desc)}</textarea></div>
+    </div>`).join('');
+}
+function addLbFeat(){
+  syncLbFeatData();
+  lbFeatData.push({icon:'✨', name:'', desc:''});
+  buildLbFeatUI();
+  setTimeout(()=>{ const el=document.getElementById(`lbf-name-${lbFeatData.length-1}`); if(el) el.focus(); },50);
+}
 function loadLinebot(){
   const lb = getLb();
   document.getElementById('lb-ed-title').value = lb.title || 'LINE Bot 自動化服務';
   document.getElementById('lb-ed-subtitle').value = lb.subtitle || 'n8n 串接 LINE Bot，讓 AI 成為社工全天候的智慧助理';
-  const feats = lb.features || DEF_LB_FEAT;
-  document.getElementById('lb-feat-ed').innerHTML = feats.map((f,i)=>`
-    <div class="editor-item" style="margin-bottom:1rem;">
-      <div style="font-family:var(--fh);font-size:.82rem;font-weight:700;color:#7a6c60;margin-bottom:.5rem;">功能 ${i+1}</div>
-      <div class="two-col">
-        <div class="ef"><label>Emoji 圖示</label><input type="text" id="lbf-icon-${i}" value="${f.icon}" style="width:80px;"></div>
-        <div class="ef"><label>功能名稱</label><input type="text" id="lbf-name-${i}" value="${f.name}"></div>
-      </div>
-      <div class="ef"><label>說明文字</label><textarea id="lbf-desc-${i}" rows="2" style="resize:vertical;">${f.desc}</textarea></div>
-    </div>`).join('');
+  lbFeatData = JSON.parse(JSON.stringify(lb.features || DEF_LB_FEAT));
+  buildLbFeatUI();
   const steps = lb.steps || DEF_LB_STEPS;
   document.getElementById('lb-steps-ed').innerHTML = steps.map((s,i)=>`
     <div class="editor-item" style="margin-bottom:1rem;">
       <div style="font-family:var(--fh);font-size:.82rem;font-weight:700;color:#7a6c60;margin-bottom:.5rem;">步驟 ${i+1}</div>
-      <div class="ef"><label>步驟標題</label><input type="text" id="lbs-title-${i}" value="${s.title}"></div>
-      <div class="ef"><label>步驟說明</label><textarea id="lbs-desc-${i}" rows="2" style="resize:vertical;">${s.desc}</textarea></div>
+      <div class="ef"><label>步驟標題</label><input type="text" id="lbs-title-${i}" value="${esc(s.title)}"></div>
+      <div class="ef"><label>步驟說明</label><textarea id="lbs-desc-${i}" rows="2" style="resize:vertical;">${esc(s.desc)}</textarea></div>
     </div>`).join('');
 }
 function saveLbHead(){
@@ -1190,13 +1209,10 @@ function saveLbHead(){
   saveSC(s); pushToGitHub(); toast('t-lb-head');
 }
 function saveLbFeatures(){
+  syncLbFeatData();
   const s=sc(); if(!s.linebot) s.linebot={};
-  const feats = (s.linebot.features || DEF_LB_FEAT).map((f,i)=>({
-    icon: document.getElementById(`lbf-icon-${i}`).value,
-    name: document.getElementById(`lbf-name-${i}`).value,
-    desc: document.getElementById(`lbf-desc-${i}`).value,
-  }));
-  s.linebot.features=feats; saveSC(s); pushToGitHub(); toast('t-lb-feat');
+  s.linebot.features=[...lbFeatData];
+  saveSC(s); pushToGitHub(); toast('t-lb-feat');
 }
 function saveLbSteps(){
   const s=sc(); if(!s.linebot) s.linebot={};
