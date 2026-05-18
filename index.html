@@ -5277,7 +5277,7 @@
       </svg>`;
       if (svcEl) svcEl.innerHTML = (sc.services || DEF_SVC).map(s => {
         if (/line\s*bot/i.test(s.name)) {
-          return `<a class="service-card-linebot" href="linebot.html" target="_blank" rel="noopener">
+          return `<a class="service-card-linebot" href="linebot.html" onclick="history.replaceState(null,'','#services')">
             <div class="lb-card-name">LINE Bot 自動化服務</div>
             <div class="lb-card-hint">點我查看詳細功能 →</div>
           </a>`;
