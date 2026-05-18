@@ -4757,6 +4757,18 @@
       }
     }
   </style>
+  <script>
+    (function(){
+      var r = sessionStorage.getItem('lbReturn');
+      if (r) {
+        sessionStorage.removeItem('lbReturn');
+        document.addEventListener('DOMContentLoaded', function(){
+          var el = document.getElementById(r);
+          if (el) el.scrollIntoView({behavior:'instant'});
+        });
+      }
+    })();
+  </script>
 </head>
 
 <body>
@@ -5277,7 +5289,7 @@
       </svg>`;
       if (svcEl) svcEl.innerHTML = (sc.services || DEF_SVC).map(s => {
         if (/line\s*bot/i.test(s.name)) {
-          return `<a class="service-card-linebot" href="#linebot" onclick="event.preventDefault();openLbModal()">
+          return `<a class="service-card-linebot" href="linebot.html" onclick="history.replaceState(null,'','#services');sessionStorage.setItem('lbReturn','services')">
             <div class="lb-card-name">LINE Bot 自動化服務</div>
             <div class="lb-card-hint">點我查看詳細功能 →</div>
           </a>`;
@@ -5321,26 +5333,14 @@
         ).join('');
       })();
 
-      let _lbPushed = false;
       window.openLbModal = function(){
         document.body.style.overflow = 'hidden';
         document.getElementById('lb-overlay').classList.add('open');
-        history.pushState({lbOpen: true}, '', '#linebot');
-        _lbPushed = true;
       };
       window.closeLbModal = function(){
         document.body.style.overflow = '';
         document.getElementById('lb-overlay').classList.remove('open');
-        if (_lbPushed) { _lbPushed = false; history.back(); }
       };
-      window.addEventListener('popstate', function() {
-        const overlay = document.getElementById('lb-overlay');
-        if (overlay.classList.contains('open')) {
-          document.body.style.overflow = '';
-          overlay.classList.remove('open');
-          _lbPushed = false;
-        }
-      });
       /* FOOTER */
       const cfg = sc.config || {};
       const fEmail = document.getElementById('footer-email');
