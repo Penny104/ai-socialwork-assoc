@@ -578,7 +578,7 @@
     "email": "tatswin2022@gmail.com",
     "phone": "+886-2-0000-0000"
   },
-  "_version": 1779103794612,
+  "_version": 1779103988809,
   "linebot": {
     "features": [
       {
@@ -590,26 +590,6 @@
         "icon": "🤖",
         "name": "對話式表單填報",
         "desc": "透過 LINE 對話引導填寫服務申請，自動整理成結構化資料，支援匯出或存入系統。"
-      },
-      {
-        "icon": "🔔",
-        "name": "",
-        "desc": ""
-      },
-      {
-        "icon": "📋",
-        "name": "",
-        "desc": ""
-      },
-      {
-        "icon": "🔗",
-        "name": "",
-        "desc": ""
-      },
-      {
-        "icon": "🚨",
-        "name": "",
-        "desc": ""
       }
     ],
     "steps": [
