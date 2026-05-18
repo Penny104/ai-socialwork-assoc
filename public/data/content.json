@@ -578,7 +578,7 @@
     "email": "tatswin2022@gmail.com",
     "phone": "+886-2-0000-0000"
   },
-  "_version": 1779103760317,
+  "_version": 1779103770917,
   "linebot": {
     "features": [
       {
@@ -615,7 +615,7 @@
     "steps": [
       {
         "title": "加入 LINE Bot 好友",
-        "desc": "掃描 QR Code 或搜尋帳號，加入好友後即可立即啟用所有自動化功能。"
+        "desc": "掃描 QR Code ，加入好友後即可立即啟用所有自動化功能。"
       },
       {
         "title": "輸入指令或傳送語音",
