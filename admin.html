@@ -185,6 +185,7 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;bac
       <button class="a-tab" data-tab="expect">課程期待</button>
       <button class="a-tab" data-tab="services">🛎️ 服務項目</button>
       <button class="a-tab" data-tab="lecturers">👩‍🏫 講師管理</button>
+      <button class="a-tab" data-tab="linebot">🤖 LINE Bot</button>
       <button class="a-tab" data-tab="settings">⚙️ 設定</button>
     </div>
     <a class="nav-front" href="index.html" target="_blank">前台 ↗</a>
@@ -294,6 +295,26 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;bac
       </div>
     </div>
 
+    <!-- LINE Bot 設定 -->
+    <div class="tab-panel" id="tab-linebot">
+      <div class="editor-box">
+        <div class="editor-box-title">LINE Bot 頁面標題 <span class="e-badge">HEADER</span></div>
+        <div class="ef"><label>標題</label><input type="text" id="lb-ed-title" placeholder="LINE Bot 自動化服務"></div>
+        <div class="ef"><label>副標題</label><input type="text" id="lb-ed-subtitle" placeholder="n8n 串接 LINE Bot，讓 AI 成為社工全天候的智慧助理"></div>
+        <div class="save-row"><span class="save-toast" id="t-lb-head">✓ 已儲存</span><button class="btn-save" onclick="saveLbHead()">儲存標題</button></div>
+      </div>
+      <div class="editor-box">
+        <div class="editor-box-title">六大功能介紹 <span class="e-badge">FEATURES</span></div>
+        <div id="lb-feat-ed"></div>
+        <div class="save-row"><span class="save-toast" id="t-lb-feat">✓ 已儲存</span><button class="btn-save" onclick="saveLbFeatures()">儲存功能</button></div>
+      </div>
+      <div class="editor-box">
+        <div class="editor-box-title">使用步驟 <span class="e-badge">STEPS</span></div>
+        <div id="lb-steps-ed"></div>
+        <div class="save-row"><span class="save-toast" id="t-lb-steps">✓ 已儲存</span><button class="btn-save" onclick="saveLbSteps()">儲存步驟</button></div>
+      </div>
+    </div>
+
     <!-- ⑧ 基本設定 -->
     <div class="tab-panel" id="tab-settings">
       <div class="editor-box">
@@ -360,7 +381,7 @@ document.getElementById('login-form').addEventListener('submit',function(e){
 function showDash(){
   document.getElementById('login-wrap').style.display='none';
   document.getElementById('dashboard').style.display='block';
-  renderBookings(); renderBlockedDates(); renderSlides(); renderNews(); renderTeam(); renderMembers(); renderCourses(); renderExpect(); renderServices(); renderLecturers(); loadCfg(); loadGhToken();
+  renderBookings(); renderBlockedDates(); renderSlides(); renderNews(); renderTeam(); renderMembers(); renderCourses(); renderExpect(); renderServices(); renderLecturers(); loadLinebot(); loadCfg(); loadGhToken();
   // 切回此分頁時立刻刷新
   document.addEventListener('visibilitychange', ()=>{ if(document.visibilityState==='visible') renderBookings(); });
   // 其他分頁寫入 localStorage 時即時更新
@@ -381,6 +402,7 @@ document.querySelectorAll('.a-tab').forEach(t=>t.addEventListener('click',()=>{
   if(t.dataset.tab==='bookings'){renderBookings();renderBlockedDates();}
   if(t.dataset.tab==='expect'){renderExpect();}
   if(t.dataset.tab==='services'){renderServices();}
+  if(t.dataset.tab==='linebot'){loadLinebot();}
 }));
 
 /* ═══ UTIL ═══ */
@@ -1121,6 +1143,68 @@ function saveServices(){
     desc:document.getElementById(`sv-ds-${i}`).value,
   }));
   saveSC(s);svcData=JSON.parse(JSON.stringify(s.services));buildServicesUI();pushToGitHub();toast('t-services');
+}
+
+/* ═══ LINE BOT ═══ */
+const DEF_LB_FEAT = [
+  {icon:'🎤', name:'語音轉訪視紀錄', desc:'錄製訪談語音後直接傳入 LINE，自動轉換為結構化訪視紀錄，大幅節省打字時間。'},
+  {icon:'🤖', name:'AI 智慧問答客服', desc:'24 小時自動回答常見問題，串接社福資源資料庫即時媒合，降低社工人工回覆負擔。'},
+  {icon:'🔔', name:'個案追蹤提醒', desc:'設定追蹤時程後，到期自動推播提醒至社工 LINE，確保每位服務對象不遺漏。'},
+  {icon:'📋', name:'對話式表單填報', desc:'透過 LINE 對話引導填寫服務申請，自動整理成結構化資料，支援匯出或存入系統。'},
+  {icon:'🔗', name:'社福資源媒合', desc:'根據服務對象描述，AI 自動比對並推薦最適合的社會福利資源，省去人工查詢時間。'},
+  {icon:'🚨', name:'緊急通報自動流程', desc:'偵測到高風險關鍵字時，自動觸發通報流程並同步通知督導，即時保障服務對象安全。'}
+];
+const DEF_LB_STEPS = [
+  {title:'加入 LINE Bot 好友', desc:'掃描 QR Code 或搜尋帳號，加入好友後即可立即啟用所有自動化功能。'},
+  {title:'輸入指令或傳送語音', desc:'輸入關鍵字（如「訪視紀錄」、「資源查詢」）或直接錄製語音，Bot 自動判斷並啟動對應流程。'},
+  {title:'接收 AI 處理結果', desc:'n8n 後台串接 AI 模型完成處理，數秒內將結果回傳至 LINE 對話視窗，即開即用。'},
+  {title:'客製化機構流程', desc:'可依各機構工作流程進行客製化設定，量身打造最適合的自動化方案。'}
+];
+function getLb(){ return sc().linebot || {}; }
+function loadLinebot(){
+  const lb = getLb();
+  document.getElementById('lb-ed-title').value = lb.title || 'LINE Bot 自動化服務';
+  document.getElementById('lb-ed-subtitle').value = lb.subtitle || 'n8n 串接 LINE Bot，讓 AI 成為社工全天候的智慧助理';
+  const feats = lb.features || DEF_LB_FEAT;
+  document.getElementById('lb-feat-ed').innerHTML = feats.map((f,i)=>`
+    <div class="editor-item" style="margin-bottom:1rem;">
+      <div style="font-family:var(--fh);font-size:.82rem;font-weight:700;color:#7a6c60;margin-bottom:.5rem;">功能 ${i+1}</div>
+      <div class="two-col">
+        <div class="ef"><label>Emoji 圖示</label><input type="text" id="lbf-icon-${i}" value="${f.icon}" style="width:80px;"></div>
+        <div class="ef"><label>功能名稱</label><input type="text" id="lbf-name-${i}" value="${f.name}"></div>
+      </div>
+      <div class="ef"><label>說明文字</label><textarea id="lbf-desc-${i}" rows="2" style="resize:vertical;">${f.desc}</textarea></div>
+    </div>`).join('');
+  const steps = lb.steps || DEF_LB_STEPS;
+  document.getElementById('lb-steps-ed').innerHTML = steps.map((s,i)=>`
+    <div class="editor-item" style="margin-bottom:1rem;">
+      <div style="font-family:var(--fh);font-size:.82rem;font-weight:700;color:#7a6c60;margin-bottom:.5rem;">步驟 ${i+1}</div>
+      <div class="ef"><label>步驟標題</label><input type="text" id="lbs-title-${i}" value="${s.title}"></div>
+      <div class="ef"><label>步驟說明</label><textarea id="lbs-desc-${i}" rows="2" style="resize:vertical;">${s.desc}</textarea></div>
+    </div>`).join('');
+}
+function saveLbHead(){
+  const s=sc(); if(!s.linebot) s.linebot={};
+  s.linebot.title=document.getElementById('lb-ed-title').value;
+  s.linebot.subtitle=document.getElementById('lb-ed-subtitle').value;
+  saveSC(s); pushToGitHub(); toast('t-lb-head');
+}
+function saveLbFeatures(){
+  const s=sc(); if(!s.linebot) s.linebot={};
+  const feats = (s.linebot.features || DEF_LB_FEAT).map((f,i)=>({
+    icon: document.getElementById(`lbf-icon-${i}`).value,
+    name: document.getElementById(`lbf-name-${i}`).value,
+    desc: document.getElementById(`lbf-desc-${i}`).value,
+  }));
+  s.linebot.features=feats; saveSC(s); pushToGitHub(); toast('t-lb-feat');
+}
+function saveLbSteps(){
+  const s=sc(); if(!s.linebot) s.linebot={};
+  const steps = (s.linebot.steps || DEF_LB_STEPS).map((st,i)=>({
+    title: document.getElementById(`lbs-title-${i}`).value,
+    desc:  document.getElementById(`lbs-desc-${i}`).value,
+  }));
+  s.linebot.steps=steps; saveSC(s); pushToGitHub(); toast('t-lb-steps');
 }
 
 /* ═══ CONFIG ═══ */

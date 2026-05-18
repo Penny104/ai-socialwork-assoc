@@ -5071,7 +5071,6 @@
     <!-- LINE BOT MODAL -->
     <div class="lb-overlay" id="lb-overlay" onclick="if(event.target===this)closeLbModal()">
       <div class="lb-modal" role="dialog" aria-modal="true">
-
         <!-- Header -->
         <div class="lb-mhead">
           <div class="lb-mhead-robot">
@@ -5079,12 +5078,9 @@
               <line x1="36" y1="9" x2="36" y2="2" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
               <circle cx="36" cy="1" r="4" fill="#F4D35E" stroke="white" stroke-width="2"/>
               <rect x="8" y="9" width="56" height="36" rx="13" fill="white" opacity=".95"/>
-              <circle cx="24" cy="25" r="8" fill="#5C8EAD"/>
-              <circle cx="48" cy="25" r="8" fill="#5C8EAD"/>
-              <circle cx="25" cy="26" r="4" fill="#3E362E"/>
-              <circle cx="49" cy="26" r="4" fill="#3E362E"/>
-              <circle cx="27" cy="23" r="1.5" fill="white"/>
-              <circle cx="51" cy="23" r="1.5" fill="white"/>
+              <circle cx="24" cy="25" r="8" fill="#5C8EAD"/><circle cx="48" cy="25" r="8" fill="#5C8EAD"/>
+              <circle cx="25" cy="26" r="4" fill="#3E362E"/><circle cx="49" cy="26" r="4" fill="#3E362E"/>
+              <circle cx="27" cy="23" r="1.5" fill="white"/><circle cx="51" cy="23" r="1.5" fill="white"/>
               <path d="M 25 36 Q 36 43 47 36" stroke="#3E362E" stroke-width="2" fill="none" stroke-linecap="round"/>
               <rect x="28" y="44" width="16" height="7" rx="3" fill="rgba(255,255,255,.4)"/>
               <rect x="12" y="49" width="48" height="36" rx="11" fill="rgba(255,255,255,.22)" stroke="white" stroke-width="1.5"/>
@@ -5094,136 +5090,40 @@
             </svg>
           </div>
           <div class="lb-mhead-text">
-            <div class="lb-mhead-title">LINE Bot 自動化服務</div>
-            <div class="lb-mhead-sub">n8n 串接 LINE Bot，讓 AI 成為社工全天候的智慧助理</div>
+            <div class="lb-mhead-title" id="lb-title"></div>
+            <div class="lb-mhead-sub" id="lb-sub"></div>
           </div>
           <button class="lb-mclose" onclick="closeLbModal()" aria-label="關閉">✕</button>
         </div>
-
         <!-- Body -->
         <div class="lb-mbody">
           <div class="lb-mbody-inner">
-
-          <!-- 流程圖 -->
-          <div class="lb-flow">
-            <div class="lb-flow-node">
-              <div class="lb-flow-icon">💬</div>
-              <div class="lb-flow-label">社工 /<br>服務對象</div>
+            <!-- 流程圖（固定） -->
+            <div class="lb-flow">
+              <div class="lb-flow-node"><div class="lb-flow-icon">💬</div><div class="lb-flow-label">社工 /<br>服務對象</div></div>
+              <div class="lb-flow-arr">→</div>
+              <div class="lb-flow-node"><div class="lb-flow-icon" style="background:#e8f5e9;"><svg viewBox="0 0 24 24" width="38" height="38" fill="none"><rect width="24" height="24" rx="6" fill="#4CAF50"/><path d="M12 4C7.58 4 4 7.13 4 11c0 2.18 1.14 4.12 2.93 5.44L6 20l3.85-1.7A8.9 8.9 0 0012 18.5c4.42 0 8-3.13 8-7s-3.58-7-8-7z" fill="white"/></svg></div><div class="lb-flow-label">LINE Bot</div></div>
+              <div class="lb-flow-arr">→</div>
+              <div class="lb-flow-node"><div class="lb-flow-icon" style="background:#fff3e0;"><svg viewBox="0 0 24 24" width="38" height="38" fill="none"><rect width="24" height="24" rx="6" fill="#FF6933"/><circle cx="12" cy="12" r="4" fill="white"/><circle cx="6" cy="7" r="2" fill="white"/><circle cx="18" cy="7" r="2" fill="white"/><circle cx="6" cy="17" r="2" fill="white"/><circle cx="18" cy="17" r="2" fill="white"/></svg></div><div class="lb-flow-label">n8n<br>自動化</div></div>
+              <div class="lb-flow-arr">→</div>
+              <div class="lb-flow-node"><div class="lb-flow-icon" style="background:#f3e5f5;">🧠</div><div class="lb-flow-label">AI 模型<br>處理</div></div>
+              <div class="lb-flow-arr">→</div>
+              <div class="lb-flow-node"><div class="lb-flow-icon">📄</div><div class="lb-flow-label">自動回覆<br>/ 生成紀錄</div></div>
             </div>
-            <div class="lb-flow-arr">→</div>
-            <div class="lb-flow-node">
-              <div class="lb-flow-icon" style="background:#e8f5e9;">
-                <svg viewBox="0 0 24 24" width="38" height="38" fill="none"><rect width="24" height="24" rx="6" fill="#4CAF50"/><path d="M12 4C7.58 4 4 7.13 4 11c0 2.18 1.14 4.12 2.93 5.44L6 20l3.85-1.7A8.9 8.9 0 0012 18.5c4.42 0 8-3.13 8-7s-3.58-7-8-7z" fill="white"/></svg>
-              </div>
-              <div class="lb-flow-label">LINE Bot</div>
+            <!-- 功能介紹（動態） -->
+            <div class="lb-sec">
+              <div class="lb-sec-title">可以為大家提供哪些服務？</div>
+              <div class="lb-feat-grid" id="lb-feat-grid"></div>
             </div>
-            <div class="lb-flow-arr">→</div>
-            <div class="lb-flow-node">
-              <div class="lb-flow-icon" style="background:#fff3e0;">
-                <svg viewBox="0 0 24 24" width="38" height="38" fill="none"><rect width="24" height="24" rx="6" fill="#FF6933"/><circle cx="12" cy="12" r="4" fill="white"/><circle cx="6" cy="7" r="2" fill="white"/><circle cx="18" cy="7" r="2" fill="white"/><circle cx="6" cy="17" r="2" fill="white"/><circle cx="18" cy="17" r="2" fill="white"/></svg>
-              </div>
-              <div class="lb-flow-label">n8n<br>自動化</div>
-            </div>
-            <div class="lb-flow-arr">→</div>
-            <div class="lb-flow-node">
-              <div class="lb-flow-icon" style="background:#f3e5f5;">🧠</div>
-              <div class="lb-flow-label">AI 模型<br>處理</div>
-            </div>
-            <div class="lb-flow-arr">→</div>
-            <div class="lb-flow-node">
-              <div class="lb-flow-icon">📄</div>
-              <div class="lb-flow-label">自動回覆<br>/ 生成紀錄</div>
+            <!-- 如何使用（動態） -->
+            <div class="lb-sec">
+              <div class="lb-sec-title">如何開始使用？</div>
+              <div class="lb-steps" id="lb-steps"></div>
             </div>
           </div>
-
-          <!-- 功能介紹 -->
-          <div class="lb-sec">
-            <div class="lb-sec-title">可以為大家提供哪些服務？</div>
-            <div class="lb-feat-grid">
-              <div class="lb-feat">
-                <div class="lb-feat-icon">🎤</div>
-                <div>
-                  <div class="lb-feat-name">語音轉訪視紀錄</div>
-                  <div class="lb-feat-desc">錄製訪談語音後直接傳入 LINE，自動轉換為結構化訪視紀錄，大幅節省打字時間。</div>
-                </div>
-              </div>
-              <div class="lb-feat">
-                <div class="lb-feat-icon">🤖</div>
-                <div>
-                  <div class="lb-feat-name">AI 智慧問答客服</div>
-                  <div class="lb-feat-desc">24 小時自動回答常見問題，串接社福資源資料庫即時媒合，降低社工人工回覆負擔。</div>
-                </div>
-              </div>
-              <div class="lb-feat">
-                <div class="lb-feat-icon">🔔</div>
-                <div>
-                  <div class="lb-feat-name">個案追蹤提醒</div>
-                  <div class="lb-feat-desc">設定追蹤時程後，到期自動推播提醒至社工 LINE，確保每位服務對象不遺漏。</div>
-                </div>
-              </div>
-              <div class="lb-feat">
-                <div class="lb-feat-icon">📋</div>
-                <div>
-                  <div class="lb-feat-name">對話式表單填報</div>
-                  <div class="lb-feat-desc">透過 LINE 對話引導填寫服務申請，自動整理成結構化資料，支援匯出或存入系統。</div>
-                </div>
-              </div>
-              <div class="lb-feat">
-                <div class="lb-feat-icon">🔗</div>
-                <div>
-                  <div class="lb-feat-name">社福資源媒合</div>
-                  <div class="lb-feat-desc">根據服務對象描述，AI 自動比對並推薦最適合的社會福利資源，省去人工查詢時間。</div>
-                </div>
-              </div>
-              <div class="lb-feat">
-                <div class="lb-feat-icon">🚨</div>
-                <div>
-                  <div class="lb-feat-name">緊急通報自動流程</div>
-                  <div class="lb-feat-desc">偵測到高風險關鍵字時，自動觸發通報流程並同步通知督導，即時保障服務對象安全。</div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- 如何使用 -->
-          <div class="lb-sec">
-            <div class="lb-sec-title">如何開始使用？</div>
-            <div class="lb-steps">
-              <div class="lb-step">
-                <div class="lb-step-num">1</div>
-                <div class="lb-step-body">
-                  <div class="lb-step-title">加入 LINE Bot 好友</div>
-                  <div class="lb-step-desc">掃描 QR Code 或搜尋帳號，加入好友後即可立即啟用所有自動化功能。</div>
-                </div>
-              </div>
-              <div class="lb-step">
-                <div class="lb-step-num">2</div>
-                <div class="lb-step-body">
-                  <div class="lb-step-title">輸入指令或傳送語音</div>
-                  <div class="lb-step-desc">輸入關鍵字（如「訪視紀錄」、「資源查詢」）或直接錄製語音，Bot 自動判斷並啟動對應流程。</div>
-                </div>
-              </div>
-              <div class="lb-step">
-                <div class="lb-step-num">3</div>
-                <div class="lb-step-body">
-                  <div class="lb-step-title">接收 AI 處理結果</div>
-                  <div class="lb-step-desc">n8n 後台串接 AI 模型完成處理，數秒內將結果回傳至 LINE 對話視窗，即開即用。</div>
-                </div>
-              </div>
-              <div class="lb-step">
-                <div class="lb-step-num">4</div>
-                <div class="lb-step-body">
-                  <div class="lb-step-title">客製化機構流程</div>
-                  <div class="lb-step-desc">可依各機構工作流程進行客製化設定，量身打造最適合的自動化方案。</div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          </div><!-- /lb-mbody-inner -->
-        </div><!-- /lb-mbody -->
-      </div><!-- /lb-modal -->
-    </div><!-- /lb-overlay -->
+        </div>
+      </div>
+    </div>
 
     <!-- FOOTER -->
     <footer class="footer">
@@ -5373,15 +5273,50 @@
       </svg>`;
       if (svcEl) svcEl.innerHTML = (sc.services || DEF_SVC).map(s => {
         if (/line\s*bot/i.test(s.name)) {
-          return `<a class="service-card-linebot" href="linebot.html" target="_blank" rel="noopener">
+          return `<div class="service-card-linebot" onclick="openLbModal()" role="button" tabindex="0">
             <div class="lb-card-name">LINE Bot 自動化服務</div>
             <div class="lb-card-hint">點我查看詳細功能 →</div>
-          </a>`;
+          </div>`;
         }
         const lines = (s.desc || '').split(/\n/).map(l => l.trim()).filter(Boolean);
         const body = lines.length ? `<ul class="service-list">${lines.map(l => `<li>${l}</li>`).join('')}</ul>` : `<div class="service-desc"></div>`;
         return `<div class="service-card"><div class="service-tape"></div><div class="service-name">${s.name}</div>${body}</div>`;
       }).join('');
+      /* LINE BOT MODAL — render from content */
+      const DEF_LB = {
+        title: 'LINE Bot 自動化服務',
+        subtitle: 'n8n 串接 LINE Bot，讓 AI 成為社工全天候的智慧助理',
+        features: [
+          {icon:'🎤', name:'語音轉訪視紀錄', desc:'錄製訪談語音後直接傳入 LINE，自動轉換為結構化訪視紀錄，大幅節省打字時間。'},
+          {icon:'🤖', name:'AI 智慧問答客服', desc:'24 小時自動回答常見問題，串接社福資源資料庫即時媒合，降低社工人工回覆負擔。'},
+          {icon:'🔔', name:'個案追蹤提醒', desc:'設定追蹤時程後，到期自動推播提醒至社工 LINE，確保每位服務對象不遺漏。'},
+          {icon:'📋', name:'對話式表單填報', desc:'透過 LINE 對話引導填寫服務申請，自動整理成結構化資料，支援匯出或存入系統。'},
+          {icon:'🔗', name:'社福資源媒合', desc:'根據服務對象描述，AI 自動比對並推薦最適合的社會福利資源，省去人工查詢時間。'},
+          {icon:'🚨', name:'緊急通報自動流程', desc:'偵測到高風險關鍵字時，自動觸發通報流程並同步通知督導，即時保障服務對象安全。'}
+        ],
+        steps: [
+          {title:'加入 LINE Bot 好友', desc:'掃描 QR Code 或搜尋帳號，加入好友後即可立即啟用所有自動化功能。'},
+          {title:'輸入指令或傳送語音', desc:'輸入關鍵字（如「訪視紀錄」、「資源查詢」）或直接錄製語音，Bot 自動判斷並啟動對應流程。'},
+          {title:'接收 AI 處理結果', desc:'n8n 後台串接 AI 模型完成處理，數秒內將結果回傳至 LINE 對話視窗，即開即用。'},
+          {title:'客製化機構流程', desc:'可依各機構工作流程進行客製化設定，量身打造最適合的自動化方案。'}
+        ]
+      };
+      (function renderLinebot() {
+        const lb = sc.linebot || DEF_LB;
+        const t = document.getElementById('lb-title');
+        const s = document.getElementById('lb-sub');
+        const fg = document.getElementById('lb-feat-grid');
+        const st = document.getElementById('lb-steps');
+        if (t) t.textContent = lb.title || DEF_LB.title;
+        if (s) s.textContent = lb.subtitle || DEF_LB.subtitle;
+        if (fg) fg.innerHTML = (lb.features || DEF_LB.features).map(f =>
+          `<div class="lb-feat"><div class="lb-feat-icon">${f.icon}</div><div><div class="lb-feat-name">${f.name}</div><div class="lb-feat-desc">${f.desc}</div></div></div>`
+        ).join('');
+        if (st) st.innerHTML = (lb.steps || DEF_LB.steps).map((step, i) =>
+          `<div class="lb-step"><div class="lb-step-num">${i+1}</div><div class="lb-step-body"><div class="lb-step-title">${step.title}</div><div class="lb-step-desc">${step.desc}</div></div></div>`
+        ).join('');
+      })();
+
       window.openLbModal = function(){
         const y = window.scrollY;
         document.body.style.position = 'fixed';
