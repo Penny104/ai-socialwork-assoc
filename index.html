@@ -5277,10 +5277,10 @@
       </svg>`;
       if (svcEl) svcEl.innerHTML = (sc.services || DEF_SVC).map(s => {
         if (/line\s*bot/i.test(s.name)) {
-          return `<div class="service-card-linebot" onclick="openLbModal()" role="button" tabindex="0">
+          return `<a class="service-card-linebot" href="linebot.html" target="_blank" rel="noopener">
             <div class="lb-card-name">LINE Bot 自動化服務</div>
             <div class="lb-card-hint">點我查看詳細功能 →</div>
-          </div>`;
+          </a>`;
         }
         const lines = (s.desc || '').split(/\n/).map(l => l.trim()).filter(Boolean);
         const body = lines.length ? `<ul class="service-list">${lines.map(l => `<li>${l}</li>`).join('')}</ul>` : `<div class="service-desc"></div>`;
