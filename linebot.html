@@ -157,13 +157,13 @@
       <div class="lb-flow-node"><div class="lb-flow-icon">💬</div><div class="lb-flow-label">社工 /<br>服務對象</div></div>
       <div class="lb-flow-arr">→</div>
       <div class="lb-flow-node">
-        <div class="lb-flow-icon" style="padding:0;overflow:hidden;border-color:#06C755;">
-          <svg viewBox="0 0 80 80" width="80" height="80" xmlns="http://www.w3.org/2000/svg">
-            <rect width="80" height="80" fill="#06C755"/>
-            <path fill="white" d="M40 13C25.6 13 14 23.1 14 35.6C14 46.7 23.1 56 35.8 58.4L35.1 62.5C34.9 63.6 36.1 64.3 37 63.7L52.8 54.4C62.4 50.1 66 43.3 66 35.6C66 23.1 54.4 13 40 13Z"/>
-            <circle cx="29.5" cy="35.6" r="4" fill="#06C755"/>
-            <circle cx="40" cy="35.6" r="4" fill="#06C755"/>
-            <circle cx="50.5" cy="35.6" r="4" fill="#06C755"/>
+        <div class="lb-flow-icon">
+          <svg viewBox="0 0 60 60" width="58" height="58" xmlns="http://www.w3.org/2000/svg">
+            <rect width="60" height="60" rx="14" fill="#06C755"/>
+            <path fill="white" d="M30 9C18.5 9 9.5 17.4 9.5 27.6C9.5 36.3 15.8 43.8 24.3 45.8L23.7 49.2C23.5 50.2 24.6 50.9 25.4 50.3L38.6 42.4C46.3 38.6 50.5 33.2 50.5 27.6C50.5 17.4 41.5 9 30 9Z"/>
+            <circle cx="22" cy="27.6" r="3" fill="#06C755"/>
+            <circle cx="30" cy="27.6" r="3" fill="#06C755"/>
+            <circle cx="38" cy="27.6" r="3" fill="#06C755"/>
           </svg>
         </div>
         <div class="lb-flow-label">LINE Bot</div>
@@ -267,6 +267,12 @@
         }
       } catch (e) {}
     })();
+
+    window.addEventListener('storage', function(e) {
+      if (e.key === 'siteContent') {
+        render(JSON.parse(e.newValue || '{}'));
+      }
+    });
   </script>
 </body>
 </html>
