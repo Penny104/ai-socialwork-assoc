@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LINE Bot 自動化服務 — 社團法人臺灣科技與社會工作協會</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600;700&family=Noto+Sans+TC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #FDFBF7;
+      --grid: #E8DCC4;
+      --ink: #3E362E;
+      --orange: #F26D5B;
+      --yellow: #F4D35E;
+      --blue: #5C8EAD;
+      --green: #7D9D7F;
+      --fh: 'Fredoka', sans-serif;
+      --fb: 'Noto Sans TC', sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--fb);
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.7;
+    }
+
+    /* ── Navbar ── */
+    .nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1rem 2.5rem 1rem 4rem;
+      background: rgba(253,251,247,.92);
+      backdrop-filter: blur(14px);
+      border-bottom: 2px solid var(--grid);
+    }
+    .nav-logo {
+      font-family: var(--fh); font-size: .88rem; font-weight: 600;
+      display: flex; align-items: center; gap: .25rem;
+      text-decoration: none; color: var(--ink); line-height: 1.3;
+    }
+    .nav-logo:hover { color: var(--orange); }
+    .nav-logo-mark { height: 36px; width: auto; flex-shrink: 0; object-fit: contain; }
+    .nav-back {
+      font-family: var(--fh); font-size: .95rem; font-weight: 600;
+      color: var(--ink); text-decoration: none;
+      display: flex; align-items: center; gap: .4rem;
+      padding: .35rem 1rem;
+      border: 1.5px solid var(--grid);
+      border-radius: 20px;
+      transition: border-color .2s, color .2s;
+    }
+    .nav-back:hover { border-color: var(--orange); color: var(--orange); }
+
+    /* ── Hero banner ── */
+    .lb-hero {
+      margin-top: 68px;
+      background: var(--orange);
+      padding: 3.5rem 2rem 3rem;
+      display: flex; flex-direction: column; align-items: center; text-align: center;
+    }
+    .lb-hero-icon {
+      width: 88px; height: 88px; border-radius: 22px;
+      background: rgba(255,255,255,.2); border: 2.5px solid rgba(255,255,255,.5);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 2.8rem; margin-bottom: 1.25rem;
+    }
+    .lb-hero-title {
+      font-family: var(--fh); font-size: clamp(1.9rem, 4vw, 2.8rem);
+      font-weight: 700; color: white; line-height: 1.2; margin-bottom: .6rem;
+    }
+    .lb-hero-sub {
+      font-size: 1.05rem; color: rgba(255,255,255,.85); max-width: 52ch;
+    }
+
+    /* ── Page body ── */
+    .lb-page {
+      max-width: 960px; margin: 0 auto;
+      padding: 3rem 2.5rem 5rem;
+    }
+
+    /* ── Flow diagram ── */
+    .lb-flow {
+      display: flex; align-items: center; justify-content: center;
+      gap: 1rem; flex-wrap: wrap;
+      background: white; border: 1.5px solid var(--grid);
+      border-radius: 18px; padding: 1.8rem 2rem;
+      margin-bottom: 3rem;
+    }
+    .lb-flow-node { display: flex; flex-direction: column; align-items: center; gap: .55rem; }
+    .lb-flow-icon {
+      width: 80px; height: 80px; border-radius: 18px;
+      border: 2px solid var(--grid);
+      display: flex; align-items: center; justify-content: center; font-size: 2.2rem;
+      background: var(--bg);
+    }
+    .lb-flow-label { font-family: var(--fh); font-size: 1rem; font-weight: 700; color: #7a6c60; text-align: center; }
+    .lb-flow-arr { color: var(--grid); font-size: 1.8rem; flex-shrink: 0; }
+
+    /* ── Section title ── */
+    .lb-sec { margin-bottom: 2.5rem; }
+    .lb-sec-title {
+      font-family: var(--fh); font-size: 1.3rem; font-weight: 700; color: var(--ink);
+      margin-bottom: 1.25rem; padding-left: .9rem;
+      border-left: 4px solid var(--orange);
+    }
+
+    /* ── Feature grid ── */
+    .lb-feat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.1rem; }
+    .lb-feat {
+      background: white; border: 1.5px solid var(--grid); border-radius: 14px;
+      padding: 1.4rem 1.5rem; display: flex; gap: .9rem;
+      transition: border-color .18s, box-shadow .18s, transform .18s;
+    }
+    .lb-feat:hover {
+      border-color: var(--orange); box-shadow: 3px 3px 0 var(--orange);
+      transform: translate(-1px,-1px);
+    }
+    .lb-feat-icon { font-size: 2rem; flex-shrink: 0; margin-top: .05rem; }
+    .lb-feat-name { font-family: var(--fh); font-size: 1.1rem; font-weight: 700; color: var(--ink); margin-bottom: .3rem; }
+    .lb-feat-desc { font-size: .95rem; color: #7a6c60; line-height: 1.7; }
+
+    /* ── Steps ── */
+    .lb-steps { display: flex; flex-direction: column; gap: 1.25rem; }
+    .lb-step { display: flex; gap: 1.1rem; align-items: flex-start; }
+    .lb-step-num {
+      width: 38px; height: 38px; border-radius: 50%; flex-shrink: 0;
+      background: var(--orange); color: white;
+      font-family: var(--fh); font-weight: 700; font-size: 1.05rem;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 2px 2px 0 var(--ink);
+    }
+    .lb-step-body { padding-top: .25rem; }
+    .lb-step-title { font-family: var(--fh); font-size: 1.1rem; font-weight: 700; color: var(--ink); margin-bottom: .2rem; }
+    .lb-step-desc { font-size: .98rem; color: #7a6c60; line-height: 1.7; }
+
+    /* ── Footer ── */
+    .footer {
+      background: var(--ink); color: rgba(255,255,255,.65);
+      padding: 3rem 5rem; text-align: center;
+    }
+    .footer-logo {
+      font-family: var(--fh); font-size: 1.5rem; font-weight: 700;
+      color: var(--yellow); margin-bottom: .75rem;
+    }
+    .footer-mission {
+      font-size: .83rem; line-height: 1.95; color: rgba(255,255,255,.5);
+      max-width: 56ch; margin: 0 auto .75rem; text-align: center;
+    }
+    .footer-copy { font-size: .78rem; opacity: .4; margin-top: .5rem; }
+
+    @media (max-width: 640px) {
+      .nav { padding: 1rem 1.25rem; }
+      .lb-feat-grid { grid-template-columns: 1fr; }
+      .lb-page { padding: 2rem 1.25rem 4rem; }
+      .footer { padding: 2.5rem 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="nav">
+    <a class="nav-logo" href="index.html">
+      <img class="nav-logo-mark" src="logo-icon.png" alt="協會Logo">
+      <span>社團法人臺灣科技與社會工作協會</span>
+    </a>
+    <a class="nav-back" href="index.html">← 返回首頁</a>
+  </nav>
+
+  <!-- Hero -->
+  <div class="lb-hero">
+    <div class="lb-hero-icon">🤖</div>
+    <div class="lb-hero-title">LINE Bot 自動化服務</div>
+    <div class="lb-hero-sub">n8n 串接 LINE Bot，讓 AI 成為社工全天候的智慧助理</div>
+  </div>
+
+  <!-- Content -->
+  <div class="lb-page">
+
+    <!-- 流程圖 -->
+    <div class="lb-flow">
+      <div class="lb-flow-node">
+        <div class="lb-flow-icon">💬</div>
+        <div class="lb-flow-label">社工 /<br>服務對象</div>
+      </div>
+      <div class="lb-flow-arr">→</div>
+      <div class="lb-flow-node">
+        <div class="lb-flow-icon" style="background:#e8f5e9;">
+          <svg viewBox="0 0 24 24" width="38" height="38" fill="none"><rect width="24" height="24" rx="6" fill="#4CAF50"/><path d="M12 4C7.58 4 4 7.13 4 11c0 2.18 1.14 4.12 2.93 5.44L6 20l3.85-1.7A8.9 8.9 0 0012 18.5c4.42 0 8-3.13 8-7s-3.58-7-8-7z" fill="white"/></svg>
+        </div>
+        <div class="lb-flow-label">LINE Bot</div>
+      </div>
+      <div class="lb-flow-arr">→</div>
+      <div class="lb-flow-node">
+        <div class="lb-flow-icon" style="background:#fff3e0;">
+          <svg viewBox="0 0 24 24" width="38" height="38" fill="none"><rect width="24" height="24" rx="6" fill="#FF6933"/><circle cx="12" cy="12" r="4" fill="white"/><circle cx="6" cy="7" r="2" fill="white"/><circle cx="18" cy="7" r="2" fill="white"/><circle cx="6" cy="17" r="2" fill="white"/><circle cx="18" cy="17" r="2" fill="white"/></svg>
+        </div>
+        <div class="lb-flow-label">n8n<br>自動化</div>
+      </div>
+      <div class="lb-flow-arr">→</div>
+      <div class="lb-flow-node">
+        <div class="lb-flow-icon" style="background:#f3e5f5;">🧠</div>
+        <div class="lb-flow-label">AI 模型<br>處理</div>
+      </div>
+      <div class="lb-flow-arr">→</div>
+      <div class="lb-flow-node">
+        <div class="lb-flow-icon">📄</div>
+        <div class="lb-flow-label">自動回覆<br>/ 生成紀錄</div>
+      </div>
+    </div>
+
+    <!-- 功能介紹 -->
+    <div class="lb-sec">
+      <div class="lb-sec-title">可以為大家提供哪些服務？</div>
+      <div class="lb-feat-grid">
+        <div class="lb-feat">
+          <div class="lb-feat-icon">🎤</div>
+          <div>
+            <div class="lb-feat-name">語音轉訪視紀錄</div>
+            <div class="lb-feat-desc">錄製訪談語音後直接傳入 LINE，自動轉換為結構化訪視紀錄，大幅節省打字時間。</div>
+          </div>
+        </div>
+        <div class="lb-feat">
+          <div class="lb-feat-icon">🤖</div>
+          <div>
+            <div class="lb-feat-name">AI 智慧問答客服</div>
+            <div class="lb-feat-desc">24 小時自動回答常見問題，串接社福資源資料庫即時媒合，降低社工人工回覆負擔。</div>
+          </div>
+        </div>
+        <div class="lb-feat">
+          <div class="lb-feat-icon">🔔</div>
+          <div>
+            <div class="lb-feat-name">個案追蹤提醒</div>
+            <div class="lb-feat-desc">設定追蹤時程後，到期自動推播提醒至社工 LINE，確保每位服務對象不遺漏。</div>
+          </div>
+        </div>
+        <div class="lb-feat">
+          <div class="lb-feat-icon">📋</div>
+          <div>
+            <div class="lb-feat-name">對話式表單填報</div>
+            <div class="lb-feat-desc">透過 LINE 對話引導填寫服務申請，自動整理成結構化資料，支援匯出或存入系統。</div>
+          </div>
+        </div>
+        <div class="lb-feat">
+          <div class="lb-feat-icon">🔗</div>
+          <div>
+            <div class="lb-feat-name">社福資源媒合</div>
+            <div class="lb-feat-desc">根據服務對象描述，AI 自動比對並推薦最適合的社會福利資源，省去人工查詢時間。</div>
+          </div>
+        </div>
+        <div class="lb-feat">
+          <div class="lb-feat-icon">🚨</div>
+          <div>
+            <div class="lb-feat-name">緊急通報自動流程</div>
+            <div class="lb-feat-desc">偵測到高風險關鍵字時，自動觸發通報流程並同步通知督導，即時保障服務對象安全。</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 如何使用 -->
+    <div class="lb-sec">
+      <div class="lb-sec-title">如何開始使用？</div>
+      <div class="lb-steps">
+        <div class="lb-step">
+          <div class="lb-step-num">1</div>
+          <div class="lb-step-body">
+            <div class="lb-step-title">加入 LINE Bot 好友</div>
+            <div class="lb-step-desc">掃描 QR Code 或搜尋帳號，加入好友後即可立即啟用所有自動化功能。</div>
+          </div>
+        </div>
+        <div class="lb-step">
+          <div class="lb-step-num">2</div>
+          <div class="lb-step-body">
+            <div class="lb-step-title">輸入指令或傳送語音</div>
+            <div class="lb-step-desc">輸入關鍵字（如「訪視紀錄」、「資源查詢」）或直接錄製語音，Bot 自動判斷並啟動對應流程。</div>
+          </div>
+        </div>
+        <div class="lb-step">
+          <div class="lb-step-num">3</div>
+          <div class="lb-step-body">
+            <div class="lb-step-title">接收 AI 處理結果</div>
+            <div class="lb-step-desc">n8n 後台串接 AI 模型完成處理，數秒內將結果回傳至 LINE 對話視窗，即開即用。</div>
+          </div>
+        </div>
+        <div class="lb-step">
+          <div class="lb-step-num">4</div>
+          <div class="lb-step-body">
+            <div class="lb-step-title">客製化機構流程</div>
+            <div class="lb-step-desc">可依各機構工作流程進行客製化設定，量身打造最適合的自動化方案。</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /lb-page -->
+
+  <footer class="footer">
+    <div class="footer-logo">社團法人臺灣科技與社會工作協會</div>
+    <p class="footer-mission">本會為依法設立、非以營利為目的之社會團體，以推廣科技與社會工作相關領域之研究與實務應用，以促進科技與社會工作之協力，並加強跨專業合作實務經驗與交流為宗旨。</p>
+    <p class="footer-copy">© 2024 Taiwan Technology & Social Work Association. All Rights Reserved.</p>
+  </footer>
+
+</body>
+</html>
