@@ -314,6 +314,13 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;bac
         <div id="lb-steps-ed"></div>
         <div class="save-row"><span class="save-toast" id="t-lb-steps">✓ 已儲存</span><button class="btn-save" onclick="saveLbSteps()">儲存步驟</button></div>
       </div>
+      <div class="editor-box">
+        <div class="editor-box-title">對話示範照片 <span class="e-badge">DEMO PHOTOS</span></div>
+        <p style="font-family:var(--fb);font-size:.84rem;color:#7a6c60;margin-bottom:1rem;line-height:1.6;">上傳截圖至圖床（如 Imgur）後貼入 URL，讓使用者預覽 LINE Bot 實際對話介面與效果。每張照片可附上說明文字。</p>
+        <button class="btn-add" onclick="addLbPhoto()">＋ 新增照片</button>
+        <div id="lb-photos-ed"></div>
+        <div class="save-row"><span class="save-toast" id="t-lb-photos">✓ 已儲存</span><button class="btn-save" onclick="saveLbPhotos()">儲存照片</button></div>
+      </div>
     </div>
 
     <!-- ⑧ 基本設定 -->
@@ -1044,8 +1051,11 @@ function buildExpectUI(){
         <div class="ef"><label>說明文字</label><input id="ex-ds-${i}" value="${esc(inst.desc||'')}"></div>
       </div>
       <div style="margin-top:.5rem;">
-        <div style="font-family:var(--fh);font-size:.74rem;font-weight:600;margin-bottom:.4rem;">課程項目（每行一項）</div>
-        <div class="ef"><textarea id="ex-it-${i}" rows="5">${esc((inst.items||[]).join('\n'))}</textarea></div>
+        <div style="display:flex;align-items:center;gap:.5rem;font-family:var(--fh);font-size:.74rem;font-weight:600;margin-bottom:.5rem;">
+          課程項目
+          <button onclick="addInstItem(${i})" style="background:var(--green);color:white;border:none;border-radius:4px;padding:.15rem .5rem;cursor:pointer;font-size:.7rem;font-weight:600;">＋ 新增</button>
+        </div>
+        <div id="ex-items-${i}">${renderInstItems(inst.items||[],i)}</div>
       </div>
     </div>`).join('');
   expectData.forEach((inst,i)=>{const el=document.getElementById(`ex-cl-${i}`);if(el)el.value=inst.color||'var(--orange)';});
@@ -1066,8 +1076,45 @@ function syncExpectData(){
     tag:document.getElementById(`ex-tg-${i}`)?.value||_.tag,
     color:document.getElementById(`ex-cl-${i}`)?.value||_.color,
     desc:document.getElementById(`ex-ds-${i}`)?.value||_.desc,
-    items:(document.getElementById(`ex-it-${i}`)?.value||'').split('\n').map(x=>x.trim()).filter(Boolean),
+    items:getInstItems(i),
   }));
+}
+function renderInstItems(items,instIdx){
+  const n=items.length;
+  if(!n) return `<div style="font-size:.8rem;color:#bbb;padding:.3rem 0;">（尚無項目，點「＋ 新增」加入）</div>`;
+  return items.map((item,j)=>`
+    <div style="display:flex;gap:.3rem;align-items:center;margin-bottom:.3rem;">
+      <button class="btn-move" onclick="moveInstItem(${instIdx},${j},-1)" ${j===0?'disabled':''}style="font-size:.6rem;padding:.1rem .25rem;min-width:22px;">▲</button>
+      <button class="btn-move" onclick="moveInstItem(${instIdx},${j},1)" ${j===n-1?'disabled':''}style="font-size:.6rem;padding:.1rem .25rem;min-width:22px;">▼</button>
+      <input id="ex-it-${instIdx}-${j}" value="${esc(item)}" style="flex:1;font-size:.82rem;padding:.35rem .5rem;border:1px solid #d8c8b8;border-radius:6px;">
+      <button onclick="delInstItem(${instIdx},${j})" style="background:#fee2e2;color:#e84040;border:1px solid #fca5a5;border-radius:5px;padding:.15rem .4rem;cursor:pointer;font-size:.75rem;">✕</button>
+    </div>`).join('');
+}
+function getInstItems(instIdx){
+  const wrap=document.getElementById(`ex-items-${instIdx}`);
+  if(!wrap) return expectData[instIdx]?.items||[];
+  return Array.from(wrap.querySelectorAll(`input[id^="ex-it-${instIdx}-"]`)).map(inp=>inp.value.trim()).filter(Boolean);
+}
+function moveInstItem(instIdx,itemIdx,dir){
+  syncExpectData();
+  const items=expectData[instIdx].items;
+  const j=itemIdx+dir;
+  if(j<0||j>=items.length) return;
+  [items[itemIdx],items[j]]=[items[j],items[itemIdx]];
+  document.getElementById(`ex-items-${instIdx}`).innerHTML=renderInstItems(items,instIdx);
+}
+function delInstItem(instIdx,itemIdx){
+  syncExpectData();
+  expectData[instIdx].items.splice(itemIdx,1);
+  document.getElementById(`ex-items-${instIdx}`).innerHTML=renderInstItems(expectData[instIdx].items,instIdx);
+}
+function addInstItem(instIdx){
+  syncExpectData();
+  expectData[instIdx].items.push('');
+  const wrap=document.getElementById(`ex-items-${instIdx}`);
+  wrap.innerHTML=renderInstItems(expectData[instIdx].items,instIdx);
+  const n=expectData[instIdx].items.length-1;
+  document.getElementById(`ex-it-${instIdx}-${n}`)?.focus();
 }
 function addExpect(){
   openAddModal('新增機構類型',`
@@ -1162,7 +1209,31 @@ const DEF_LB_STEPS = [
   {title:'客製化機構流程', desc:'可依各機構工作流程進行客製化設定，量身打造最適合的自動化方案。'}
 ];
 let lbFeatData = [];
+let lbPhotoData = [];
 function getLb(){ return sc().linebot || {}; }
+function buildLbPhotosUI(){
+  document.getElementById('lb-photos-ed').innerHTML=lbPhotoData.map((p,i)=>`
+    <div class="item-card" style="margin-top:.8rem;">
+      <button class="btn-del" onclick="lbPhotoData.splice(${i},1);buildLbPhotosUI()">✕</button>
+      <div class="item-num">照片 ${i+1}</div>
+      <div class="ef"><label>照片 URL</label><input type="url" id="lbp-url-${i}" value="${esc(p.url||'')}" placeholder="https://...（可貼入 Imgur 或任何圖片網址）"></div>
+      <div class="ef"><label>說明文字</label><input type="text" id="lbp-cap-${i}" value="${esc(p.caption||'')}" placeholder="例：語音傳送後自動生成訪視紀錄"></div>
+      ${p.url?`<div style="margin-top:.5rem;"><img src="${esc(p.url)}" style="max-height:160px;border-radius:8px;border:1px solid #ddd;" onerror="this.style.display='none'"></div>`:''}
+    </div>`).join('');
+}
+function addLbPhoto(){
+  lbPhotoData.push({url:'',caption:''});
+  buildLbPhotosUI();
+  setTimeout(()=>document.getElementById(`lbp-url-${lbPhotoData.length-1}`)?.focus(),50);
+}
+function saveLbPhotos(){
+  const s=sc(); if(!s.linebot) s.linebot={};
+  s.linebot.demoPhotos=lbPhotoData.map((_,i)=>({
+    url:(document.getElementById(`lbp-url-${i}`)?.value||'').trim(),
+    caption:(document.getElementById(`lbp-cap-${i}`)?.value||'').trim(),
+  })).filter(p=>p.url);
+  saveSC(s); pushToGitHub(); toast('t-lb-photos');
+}
 function syncLbFeatData(){
   lbFeatData = lbFeatData.map((f,i)=>({
     icon: document.getElementById(`lbf-icon-${i}`)?.value ?? f.icon,
@@ -1194,6 +1265,8 @@ function loadLinebot(){
   document.getElementById('lb-ed-subtitle').value = lb.subtitle || 'n8n 串接 LINE Bot，讓 AI 成為社工全天候的智慧助理';
   lbFeatData = JSON.parse(JSON.stringify(lb.features || DEF_LB_FEAT));
   buildLbFeatUI();
+  lbPhotoData = JSON.parse(JSON.stringify(lb.demoPhotos || []));
+  buildLbPhotosUI();
   const steps = lb.steps || DEF_LB_STEPS;
   document.getElementById('lb-steps-ed').innerHTML = steps.map((s,i)=>`
     <div class="editor-item" style="margin-bottom:1rem;">
