@@ -1216,9 +1216,19 @@ function buildLbPhotosUI(){
     <div class="item-card" style="margin-top:.8rem;">
       <button class="btn-del" onclick="lbPhotoData.splice(${i},1);buildLbPhotosUI()">✕</button>
       <div class="item-num">照片 ${i+1}</div>
-      <div class="ef"><label>照片 URL</label><input type="url" id="lbp-url-${i}" value="${esc(p.url||'')}" placeholder="https://...（可貼入 Imgur 或任何圖片網址）"></div>
+      <div class="ef"><label>照片</label>
+        <div class="photo-row">
+          <div class="ef" style="margin-bottom:0;flex:1;">
+            <input id="lbp-url-${i}" value="${esc(p.url||'')}" placeholder="圖片 URL 或點右側上傳"
+              oninput="document.getElementById('lbp-img-${i}').src=this.value;document.getElementById('lbp-img-${i}').style.opacity=this.value?1:.2;">
+          </div>
+          <img class="photo-prev" id="lbp-img-${i}" src="${esc(p.url||'')}" alt=""
+            style="width:90px;height:68px;object-fit:cover;border-radius:8px;border:1px solid #ddd;${p.url?'':'opacity:.2;'}">
+          <label class="btn-upload">上傳<input type="file" accept="image/*" style="display:none"
+            onchange="upload(event,v=>{document.getElementById('lbp-url-${i}').value=v;document.getElementById('lbp-img-${i}').src=v;document.getElementById('lbp-img-${i}').style.opacity=1;})"></label>
+        </div>
+      </div>
       <div class="ef"><label>說明文字</label><input type="text" id="lbp-cap-${i}" value="${esc(p.caption||'')}" placeholder="例：語音傳送後自動生成訪視紀錄"></div>
-      ${p.url?`<div style="margin-top:.5rem;"><img src="${esc(p.url)}" style="max-height:160px;border-radius:8px;border:1px solid #ddd;" onerror="this.style.display='none'"></div>`:''}
     </div>`).join('');
 }
 function addLbPhoto(){
