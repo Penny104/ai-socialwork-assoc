@@ -452,12 +452,12 @@ function upload(e,cb){
   const img=new Image(), url=URL.createObjectURL(f);
   img.onload=()=>{
     URL.revokeObjectURL(url);
-    const MAX=600, ratio=Math.min(1,MAX/img.naturalWidth,MAX/img.naturalHeight);
+    const MAX=1400, ratio=Math.min(1,MAX/img.naturalWidth,MAX/img.naturalHeight);
     const c=document.createElement('canvas');
     c.width=Math.round(img.naturalWidth*ratio);
     c.height=Math.round(img.naturalHeight*ratio);
     c.getContext('2d').drawImage(img,0,0,c.width,c.height);
-    _uploadFinish(c.toDataURL('image/jpeg',0.65),cb);
+    _uploadFinish(c.toDataURL('image/jpeg',0.88),cb);
   };
   img.onerror=()=>{URL.revokeObjectURL(url);const r=new FileReader();r.onload=ev=>_uploadFinish(ev.target.result,cb);r.readAsDataURL(f);};
   img.src=url;
