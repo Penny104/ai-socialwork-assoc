@@ -452,7 +452,7 @@ function upload(e,cb){
   const img=new Image(), url=URL.createObjectURL(f);
   img.onload=()=>{
     URL.revokeObjectURL(url);
-    const MAX=1400, ratio=Math.min(1,MAX/img.naturalWidth,MAX/img.naturalHeight);
+    const MAX_W=1400, ratio=Math.min(1,MAX_W/img.naturalWidth); /* 只限寬度，高度不壓縮 */
     const c=document.createElement('canvas');
     c.width=Math.round(img.naturalWidth*ratio);
     c.height=Math.round(img.naturalHeight*ratio);
