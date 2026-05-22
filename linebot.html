@@ -125,16 +125,19 @@
     .footer-copy { font-size: .78rem; opacity: .4; margin-top: .5rem; }
 
     /* ── Demo photos ── */
-    .lb-demo-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem; margin-top: .5rem; }
-    .lb-demo-item { border-radius: 14px; overflow: hidden; border: 1.5px solid var(--grid); background: white; }
-    .lb-demo-item img { width: 100%; height: auto; display: block; }
-    .lb-demo-caption { padding: .55rem .8rem; font-size: .82rem; color: #6a5c50; line-height: 1.5; }
+    .lb-demo-grid { display: flex; flex-direction: column; gap: 2rem; margin-top: .5rem; }
+    .lb-demo-item { display: flex; align-items: flex-start; gap: 2rem; }
+    .lb-demo-photo { flex-shrink: 0; max-width: 280px; border: 1.5px solid var(--grid); border-radius: 14px; overflow: hidden; background: white; }
+    .lb-demo-photo img { width: 100%; height: auto; display: block; }
+    .lb-demo-caption { flex: 1; font-size: .95rem; color: #6a5c50; line-height: 1.8; padding-top: .25rem; }
 
     @media (max-width: 640px) {
       .nav { padding: 1rem 1.25rem; }
       .lb-feat-grid { grid-template-columns: 1fr; }
       .lb-page { padding: 2rem 1.25rem 4rem; }
       .footer { padding: 2.5rem 1.5rem; }
+      .lb-demo-item { flex-direction: column; gap: 1rem; }
+      .lb-demo-photo { max-width: 100%; width: 100%; }
     }
   </style>
 </head>
@@ -264,7 +267,7 @@
       if (visible.length > 0) {
         demoGrid.innerHTML = visible.map(p =>
           `<div class="lb-demo-item">
-            <img src="${p.url}" alt="${p.caption || ''}">
+            <div class="lb-demo-photo"><img src="${p.url}" alt=""></div>
             ${p.caption ? `<div class="lb-demo-caption">${p.caption}</div>` : ''}
           </div>`
         ).join('');
