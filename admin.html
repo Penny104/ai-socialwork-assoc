@@ -613,7 +613,13 @@ function addNews(){
     </div>
     <div class="ef"><label>標題（換行用 \\n）</label><input id="m-nc" value="新消息標題\\n副標題"></div>
     <div class="ef"><label>膠帶顏色</label><select id="m-ncol">${CLR_OPTS}</select></div>
-    <div class="ef"><label>照片 URL（可選）</label><input id="m-np" placeholder="https://..."></div>
+    <div class="ef"><label>照片（可選）</label>
+      <div class="photo-row">
+        <div class="ef" style="margin-bottom:0;flex:1;"><input id="m-np" placeholder="圖片 URL 或點右側上傳" oninput="document.getElementById('m-np-img').src=this.value;document.getElementById('m-np-img').style.opacity=this.value?1:.2;"></div>
+        <img class="photo-prev" id="m-np-img" src="" alt="" style="opacity:.2;">
+        <label class="btn-upload">上傳<input type="file" accept="image/*" style="display:none" onchange="upload(event,v=>{document.getElementById('m-np').value=v;document.getElementById('m-np-img').src=v;document.getElementById('m-np-img').style.opacity=1;})"></label>
+      </div>
+    </div>
   `,null,()=>{
     const item={
       emoji:document.getElementById('m-ne').value,
@@ -1238,10 +1244,14 @@ function addLbPhoto(){
 }
 function saveLbPhotos(){
   const s=sc(); if(!s.linebot) s.linebot={};
-  s.linebot.demoPhotos=lbPhotoData.map((_,i)=>({
+  const photos=lbPhotoData.map((_,i)=>({
     url:(document.getElementById(`lbp-url-${i}`)?.value||'').trim(),
     caption:(document.getElementById(`lbp-cap-${i}`)?.value||'').trim(),
   })).filter(p=>p.url);
+  s.linebot.demoPhotos=photos;
+  /* 照片存獨立 key，確保前台不被 GitHub 同步覆蓋掉 */
+  localStorage.setItem('lb_demo_photos', JSON.stringify(photos));
+  lbPhotoData=[...photos];
   saveSC(s); pushToGitHub(); toast('t-lb-photos');
 }
 function syncLbFeatData(){
@@ -1275,7 +1285,9 @@ function loadLinebot(){
   document.getElementById('lb-ed-subtitle').value = lb.subtitle || 'n8n 串接 LINE Bot，讓 AI 成為社工全天候的智慧助理';
   lbFeatData = JSON.parse(JSON.stringify(lb.features || DEF_LB_FEAT));
   buildLbFeatUI();
-  lbPhotoData = JSON.parse(JSON.stringify(lb.demoPhotos || []));
+  /* 優先從獨立 key 讀取照片（不受 GitHub 同步影響） */
+  const savedPhotos = JSON.parse(localStorage.getItem('lb_demo_photos') || 'null');
+  lbPhotoData = JSON.parse(JSON.stringify(savedPhotos !== null ? savedPhotos : (lb.demoPhotos || [])));
   buildLbPhotosUI();
   const steps = lb.steps || DEF_LB_STEPS;
   document.getElementById('lb-steps-ed').innerHTML = steps.map((s,i)=>`

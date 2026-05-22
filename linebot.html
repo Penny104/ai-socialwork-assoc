@@ -124,6 +124,12 @@
     .footer-mission { font-size: .83rem; line-height: 1.95; color: rgba(255,255,255,.5); max-width: 56ch; margin: 0 auto .75rem; }
     .footer-copy { font-size: .78rem; opacity: .4; margin-top: .5rem; }
 
+    /* ── Demo photos ── */
+    .lb-demo-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem; margin-top: .5rem; }
+    .lb-demo-item { border-radius: 14px; overflow: hidden; border: 1.5px solid var(--grid); background: white; }
+    .lb-demo-item img { width: 100%; height: auto; display: block; }
+    .lb-demo-caption { padding: .55rem .8rem; font-size: .82rem; color: #6a5c50; line-height: 1.5; }
+
     @media (max-width: 640px) {
       .nav { padding: 1rem 1.25rem; }
       .lb-feat-grid { grid-template-columns: 1fr; }
@@ -181,6 +187,12 @@
       <div class="lb-flow-node"><div class="lb-flow-icon">📄</div><div class="lb-flow-label">自動回覆<br>/ 生成紀錄</div></div>
     </div>
 
+    <!-- 對話示範照片（動態） -->
+    <div class="lb-sec" id="lb-demo-sec" style="display:none;">
+      <div class="lb-sec-title">對話介面示範</div>
+      <div class="lb-demo-grid" id="lb-demo-grid"></div>
+    </div>
+
     <!-- 功能介紹（動態） -->
     <div class="lb-sec">
       <div class="lb-sec-title">可以為大家提供哪些服務？</div>
@@ -221,10 +233,29 @@
       ]
     };
 
+    function renderPhotos() {
+      /* 照片存在獨立 key，不被 GitHub 同步覆蓋 */
+      const photos = JSON.parse(localStorage.getItem('lb_demo_photos') || '[]');
+      const demoSec  = document.getElementById('lb-demo-sec');
+      const demoGrid = document.getElementById('lb-demo-grid');
+      if (photos.length > 0) {
+        demoGrid.innerHTML = photos.map(p =>
+          `<div class="lb-demo-item">
+            <img src="${p.url}" alt="${p.caption || ''}">
+            ${p.caption ? `<div class="lb-demo-caption">${p.caption}</div>` : ''}
+          </div>`
+        ).join('');
+        demoSec.style.display = '';
+      } else {
+        demoSec.style.display = 'none';
+      }
+    }
+
     function render(sc) {
       const lb = (sc && sc.linebot) ? sc.linebot : {};
       document.getElementById('lb-title').textContent = lb.title || DEF_LB.title;
       document.getElementById('lb-sub').textContent   = lb.subtitle || DEF_LB.subtitle;
+      renderPhotos();
       document.getElementById('lb-feat-grid').innerHTML =
         (lb.features || DEF_LB.features).map(f =>
           `<div class="lb-feat">
@@ -271,6 +302,9 @@
     window.addEventListener('storage', function(e) {
       if (e.key === 'siteContent') {
         render(JSON.parse(e.newValue || '{}'));
+      }
+      if (e.key === 'lb_demo_photos') {
+        renderPhotos();
       }
     });
   </script>
