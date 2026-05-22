@@ -19,6 +19,34 @@
   "news": [
     {
       "emoji": "📢",
+      "caption": "台灣世界展望會南區辦事處",
+      "date": "2026.05.19-20",
+      "color": "orange",
+      "photo": ""
+    },
+    {
+      "emoji": "📢",
+      "caption": "見賢思齊琪基金會 台中學習沙龍進階課程",
+      "date": "2026.05.16",
+      "color": "orange",
+      "photo": ""
+    },
+    {
+      "emoji": "📢",
+      "caption": "嘉義基督教早療中心課程",
+      "date": "2026.04.28",
+      "color": "orange",
+      "photo": ""
+    },
+    {
+      "emoji": "📢",
+      "caption": "見賢思齊琪基金會 台中學習沙龍初階課程",
+      "date": "2026.04.26",
+      "color": "orange",
+      "photo": ""
+    },
+    {
+      "emoji": "📢",
       "caption": "彰化縣社會處課程",
       "date": "2026.04.23 ",
       "color": "orange",
@@ -585,7 +613,7 @@
     "email": "tatswin2022@gmail.com",
     "phone": "+886-2-0000-0000"
   },
-  "_version": 1779415880639,
+  "_version": 1779416175619,
   "linebot": {
     "features": [
       {
