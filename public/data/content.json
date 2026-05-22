@@ -19,6 +19,13 @@
   "news": [
     {
       "emoji": "📢",
+      "caption": "彰化縣社會處課程",
+      "date": "2026.04.23 ",
+      "color": "orange",
+      "photo": ""
+    },
+    {
+      "emoji": "📢",
       "caption": "更生保護會AI倫理課程",
       "date": "2026.04.20",
       "color": "orange",
@@ -578,7 +585,7 @@
     "email": "tatswin2022@gmail.com",
     "phone": "+886-2-0000-0000"
   },
-  "_version": 1779414832122,
+  "_version": 1779415880639,
   "linebot": {
     "features": [
       {
