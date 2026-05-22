@@ -214,6 +214,13 @@
   </footer>
 
   <script>
+    /* ── IndexedDB image store (same origin as admin.html) ── */
+    const imgStore=(()=>{
+      let _db=null;
+      function _open(){if(_db)return Promise.resolve(_db);return new Promise((res,rej)=>{const r=indexedDB.open('siteImg',1);r.onupgradeneeded=e=>e.target.result.createObjectStore('imgs');r.onsuccess=e=>{_db=e.target.result;res(_db);};r.onerror=()=>rej(r.error);});}
+      return{async get(key){const db=await _open();return new Promise((res,rej)=>{const tx=db.transaction('imgs','readonly');const r2=tx.objectStore('imgs').get(key);r2.onsuccess=()=>res(r2.result??null);r2.onerror=()=>rej(r2.error);});}};
+    })();
+
     const DEF_LB = {
       title: 'LINE Bot 自動化服務',
       subtitle: 'n8n 串接 LINE Bot，讓 AI 成為社工全天候的智慧助理',
@@ -233,7 +240,7 @@
       ]
     };
 
-    function renderPhotos() {
+    async function renderPhotos() {
       /* 優先讀獨立 key；若從未設定（舊版資料），回退讀 siteContent */
       const raw = localStorage.getItem('lb_demo_photos');
       let photos;
@@ -243,10 +250,19 @@
         const sc = JSON.parse(localStorage.getItem('siteContent') || '{}');
         photos = (sc.linebot && sc.linebot.demoPhotos) || [];
       }
+      /* Resolve any idb: keys to base64 */
+      photos = await Promise.all(photos.map(async p => {
+        if (p.url && p.url.startsWith('idb:')) {
+          const data = await imgStore.get(p.url);
+          return data ? { ...p, url: data } : p;
+        }
+        return p;
+      }));
       const demoSec  = document.getElementById('lb-demo-sec');
       const demoGrid = document.getElementById('lb-demo-grid');
-      if (photos.length > 0) {
-        demoGrid.innerHTML = photos.map(p =>
+      const visible  = photos.filter(p => p.url);
+      if (visible.length > 0) {
+        demoGrid.innerHTML = visible.map(p =>
           `<div class="lb-demo-item">
             <img src="${p.url}" alt="${p.caption || ''}">
             ${p.caption ? `<div class="lb-demo-caption">${p.caption}</div>` : ''}
