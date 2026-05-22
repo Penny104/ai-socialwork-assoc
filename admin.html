@@ -1248,11 +1248,17 @@ function saveLbPhotos(){
     url:(document.getElementById(`lbp-url-${i}`)?.value||'').trim(),
     caption:(document.getElementById(`lbp-cap-${i}`)?.value||'').trim(),
   })).filter(p=>p.url);
-  s.linebot.demoPhotos=photos;
-  /* 照片存獨立 key，確保前台不被 GitHub 同步覆蓋掉 */
-  localStorage.setItem('lb_demo_photos', JSON.stringify(photos));
+  /* 照片存獨立 key（不受 GitHub 同步覆蓋），並捕捉 localStorage 容量錯誤 */
+  try {
+    localStorage.setItem('lb_demo_photos', JSON.stringify(photos));
+  } catch(e) {
+    alert('照片儲存失敗：瀏覽器儲存空間已滿。\n請改用圖片網址（如 Imgur）貼入欄位，或清理其他區塊的照片後重試。');
+    return;
+  }
   lbPhotoData=[...photos];
-  saveSC(s); pushToGitHub(); toast('t-lb-photos');
+  s.linebot.demoPhotos=photos;
+  try { saveSC(s); } catch(e) {}
+  pushToGitHub(); toast('t-lb-photos');
 }
 function syncLbFeatData(){
   lbFeatData = lbFeatData.map((f,i)=>({
@@ -1285,8 +1291,12 @@ function loadLinebot(){
   document.getElementById('lb-ed-subtitle').value = lb.subtitle || 'n8n 串接 LINE Bot，讓 AI 成為社工全天候的智慧助理';
   lbFeatData = JSON.parse(JSON.stringify(lb.features || DEF_LB_FEAT));
   buildLbFeatUI();
-  /* 優先從獨立 key 讀取照片（不受 GitHub 同步影響） */
-  const savedPhotos = JSON.parse(localStorage.getItem('lb_demo_photos') || 'null');
+  /* 優先從獨立 key 讀取；若從未設定，從 siteContent 遷移並立即寫入獨立 key */
+  let savedPhotos = JSON.parse(localStorage.getItem('lb_demo_photos') || 'null');
+  if (savedPhotos === null && lb.demoPhotos && lb.demoPhotos.length > 0) {
+    try { localStorage.setItem('lb_demo_photos', JSON.stringify(lb.demoPhotos)); } catch(e) {}
+    savedPhotos = lb.demoPhotos;
+  }
   lbPhotoData = JSON.parse(JSON.stringify(savedPhotos !== null ? savedPhotos : (lb.demoPhotos || [])));
   buildLbPhotosUI();
   const steps = lb.steps || DEF_LB_STEPS;

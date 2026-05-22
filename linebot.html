@@ -234,8 +234,15 @@
     };
 
     function renderPhotos() {
-      /* 照片存在獨立 key，不被 GitHub 同步覆蓋 */
-      const photos = JSON.parse(localStorage.getItem('lb_demo_photos') || '[]');
+      /* 優先讀獨立 key；若從未設定（舊版資料），回退讀 siteContent */
+      const raw = localStorage.getItem('lb_demo_photos');
+      let photos;
+      if (raw !== null) {
+        photos = JSON.parse(raw);
+      } else {
+        const sc = JSON.parse(localStorage.getItem('siteContent') || '{}');
+        photos = (sc.linebot && sc.linebot.demoPhotos) || [];
+      }
       const demoSec  = document.getElementById('lb-demo-sec');
       const demoGrid = document.getElementById('lb-demo-grid');
       if (photos.length > 0) {
