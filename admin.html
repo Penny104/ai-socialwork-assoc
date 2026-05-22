@@ -456,8 +456,12 @@ function upload(e,cb){
     const c=document.createElement('canvas');
     c.width=Math.round(img.naturalWidth*ratio);
     c.height=Math.round(img.naturalHeight*ratio);
-    c.getContext('2d').drawImage(img,0,0,c.width,c.height);
-    _uploadFinish(c.toDataURL('image/jpeg',0.88),cb);
+    const ctx=c.getContext('2d');
+    ctx.imageSmoothingEnabled=true; ctx.imageSmoothingQuality='high';
+    ctx.drawImage(img,0,0,c.width,c.height);
+    /* 截圖（PNG 等）保持無損；只有原始 JPEG 才壓 JPEG */
+    const isJpeg=f.type==='image/jpeg'||f.type==='image/jpg';
+    _uploadFinish(c.toDataURL(isJpeg?'image/jpeg':'image/png',isJpeg?0.92:undefined),cb);
   };
   img.onerror=()=>{URL.revokeObjectURL(url);const r=new FileReader();r.onload=ev=>_uploadFinish(ev.target.result,cb);r.readAsDataURL(f);};
   img.src=url;
