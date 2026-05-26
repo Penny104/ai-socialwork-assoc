@@ -100,13 +100,6 @@
       "date": "2025.07.27",
       "color": "orange",
       "photo": "idb:1779711207097_15"
-    },
-    {
-      "emoji": "📢",
-      "caption": "新消息標題\\n副標題",
-      "date": "",
-      "color": "orange",
-      "photo": ""
     }
   ],
   "coreTeam": [
@@ -620,7 +613,7 @@
     "email": "tatswin2022@gmail.com",
     "phone": "+886-2-0000-0000"
   },
-  "_version": 1779711288639,
+  "_version": 1779775118390,
   "linebot": {
     "features": [
       {
